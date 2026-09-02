@@ -24,11 +24,24 @@ README or old chat history.
 - `docs/DECISIONS.md` — dated log of architecture/product decisions and why
 - `docs/SLICES.md` — one entry per vertical slice: problem, scope, result, learnings
 
-## Data sources (planned)
+## Local workflow
+
+Requires Node.js 20 or newer. No third-party packages are needed yet.
+
+```sh
+npm test
+npm run fetch:governance
+```
+
+The fetch command writes a validated, traceable snapshot to
+`data/governance.json`. It refuses to replace the previous snapshot if vote
+totals, voter records, or organization mappings are inconsistent.
+
+## Data sources
 
 | Metric | Source | Access |
 |---|---|---|
-| Governance vote participation | neo.community (proposals + candidates pages) | scraped — no public API found |
+| Governance vote participation | neo.community public governance API | JSON; proposal details + organization directory |
 | Node uptime | any public Neo N3 RPC endpoint | clean JSON-RPC |
 | Discussion engagement | github.com/neo-project/neo (Discussion-labeled issues) | GitHub API, + a small hand-maintained org→handle map |
 

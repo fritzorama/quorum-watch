@@ -57,7 +57,23 @@ and a static host (Cloudflare Pages or GitHub Pages) for redeploys — same
 pattern as the existing (independent, unaffiliated) neo-treasury.pages.dev
 tool. Not finalized — flagging here so it isn't decided silently mid-slice.
 
-### OPEN — GitHub remote
+### OPEN — Hosting
 
-This repo exists locally only so far. Whether it lives under the project
-owner's personal GitHub, an org, or elsewhere is undecided.
+Static hosting remains undecided. GitHub Pages and Cloudflare Pages are the
+leading options; choose only after the first real-data slice works locally.
+
+### 2026-09-02 — Supersedes “scraping is required”: use the public governance API
+
+The rebuilt neo.community frontend exposes its API base URL and public,
+read-only endpoints. `/proposal/get/all` lists proposals,
+`/proposal/get?proposal_id=...` includes the Council vote map, and
+`/organization/get/all` maps voter IDs to organization names. Slice 1 will use
+those endpoints instead of scraping presentation markup. Every fetch is
+validated before replacing the checked-in snapshot; mismatched totals or
+unknown voter IDs fail the run.
+
+### 2026-09-02 — GitHub source of truth: fritzorama/quorum-watch
+
+The remote repository has been created at
+`https://github.com/fritzorama/quorum-watch`. It was empty at takeover time;
+the local Slice 0 commit is the only existing history and seeds the remote.

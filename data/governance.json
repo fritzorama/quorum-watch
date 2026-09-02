@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "fetchedAt": "2026-09-02T16:56:47.689Z",
+  "sources": {
+    "proposals": "https://neo-governance-api.flamingo.finance/proposal/get/all",
+    "proposalDetails": "https://neo-governance-api.flamingo.finance/proposal/get?proposal_id={id}",
+    "organizations": "https://neo-governance-api.flamingo.finance/organization/get/all"
+  },
+  "proposalCount": 7,
+  "proposals": [
+    {
+      "id": "69243355008ce4201f06946b",
+      "number": 1,
+      "title": "Debug proposal",
+      "createdAt": "2025-11-24T10:28:37.045000",
+      "endsAt": "2025-12-26T23:59:59",
+      "status": "active",
+      "councilVoteCounts": {
+        "for": 1,
+        "against": 0,
+        "neutral": 1
+      },
+      "votes": [
+        {
+          "organizationId": "68ef43be9765e8c33f3b1039",
+          "organizationName": "Flamingo",
+          "choice": "for"
+        },
+        {
+          "organizationId": "68f5fda72dafd413c4109a62",
+          "organizationName": "Nash.io",
+          "choice": "neutral"
+        }
+      ],
+      "sourceUrl": "https://neo.community/proposals/69243355008ce4201f06946b"
+    },
+    {
+      "id": "692433721ea69cca3a40afa0",
+      "number": 2,
+      "title": "Ended proposal",
+      "createdAt": "2025-11-04T10:29:06.635000",
+      "endsAt": "2025-11-21T23:59:59",
+      "status": "active",
+      "councilVoteCounts": {
+        "for": 0,
+        "against": 0,
+        "neutral": 0
+      },
+      "votes": [],
+      "sourceUrl": "https://neo.community/proposals/692433721ea69cca3a40afa0"
+    },
+    {
+      "id": "692451dbc3a821b26a8e9adc",
+      "number": 3,
+      "title": "This will be replaced",
+      "createdAt": "2025-11-24T12:38:51.472000",
+      "endsAt": "2025-12-26T23:59:59",
+      "status": "replaced",
+      "councilVoteCounts": {
+        "for": 0,
+        "against": 0,
+        "neutral": 0
+      },
+      "votes": [],
+      "sourceUrl": "https://neo.community/proposals/692451dbc3a821b26a8e9adc"
+    },
+    {
+      "id": "692451eed13ef5502534d91c",
+      "number": 4,
+      "title": "This replaces Prop #3",
+      "createdAt": "2025-11-24T12:39:10.449000",
+      "endsAt": "2025-12-26T23:59:59",
+      "status": "active",
+      "councilVoteCounts": {
+        "for": 0,
+        "against": 0,
+        "neutral": 1
+      },
+      "votes": [
+        {
+          "organizationId": "68f5fda72dafd413c4109a62",
+          "organizationName": "Nash.io",
+          "choice": "neutral"
+        }
+      ],
+      "sourceUrl": "https://neo.community/proposals/692451eed13ef5502534d91c"
+    },
+    {
+      "id": "69245578684209924c5fbe0b",
+      "number": 5,
+      "title": "European Neo developer hub pilot",
+      "createdAt": "2025-11-24T12:54:16.479000",
+      "endsAt": "2025-12-26T23:59:59",
+      "status": "active",
+      "councilVoteCounts": {
+        "for": 6,
+        "against": 0,
+        "neutral": 1
+      },
+      "votes": [
+        {
+          "organizationId": "68ef43be9765e8c33f3b1039",
+          "organizationName": "Flamingo",
+          "choice": "neutral"
+        },
+        {
+          "organizationId": "68f5fda72dafd413c4109a62",
+          "organizationName": "Nash.io",
+          "choice": "for"
+        },
+        {
+          "organizationId": "68f5fda32dafd413c4109a55",
+          "organizationName": "AxLabs (neow3j)",
+          "choice": "for"
+        },
+        {
+          "organizationId": "68f5fda82dafd413c4109a64",
+          "organizationName": "COZ",
+          "choice": "for"
+        },
+        {
+          "organizationId": "68f5fda22dafd413c4109a51",
+          "organizationName": "NGD4",
+          "choice": "for"
+        },
+        {
+          "organizationId": "68f5fda82dafd413c4109a65",
+          "organizationName": "InfStones",
+          "choice": "for"
+        },
+        {
+          "organizationId": "68f5fda32dafd413c4109a56",
+          "organizationName": "Everstake",
+          "choice": "for"
+        }
+      ],
+      "sourceUrl": "https://neo.community/proposals/69245578684209924c5fbe0b"
+    },
+    {
+      "id": "692dbc8fe505a19890ccce5b",
+      "number": 6,
+      "title": "First time to neo.community governance platform MVP? Learn more and test here!",
+      "createdAt": "2025-12-01T16:04:31.012000",
+      "endsAt": "2026-01-30T23:59:59",
+      "status": "active",
+      "councilVoteCounts": {
+        "for": 5,
+        "against": 0,
+        "neutral": 0
+      },
+      "votes": [
+        {
+          "organizationId": "68f5fda82dafd413c4109a65",
+          "organizationName": "InfStones",
+          "choice": "for"
+        },
+        {
+          "organizationId": "68f5fda72dafd413c4109a62",
+          "organizationName": "Nash.io",
+          "choice": "for"
+        },
+        {
+          "organizationId": "68ef43be9765e8c33f3b1039",
+          "organizationName": "Flamingo",
+          "choice": "for"
+        },
+        {
+          "organizationId": "68f5fda12dafd413c4109a4b",
+          "organizationName": "Neo News Today",
+          "choice": "for"
+        },
+        {
+          "organizationId": "68f5fda32dafd413c4109a55",
+          "organizationName": "AxLabs (neow3j)",
+          "choice": "for"
+        }
+      ],
+      "sourceUrl": "https://neo.community/proposals/692dbc8fe505a19890ccce5b"
+    },
+    {
+      "id": "698248d380b112125a296fc4",
+      "number": 7,
+      "title": "Competitive Fee and Blocktime Enhancements",
+      "createdAt": "2026-02-03T19:13:23.003000",
+      "endsAt": "2026-03-27T23:59:59",
+      "status": "active",
+      "councilVoteCounts": {
+        "for": 2,
+        "against": 0,
+        "neutral": 0
+      },
+      "votes": [
+        {
+          "organizationId": "68ef43be9765e8c33f3b1039",
+          "organizationName": "Flamingo",
+          "choice": "for"
+        },
+        {
+          "organizationId": "68f5fda12dafd413c4109a4b",
+          "organizationName": "Neo News Today",
+          "choice": "for"
+        }
+      ],
+      "sourceUrl": "https://neo.community/proposals/698248d380b112125a296fc4"
+    }
+  ],
+  "participation": [
+    {
+      "organizationId": "68ef43be9765e8c33f3b1039",
+      "organizationName": "Flamingo",
+      "proposalsVoted": 4,
+      "proposalNumbers": [
+        1,
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "organizationId": "68f5fda72dafd413c4109a62",
+      "organizationName": "Nash.io",
+      "proposalsVoted": 4,
+      "proposalNumbers": [
+        1,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "organizationId": "68f5fda32dafd413c4109a55",
+      "organizationName": "AxLabs (neow3j)",
+      "proposalsVoted": 2,
+      "proposalNumbers": [
+        5,
+        6
+      ]
+    },
+    {
+      "organizationId": "68f5fda82dafd413c4109a65",
+      "organizationName": "InfStones",
+      "proposalsVoted": 2,
+      "proposalNumbers": [
+        5,
+        6
+      ]
+    },
+    {
+      "organizationId": "68f5fda12dafd413c4109a4b",
+      "organizationName": "Neo News Today",
+      "proposalsVoted": 2,
+      "proposalNumbers": [
+        6,
+        7
+      ]
+    },
+    {
+      "organizationId": "68f5fda82dafd413c4109a64",
+      "organizationName": "COZ",
+      "proposalsVoted": 1,
+      "proposalNumbers": [
+        5
+      ]
+    },
+    {
+      "organizationId": "68f5fda32dafd413c4109a56",
+      "organizationName": "Everstake",
+      "proposalsVoted": 1,
+      "proposalNumbers": [
+        5
+      ]
+    },
+    {
+      "organizationId": "68f5fda22dafd413c4109a51",
+      "organizationName": "NGD4",
+      "proposalsVoted": 1,
+      "proposalNumbers": [
+        5
+      ]
+    }
+  ]
+}

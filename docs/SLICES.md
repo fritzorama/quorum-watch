@@ -41,4 +41,23 @@ fact, once we adopted a disciplined workflow.
 
 ## Slice 1 — Real governance vote data (in progress)
 
-See `docs/STATUS.md` → NEXT for current spec. Filled in here once closed.
+**Problem:** The prototype attaches synthetic activity figures to real named
+organizations, so it cannot yet support its central claim.
+
+**Current scope:**
+
+1. Fetch proposal summaries, proposal details, and the organization directory
+   from the public neo.community governance API.
+2. Validate that aggregate Council counts match individual voter records and
+   every voter maps to a known organization; fail without replacing the last
+   snapshot if any invariant breaks.
+3. Save a deterministic JSON snapshot with proposal source links and per-org
+   participation counts.
+4. Verify representative output by hand, then replace only the frontend vote
+   metric. Do not implement uptime or discussion in this slice.
+
+**Takeover finding:** The original scraping assumption was stale. The current
+site exposes a public API, which is both less fragile and more complete than
+parsing HTML. See `docs/DECISIONS.md`.
+
+Filled in with results and learnings when the slice closes.

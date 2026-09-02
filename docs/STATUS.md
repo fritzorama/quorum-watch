@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-09-02 (Slice 0 close-out)
+Last updated: 2026-09-02 (takeover audit; Slice 1 started)
 
 This file is the single source of truth for where the project actually is.
 Update it at the end of every slice — before committing.
@@ -21,22 +21,44 @@ Update it at the end of every slice — before committing.
   - **All 21 members' per-metric numbers (votes, uptime, threads, total
     score) are synthetic placeholder data**, clearly labeled as such in the
     UI. No live data fetching exists yet.
-- No fetch scripts, no scheduled job, no deployment pipeline, no GitHub
-  remote for this repo yet.
+- The local repository's original Slice 0 commit is `c5e8288`. The working
+  branch is now `main`, connected to
+  `https://github.com/fritzorama/quorum-watch` as `origin`.
+- A dependency-free governance fetcher now reads the public neo.community
+  governance API, validates proposal vote totals and organization mappings,
+  and writes one atomic JSON snapshot.
+- Fixture-based validation tests cover the successful path and fail-closed
+  behavior.
+- The frontend is not yet connected to the real snapshot. Its synthetic-data
+  warnings remain accurate.
+- The live vote history contains `Nash.io`, which is absent from the prototype
+  roster, while the prototype includes members not present in those vote
+  records. Council seats can change over time, so the roster must be reconciled
+  by public key and effective date before historical participation is displayed.
 
 ## NEXT (the slice we are currently building)
 
-**Slice 1 — Real governance vote data.** See `docs/SLICES.md` for the full
-spec. Short version: replace the synthetic `vote` field only (not uptime,
-not discussion) with real numbers scraped from neo.community, for all 21
-members, verified by hand against what we can already see on the live site.
+**Slice 1 — Real governance vote data.** Generate and inspect the first real
+snapshot, verify representative proposals against neo.community, then connect
+only the frontend's governance-vote field to it. Keep uptime, discussion, and
+the combined score visibly unavailable/synthetic until their own slices.
+
+Before closing the slice:
+
+- configure and seed `https://github.com/fritzorama/quorum-watch`
+- run the fetcher and tests from a clean checkout
+- make data freshness and per-proposal source links visible in the UI
+- reconcile the prototype roster against current Council public keys and define
+  how seat changes affect historical participation
+- remove synthetic vote values without implying the other metrics are real
 
 ## LATER (recorded, not started)
 
 - Node uptime metric (Neo RPC — clean API, lower risk, do this once vote
   data is trusted)
 - Discussion engagement metric + the org→GitHub-handle mapping table
-- Scheduled/automated refresh (likely GitHub Actions cron + static redeploy)
+- Scheduled/automated refresh (GitHub Actions cron + static redeploy is still
+  the leading option)
 - Historical trend view (score over time, not just current snapshot)
 - Per-proposal / per-thread citation links inside each expanded row, so a
   claim about a member is always one click from its source
