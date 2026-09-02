@@ -12,15 +12,16 @@ Update it at the end of every slice — before committing.
   - The real, public roster of all 21 Council members — name, org, location
     — from neo.community/candidates.
   - The real headline stats: 2 of 21 voted on the most recent proposal
-    (#7), 0 of 6 proposals have ever reached majority, 11 votes needed for
-    quorum.
+    (#7), no proposal record has reached majority, 11 votes needed for a
+    Council majority. The prototype's displayed `0 / 6` count is stale now
+    that the API returns seven proposal records.
   - A fixed, disclosed scoring formula: 40% governance vote participation +
     30% node uptime + 30% discussion engagement.
   - Sortable columns, click-to-expand per-member metric breakdown, light/dark
     themes.
   - **All 21 members' per-metric numbers (votes, uptime, threads, total
     score) are synthetic placeholder data**, clearly labeled as such in the
-    UI. No live data fetching exists yet.
+    UI. The frontend does not read the live snapshot yet.
 - The local repository's original Slice 0 commit is `c5e8288`. The working
   branch is now `main`, connected to
   `https://github.com/fritzorama/quorum-watch` as `origin`.
@@ -45,8 +46,6 @@ the combined score visibly unavailable/synthetic until their own slices.
 
 Before closing the slice:
 
-- configure and seed `https://github.com/fritzorama/quorum-watch`
-- run the fetcher and tests from a clean checkout
 - make data freshness and per-proposal source links visible in the UI
 - reconcile the prototype roster against current Council public keys and define
   how seat changes affect historical participation

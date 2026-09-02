@@ -6,8 +6,8 @@ online, and whether they show up to the discussions that actually decide
 things.
 
 Built as a candidate Neo GrantShares submission, born out of watching the
-Council fail to reach quorum on its own governance portal (0 of 6 proposals
-have ever passed; the last one drew votes from 2 of 21 members).
+Council fail to reach quorum on its own governance portal (none of the seven
+proposal records has reached a Council majority; the latest drew 2 of 21).
 
 ## Status
 
@@ -18,8 +18,8 @@ README or old chat history.
 ## Repository map
 
 - `web/` — the frontend (currently a working mockup with synthetic data)
-- `scripts/` — data-fetching scripts (none written yet — see Slice 1)
-- `data/` — fetched snapshots, once the fetcher exists
+- `scripts/` — validated data-fetching scripts
+- `data/` — checked-in, traceable data snapshots
 - `docs/STATUS.md` — CURRENT / NEXT / LATER, kept up to date every slice
 - `docs/DECISIONS.md` — dated log of architecture/product decisions and why
 - `docs/SLICES.md` — one entry per vertical slice: problem, scope, result, learnings
