@@ -1,0 +1,580 @@
+<title>Quorum Watch</title>
+<meta name="description" content="A public attendance record for Neo's elected Council — governance votes, node uptime, and discussion engagement in one ledger.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    color-scheme: light;
+    --paper: #f5f1e8;
+    --paper-2: #ede6d3;
+    --paper-3: #e4dcc4;
+    --ink: #221d16;
+    --ink-muted: #6b6152;
+    --ink-faint: #948a76;
+    --line: #d8cfb8;
+    --line-strong: #c3b795;
+    --accent: #2a78d6;
+    --accent-ink: #ffffff;
+    --metric-vote: #2a78d6;
+    --metric-uptime: #1baf7a;
+    --metric-discuss: #eb6834;
+    --good: #0ca30c;
+    --warn: #b8790c;
+    --critical: #d03b3b;
+    --shadow: 0 1px 0 rgba(34,29,22,0.06);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      color-scheme: dark;
+      --paper: #17140f;
+      --paper-2: #221e16;
+      --paper-3: #2b2519;
+      --ink: #efe8d8;
+      --ink-muted: #a89c86;
+      --ink-faint: #756a58;
+      --line: #3a3326;
+      --line-strong: #4a4130;
+      --accent: #5b9bde;
+      --accent-ink: #0d1a26;
+      --metric-vote: #5b9bde;
+      --metric-uptime: #199e70;
+      --metric-discuss: #d95926;
+      --good: #35c93a;
+      --warn: #fab219;
+      --critical: #e66767;
+    }
+  }
+  :root[data-theme="dark"]{
+    color-scheme: dark;
+    --paper: #17140f;
+    --paper-2: #221e16;
+    --paper-3: #2b2519;
+    --ink: #efe8d8;
+    --ink-muted: #a89c86;
+    --ink-faint: #756a58;
+    --line: #3a3326;
+    --line-strong: #4a4130;
+    --accent: #5b9bde;
+    --accent-ink: #0d1a26;
+    --metric-vote: #5b9bde;
+    --metric-uptime: #199e70;
+    --metric-discuss: #d95926;
+    --good: #35c93a;
+    --warn: #fab219;
+    --critical: #e66767;
+  }
+
+  *{ box-sizing: border-box; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+  h1,h2,h3{
+    font-family:"Fraunces", Georgia, serif;
+    font-weight:600;
+    text-wrap:balance;
+    margin:0;
+  }
+  a{ color: var(--accent); }
+  .eyebrow{
+    font-family:"IBM Plex Mono", ui-monospace, monospace;
+    font-size:11px;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+  }
+
+  /* ---- masthead ---- */
+  .masthead{
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 20px;
+    margin-bottom: 22px;
+  }
+  .masthead-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .masthead h1{ font-size: 34px; letter-spacing: -0.01em; }
+  .masthead .tag{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color:var(--ink-muted);
+    border:1px solid var(--line-strong);
+    padding:3px 9px;
+    border-radius: 3px;
+    white-space:nowrap;
+  }
+  .masthead p.lede{
+    max-width: 62ch;
+    color: var(--ink-muted);
+    font-size:15px;
+    line-height:1.55;
+    margin-top:10px;
+  }
+
+  /* ---- demo banner ---- */
+  .demo-banner{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    background: var(--paper-2);
+    border: 1px dashed var(--line-strong);
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 28px;
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height:1.5;
+  }
+  .demo-banner strong{ color: var(--ink); font-family:"IBM Plex Mono", monospace; letter-spacing:.03em; }
+
+  /* ---- why band ---- */
+  .why{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow:hidden;
+    margin-bottom: 32px;
+  }
+  .why-cell{
+    background: var(--paper-2);
+    padding: 16px 18px;
+  }
+  .why-num{
+    font-family:"Fraunces", serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height:1;
+  }
+  .why-label{
+    margin-top:6px;
+    font-size:12.5px;
+    color: var(--ink-muted);
+    line-height:1.4;
+  }
+  .why-cell.crit .why-num{ color: var(--critical); }
+
+  /* ---- formula clause ---- */
+  .formula{
+    margin-bottom: 34px;
+    padding: 16px 18px;
+    background: var(--paper-2);
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+  .formula h2{ font-size: 15px; margin-bottom:10px; }
+  .formula-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap: 10px 22px;
+    align-items:center;
+    font-family:"IBM Plex Mono", monospace;
+    font-size: 13px;
+  }
+  .formula-term{ display:flex; align-items:center; gap:7px; white-space:nowrap; }
+  .swatch{ width:10px; height:10px; border-radius:2px; display:inline-block; }
+  .formula-plus{ color: var(--ink-faint); }
+  .formula-note{
+    margin-top:10px;
+    font-size:12.5px;
+    color:var(--ink-muted);
+    line-height:1.5;
+  }
+
+  /* ---- section heading ---- */
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    margin-bottom: 10px;
+    gap: 12px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{ font-size: 19px; }
+  .section-head .hint{ font-size:12px; color:var(--ink-faint); font-family:"IBM Plex Mono",monospace; }
+
+  /* ---- table ---- */
+  .ledger{
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .ledger-head{
+    display:grid;
+    grid-template-columns: 32px 1fr 96px 96px 96px 78px;
+    gap: 10px;
+    padding: 9px 12px;
+    font-family:"IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing:.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-bottom: 1px solid var(--line);
+  }
+  .ledger-head button{
+    all:unset;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:4px;
+  }
+  .ledger-head button:hover{ color: var(--ink); }
+  .ledger-head button:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; border-radius:2px; }
+  .col-num{ text-align:right; justify-content:flex-end; }
+  .sort-arrow{ font-size:9px; opacity:.6; }
+
+  .row{
+    border-bottom: 1px solid var(--line);
+  }
+  .row:nth-child(even) .row-main{ background: color-mix(in srgb, var(--paper-2) 55%, transparent); }
+  .row-main{
+    display:grid;
+    grid-template-columns: 32px 1fr 96px 96px 96px 78px;
+    gap: 10px;
+    align-items:center;
+    padding: 10px 12px;
+    cursor:pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+  }
+  .row-main:hover{ background: var(--paper-3); }
+  .row-main:focus-visible{ outline: 2px solid var(--accent); outline-offset: -2px; }
+  .rank{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+  }
+  .who .name{ font-weight:600; font-size:14px; }
+  .who .loc{ font-size:11.5px; color: var(--ink-faint); margin-top:1px; }
+  .num{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12.5px;
+    text-align:right;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-muted);
+  }
+  .total{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:6px;
+  }
+  .total .score{
+    font-family:"Fraunces", serif;
+    font-weight:600;
+    font-size:17px;
+  }
+  .pill{
+    width:8px; height:8px; border-radius:50%;
+    flex:none;
+  }
+  .pill.good{ background: var(--good); }
+  .pill.warn{ background: var(--warn); }
+  .pill.critical{ background: var(--critical); }
+  .caret{
+    font-size: 10px;
+    color: var(--ink-faint);
+    transition: transform .15s ease;
+    justify-self:center;
+  }
+  .row.open .caret{ transform: rotate(90deg); }
+
+  .row-detail{
+    display:grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .18s ease;
+  }
+  .row.open .row-detail{ grid-template-rows: 1fr; }
+  .row-detail-inner{ overflow:hidden; }
+  .detail-pad{
+    padding: 4px 12px 18px 54px;
+    display:flex;
+    flex-direction:column;
+    gap: 11px;
+  }
+  .metric-line{
+    display:grid;
+    grid-template-columns: 128px 1fr 128px;
+    align-items:center;
+    gap: 10px;
+  }
+  .metric-label{
+    font-size:12.5px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    color: var(--ink-muted);
+  }
+  .bar-track{
+    height:7px;
+    background: var(--paper-3);
+    border-radius:4px;
+    overflow:hidden;
+    border: 1px solid var(--line);
+  }
+  .bar-fill{
+    height:100%;
+    border-radius:4px 0 0 4px;
+  }
+  .metric-val{
+    font-family:"IBM Plex Mono", monospace;
+    font-size:12px;
+    text-align:right;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .detail-note{
+    font-size:11.5px;
+    color: var(--ink-faint);
+    line-height:1.5;
+    max-width:56ch;
+  }
+
+  @media (max-width: 640px){
+    .ledger-head, .row-main{
+      grid-template-columns: 22px 1fr 60px 40px;
+    }
+    .col-uptime, .col-discuss, .num.uptime, .num.discuss{ display:none; }
+    .detail-pad{ padding-left: 30px; }
+  }
+
+  footer{
+    margin-top: 40px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--ink-faint);
+    line-height: 1.6;
+  }
+  footer a{ color: var(--ink-muted); }
+</style>
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div class="masthead-top">
+      <h1>Quorum Watch</h1>
+      <span class="tag">MVP mockup · GrantShares draft</span>
+    </div>
+    <p class="lede">
+      A public attendance record for Neo's 21 elected Council members — how often they vote
+      on governance proposals, whether their node stays online, and whether they show up to
+      the discussions that actually decide things.
+    </p>
+  </div>
+
+  <div class="demo-banner">
+    <span>🗳️</span>
+    <div>
+      <strong>SAMPLE DATA.</strong> Every score below is illustrative, generated to show how the
+      page works — it is not a live measurement of any of these organizations' real conduct.
+      A working version would pull governance votes from neo.community, node uptime from a
+      public Neo RPC endpoint, and thread activity from GitHub. See the formula methodology below.
+    </div>
+  </div>
+
+  <div class="why">
+    <div class="why-cell crit">
+      <div class="why-num">2 / 21</div>
+      <div class="why-label">Council members who voted on Proposal #7, neo.community's most recent governance vote</div>
+    </div>
+    <div class="why-cell crit">
+      <div class="why-num">0 / 6</div>
+      <div class="why-label">Proposals that have ever reached majority on the Council's own governance portal</div>
+    </div>
+    <div class="why-cell">
+      <div class="why-num">11</div>
+      <div class="why-label">Votes needed for a majority, out of 21 seats — the quorum this ledger measures against</div>
+    </div>
+  </div>
+
+  <div class="formula">
+    <h2>The score</h2>
+    <div class="formula-row">
+      <span class="formula-term"><span class="swatch" style="background:var(--metric-vote)"></span>Governance votes cast · 40%</span>
+      <span class="formula-plus">+</span>
+      <span class="formula-term"><span class="swatch" style="background:var(--metric-uptime)"></span>Node uptime · 30%</span>
+      <span class="formula-plus">+</span>
+      <span class="formula-term"><span class="swatch" style="background:var(--metric-discuss)"></span>Discussion engagement · 30%</span>
+      <span class="formula-plus">=</span>
+      <span class="formula-term" style="font-weight:600;">Total score</span>
+    </div>
+    <p class="formula-note">
+      Weights are fixed and shown here on purpose — nothing about how a member's score is built
+      is hidden behind the number. A member with no mappable GitHub handle shows that metric as
+      <em>not tracked</em> rather than being penalized for a data gap that isn't their fault.
+    </p>
+  </div>
+
+  <div class="section-head">
+    <h2>Council roll call</h2>
+    <span class="hint">click a row to expand</span>
+  </div>
+
+  <div class="ledger">
+    <div class="ledger-head">
+      <span></span>
+      <button data-sort="name">Member <span class="sort-arrow">↕</span></button>
+      <button class="col-num col-vote" data-sort="vote">Votes <span class="sort-arrow">↕</span></button>
+      <button class="col-num col-uptime" data-sort="uptime">Uptime <span class="sort-arrow">↕</span></button>
+      <button class="col-num col-discuss" data-sort="discuss">Threads <span class="sort-arrow">↕</span></button>
+      <button class="col-num" data-sort="score">Score <span class="sort-arrow">↓</span></button>
+    </div>
+    <div id="rows"></div>
+  </div>
+
+  <footer>
+    Roster and locations are the real, public Neo Council candidate list from
+    <a href="https://neo.community/candidates" target="_blank" rel="noopener">neo.community/candidates</a>.
+    Scores are synthetic placeholder data for this mockup only. Proposal record (2/21, 0/6, 11-seat
+    majority) reflects neo.community Proposal #7 and its governance history as of this draft.
+    Draft for a Neo GrantShares submission — not an official Neo Foundation, NGD, or Council product.
+  </footer>
+
+</div>
+
+<script>
+  // Real public roster (name, org location) — from neo.community/candidates.
+  // vote/uptime/discuss are SYNTHETIC SAMPLE VALUES for this mockup only.
+  const members = [
+    { name:"NF1", loc:"Global", vote:4, uptime:99.2, discuss:3 },
+    { name:"NeoSPCC", loc:"Europe", vote:5, uptime:99.8, discuss:4 },
+    { name:"The Neo Order", loc:"Shanghai", vote:2, uptime:95.1, discuss:1 },
+    { name:"Red4Sec", loc:"Europe", vote:3, uptime:98.7, discuss:2 },
+    { name:"NGD4", loc:"Singapore", vote:3, uptime:97.4, discuss:2 },
+    { name:"R3E", loc:"Detroit, USA", vote:5, uptime:99.6, discuss:5 },
+    { name:"NGD8", loc:"Singapore", vote:2, uptime:96.8, discuss:1 },
+    { name:"COZ", loc:"United States", vote:6, uptime:99.9, discuss:5 },
+    { name:"NGD6", loc:"Hongkong", vote:2, uptime:94.3, discuss:0 },
+    { name:"lazynode", loc:"Earth", vote:1, uptime:88.2, discuss:0 },
+    { name:"NEXT (NeoLine)", loc:"China", vote:3, uptime:97.9, discuss:2 },
+    { name:"AxLabs (neow3j)", loc:"Switzerland", vote:5, uptime:99.5, discuss:4 },
+    { name:"Everstake", loc:"Ukraine", vote:2, uptime:99.1, discuss:1 },
+    { name:"BinanceStaking1", loc:"Global", vote:0, uptime:99.7, discuss:0 },
+    { name:"MakeNeoGreatAgain", loc:"Global", vote:1, uptime:91.4, discuss:0 },
+    { name:"Switcheo Labs", loc:"Singapore", vote:2, uptime:98.0, discuss:1 },
+    { name:"HashKey Cloud", loc:"Hongkong", vote:1, uptime:99.3, discuss:0 },
+    { name:"Neo News Today", loc:"USA", vote:4, uptime:97.6, discuss:3 },
+    { name:"Flamingo", loc:"Norway", vote:5, uptime:96.2, discuss:4 },
+    { name:"bNEO representative", loc:"Global", vote:0, uptime:98.9, discuss:0 },
+    { name:"InfStones", loc:"United States", vote:1, uptime:99.4, discuss:0 },
+  ];
+  const PROPOSALS = 6, THREADS = 5;
+
+  members.forEach(m=>{
+    m.votePct = m.vote / PROPOSALS * 100;
+    m.discussPct = m.discuss / THREADS * 100;
+    m.score = Math.round(m.votePct*0.4 + m.uptime*0.3 + m.discussPct*0.3);
+  });
+
+  function statusOf(score){
+    if(score >= 66) return "good";
+    if(score >= 33) return "warn";
+    return "critical";
+  }
+
+  let sortKey = "score", sortDir = -1;
+  const sortMap = {
+    name: m => m.name.toLowerCase(),
+    vote: m => m.votePct,
+    uptime: m => m.uptime,
+    discuss: m => m.discussPct,
+    score: m => m.score,
+  };
+
+  const rowsEl = document.getElementById("rows");
+  const openState = new Set();
+
+  function render(){
+    const sorted = [...members].sort((a,b)=>{
+      const av = sortMap[sortKey](a), bv = sortMap[sortKey](b);
+      if(av < bv) return -1 * sortDir;
+      if(av > bv) return 1 * sortDir;
+      return 0;
+    });
+
+    rowsEl.innerHTML = sorted.map((m, i)=>{
+      const isOpen = openState.has(m.name);
+      return `
+      <div class="row ${isOpen ? "open" : ""}" data-name="${m.name}">
+        <button class="row-main" aria-expanded="${isOpen}">
+          <span class="rank">${String(i+1).padStart(2,"0")}</span>
+          <span class="who">
+            <div class="name">${m.name}</div>
+            <div class="loc">${m.loc}</div>
+          </span>
+          <span class="num col-vote">${m.vote}/${PROPOSALS}</span>
+          <span class="num col-uptime">${m.uptime.toFixed(1)}%</span>
+          <span class="num col-discuss">${m.discuss}/${THREADS}</span>
+          <span class="total">
+            <span class="score">${m.score}</span>
+            <span class="pill ${statusOf(m.score)}"></span>
+          </span>
+        </button>
+        <div class="row-detail">
+          <div class="row-detail-inner">
+            <div class="detail-pad">
+              ${metricLine("Vote participation", "var(--metric-vote)", m.votePct, `${m.vote} of ${PROPOSALS} proposals`)}
+              ${metricLine("Node uptime", "var(--metric-uptime)", m.uptime, `${m.uptime.toFixed(1)}% of assigned blocks`)}
+              ${metricLine("Discussion engagement", "var(--metric-discuss)", m.discussPct, `${m.discuss} of ${THREADS} major threads`)}
+              <p class="detail-note">Sample figures for mockup purposes. A live build would cite each
+              proposal, block range, and GitHub thread this member's numbers came from, right here.</p>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }).join("");
+
+    rowsEl.querySelectorAll(".row-main").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const row = btn.closest(".row");
+        const name = row.dataset.name;
+        if(openState.has(name)){ openState.delete(name); }
+        else{ openState.add(name); }
+        render();
+      });
+    });
+  }
+
+  function metricLine(label, color, pct, valText){
+    return `
+      <div class="metric-line">
+        <span class="metric-label"><span class="swatch" style="background:${color}"></span>${label}</span>
+        <span class="bar-track"><span class="bar-fill" style="width:${Math.max(pct,2)}%;background:${color}"></span></span>
+        <span class="metric-val">${valText}</span>
+      </div>`;
+  }
+
+  document.querySelectorAll("[data-sort]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const key = btn.dataset.sort;
+      if(sortKey === key){ sortDir *= -1; }
+      else{ sortKey = key; sortDir = key === "name" ? 1 : -1; }
+      document.querySelectorAll(".sort-arrow").forEach(a=>a.textContent="↕");
+      btn.querySelector(".sort-arrow").textContent = sortDir === 1 ? "↑" : "↓";
+      render();
+    });
+  });
+
+  render();
+</script>
