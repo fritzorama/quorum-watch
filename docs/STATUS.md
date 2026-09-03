@@ -1,55 +1,45 @@
 # Status
 
-Last updated: 2026-09-02 (takeover audit; Slice 1 started)
+Last updated: 2026-09-03 (Slice 1 implementation ready for preview)
 
 This file is the single source of truth for where the project actually is.
 Update it at the end of every slice — before committing.
 
 ## CURRENT (what actually exists and works)
 
-- A working frontend mockup (`web/index.html`, published as a Claude
-  Artifact) with:
+- A working frontend (`web/index.html`) with:
   - The real, public roster of all 21 Council members — name, org, location
     — from neo.community/candidates.
-  - The real headline stats: 2 of 21 voted on the most recent proposal
-    (#7), no proposal record has reached majority, 11 votes needed for a
-    Council majority. The prototype's displayed `0 / 6` count is stale now
-    that the API returns seven proposal records.
-  - A fixed, disclosed scoring formula: 40% governance vote participation +
-    30% node uptime + 30% discussion engagement.
-  - Sortable columns, click-to-expand per-member metric breakdown, light/dark
-    themes.
-  - **All 21 members' per-metric numbers (votes, uptime, threads, total
-    score) are synthetic placeholder data**, clearly labeled as such in the
-    UI. The frontend does not read the live snapshot yet.
-- The local repository's original Slice 0 commit is `c5e8288`. The working
-  branch is now `main`, connected to
+  - Verified headline stats from the snapshot: 2 of 21 recorded voters on
+    Proposal #7, 0 of 7 proposal records reaching the 11-seat majority.
+  - Sortable vote counts, click-to-expand proposal source links, data
+    freshness, light/dark themes, and a checked mobile layout.
+  - Uptime and discussion are clearly `not tracked`; the combined score is
+    `unavailable`. No synthetic member-level values remain.
+- The local repository's original Slice 0 commit is `c5e8288`. Slice 1 is on
+  `slice-1-governance-data`, connected to
   `https://github.com/fritzorama/quorum-watch` as `origin`.
 - A dependency-free governance fetcher now reads the public neo.community
   governance API, validates proposal vote totals and organization mappings,
   and writes one atomic JSON snapshot.
 - Fixture-based validation tests cover the successful path and fail-closed
   behavior.
-- The frontend is not yet connected to the real snapshot. Its synthetic-data
-  warnings remain accurate.
-- The live vote history contains `Nash.io`, which is absent from the prototype
-  roster, while the prototype includes members not present in those vote
-  records. Council seats can change over time, so the roster must be reconciled
-  by public key and effective date before historical participation is displayed.
+- `data/council-roster.json` records the 21 current seats observed on
+  2026-09-03, keyed by the candidate public keys shown on neo.community.
+- The governance snapshot is schema v2. It maps organization vote records to
+  current seats by public key, preserves source URLs and freshness, and keeps
+  four Nash.io vote records in `excludedVotes` because Nash is currently rank
+  22 rather than silently attributing them to a current seat.
+- Positive vote records are displayed, but historical non-votes and
+  participation rates are not inferred. The current roster observation does
+  not prove who held every seat at each older proposal date.
 
 ## NEXT (the slice we are currently building)
 
-**Slice 1 — Real governance vote data.** Generate and inspect the first real
-snapshot, verify representative proposals against neo.community, then connect
-only the frontend's governance-vote field to it. Keep uptime, discussion, and
-the combined score visibly unavailable/synthetic until their own slices.
-
-Before closing the slice:
-
-- make data freshness and per-proposal source links visible in the UI
-- reconcile the prototype roster against current Council public keys and define
-  how seat changes affect historical participation
-- remove synthetic vote values without implying the other metrics are real
+**Preview and approval for Slice 1.** The implementation is complete on
+`slice-1-governance-data`. Push the branch, provision a branch preview once a
+host is selected, let the user test it, then merge only after explicit approval.
+Do not merge this branch as part of implementation.
 
 ## LATER (recorded, not started)
 

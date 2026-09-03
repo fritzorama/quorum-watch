@@ -11,13 +11,14 @@ proposal records has reached a Council majority; the latest drew 2 of 21).
 
 ## Status
 
-Pre-MVP. See [`docs/STATUS.md`](docs/STATUS.md) for what's real, what's next,
-and what's deliberately deferred — that file is the source of truth, not this
-README or old chat history.
+Slice 1 is implemented on a preview branch and awaits user testing before it
+can be merged to `main`. See [`docs/STATUS.md`](docs/STATUS.md) for what's real,
+what's next, and what's deliberately deferred — that file is the source of
+truth, not this README or old chat history.
 
 ## Repository map
 
-- `web/` — the frontend (currently a working mockup with synthetic data)
+- `web/` — the frontend (verified governance vote records; other metrics unavailable)
 - `scripts/` — validated data-fetching scripts
 - `data/` — checked-in, traceable data snapshots
 - `docs/STATUS.md` — CURRENT / NEXT / LATER, kept up to date every slice
@@ -36,6 +37,9 @@ npm run fetch:governance
 The fetch command writes a validated, traceable snapshot to
 `data/governance.json`. It refuses to replace the previous snapshot if vote
 totals, voter records, or organization mappings are inconsistent.
+
+Development uses slice branches. `main` remains the approved/public version;
+a slice is previewed and tested by the user before merge.
 
 ## Data sources
 

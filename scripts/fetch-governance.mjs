@@ -1,4 +1,4 @@
-import { mkdir, rename, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
@@ -6,6 +6,10 @@ const DEFAULT_API_BASE = "https://neo-governance-api.flamingo.finance";
 const DEFAULT_OUTPUT = resolve(
   dirname(fileURLToPath(import.meta.url)),
   "../data/governance.json",
+);
+const DEFAULT_ROSTER = resolve(
+  dirname(fileURLToPath(import.meta.url)),
+  "../data/council-roster.json",
 );
 
 function assert(condition, message) {
@@ -21,7 +25,29 @@ function voteCount(proposal) {
   return counts.for + counts.against + counts.neutral;
 }
 
-export function buildSnapshot(proposalSummaries, proposalDetails, organizations, fetchedAt = new Date().toISOString()) {
+function validateRoster(roster) {
+  assert(roster && typeof roster === "object", "Council roster is missing");
+  assert(roster.schemaVersion === 1, "Council roster schema is unsupported");
+  assert(!Number.isNaN(Date.parse(roster.observedAt)), "Council roster observedAt is invalid");
+  assert(typeof roster.sourceUrl === "string" && roster.sourceUrl.startsWith("https://"), "Council roster source URL is invalid");
+  assert(Array.isArray(roster.members) && roster.members.length === 21, "Council roster must contain exactly 21 members");
+
+  const keys = new Set();
+  const ranks = new Set();
+  for (const member of roster.members) {
+    assert(Number.isInteger(member.rank) && member.rank >= 1 && member.rank <= 21, `Council member ${member.name} has an invalid rank`);
+    assert(!ranks.has(member.rank), `duplicate Council rank ${member.rank}`);
+    assert(typeof member.name === "string" && member.name.trim(), "Council member has no name");
+    assert(typeof member.location === "string" && member.location.trim(), `Council member ${member.name} has no location`);
+    assert(/^(02|03)[0-9a-f]{64}$/i.test(member.publicKey), `Council member ${member.name} has an invalid public key`);
+    assert(!keys.has(member.publicKey.toLowerCase()), `duplicate Council public key ${member.publicKey}`);
+    ranks.add(member.rank);
+    keys.add(member.publicKey.toLowerCase());
+  }
+  return roster.members.map((member) => ({ ...member, publicKey: member.publicKey.toLowerCase() }));
+}
+
+export function buildSnapshot(proposalSummaries, proposalDetails, organizations, roster, fetchedAt = new Date().toISOString()) {
   assert(Array.isArray(proposalSummaries), "proposal list is not an array");
   assert(proposalSummaries.length > 0, "proposal list is empty");
   assert(Array.isArray(proposalDetails), "proposal details are not an array");
@@ -29,17 +55,29 @@ export function buildSnapshot(proposalSummaries, proposalDetails, organizations,
   assert(Array.isArray(organizations), "organization list is not an array");
   assert(organizations.length > 0, "organization list is empty");
 
+  const rosterMembers = validateRoster(roster);
+  const rosterByPublicKey = new Map(rosterMembers.map((member) => [member.publicKey, member]));
+
   const organizationById = new Map();
   for (const organization of organizations) {
     assert(typeof organization.organization_id === "string" && organization.organization_id, "organization has no ID");
     assert(typeof organization.name === "string" && organization.name.trim(), `organization ${organization.organization_id} has no name`);
+    assert(/^(02|03)[0-9a-f]{64}$/i.test(organization.public_key), `organization ${organization.organization_id} has an invalid public key`);
     assert(!organizationById.has(organization.organization_id), `duplicate organization ID ${organization.organization_id}`);
-    organizationById.set(organization.organization_id, organization);
+    organizationById.set(organization.organization_id, { ...organization, public_key: organization.public_key.toLowerCase() });
   }
 
   const detailById = new Map(proposalDetails.map((proposal) => [proposal.proposal_id, proposal]));
   const proposalNumbers = new Set();
-  const participation = new Map();
+  const participation = new Map(rosterMembers.map((member) => [member.publicKey, {
+    publicKey: member.publicKey,
+    name: member.name,
+    location: member.location,
+    rank: member.rank,
+    recordedVotes: 0,
+    proposalNumbers: [],
+  }]));
+  const excludedVotes = [];
 
   const proposals = proposalSummaries
     .map((summary) => {
@@ -58,16 +96,27 @@ export function buildSnapshot(proposalSummaries, proposalDetails, organizations,
         const organization = organizationById.get(organizationId);
         assert(organization, `proposal #${detail.proposal_number} references unknown organization ${organizationId}`);
         assert(["for", "against", "neutral"].includes(choice), `proposal #${detail.proposal_number} has invalid vote ${choice}`);
-        const record = participation.get(organizationId) ?? {
+        const member = rosterByPublicKey.get(organization.public_key);
+        if (member) {
+          const record = participation.get(member.publicKey);
+          record.recordedVotes += 1;
+          record.proposalNumbers.push(detail.proposal_number);
+        } else {
+          excludedVotes.push({
+            proposalNumber: detail.proposal_number,
+            organizationId,
+            organizationName: organization.name,
+            publicKey: organization.public_key,
+            reason: "not-in-current-council-roster",
+          });
+        }
+        return {
           organizationId,
           organizationName: organization.name,
-          proposalsVoted: 0,
-          proposalNumbers: [],
+          publicKey: organization.public_key,
+          choice,
+          currentCouncilMember: Boolean(member),
         };
-        record.proposalsVoted += 1;
-        record.proposalNumbers.push(detail.proposal_number);
-        participation.set(organizationId, record);
-        return { organizationId, organizationName: organization.name, choice };
       });
 
       return {
@@ -84,19 +133,40 @@ export function buildSnapshot(proposalSummaries, proposalDetails, organizations,
     })
     .sort((a, b) => a.number - b.number);
 
+  const latestProposal = proposals.at(-1);
+  const majorityThreshold = 11;
+
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     fetchedAt,
     sources: {
       proposals: `${DEFAULT_API_BASE}/proposal/get/all`,
       proposalDetails: `${DEFAULT_API_BASE}/proposal/get?proposal_id={id}`,
       organizations: `${DEFAULT_API_BASE}/organization/get/all`,
+      currentCouncil: roster.sourceUrl,
+    },
+    councilRoster: {
+      observedAt: roster.observedAt,
+      memberCount: rosterMembers.length,
+      identityKey: "Neo N3 candidate public key",
+    },
+    attribution: {
+      rule: "A recorded vote is assigned to a current member only when the vote organization and current roster share the same candidate public key.",
+      historicalAbsencePolicy: "No historical non-vote or participation rate is inferred without a dated seat interval covering that proposal.",
     },
     proposalCount: proposals.length,
+    majorityThreshold,
+    proposalsReachingMajority: proposals.filter((proposal) => voteCount({ proposal_number: proposal.number, council_vote_counts: proposal.councilVoteCounts }) >= majorityThreshold).length,
+    latestProposal: latestProposal ? {
+      number: latestProposal.number,
+      voterCount: latestProposal.votes.length,
+      sourceUrl: latestProposal.sourceUrl,
+    } : null,
     proposals,
     participation: [...participation.values()]
       .map((record) => ({ ...record, proposalNumbers: record.proposalNumbers.sort((a, b) => a - b) }))
-      .sort((a, b) => b.proposalsVoted - a.proposalsVoted || a.organizationName.localeCompare(b.organizationName)),
+      .sort((a, b) => a.rank - b.rank),
+    excludedVotes: excludedVotes.sort((a, b) => a.proposalNumber - b.proposalNumber || a.organizationName.localeCompare(b.organizationName)),
   };
 }
 
@@ -106,7 +176,7 @@ async function fetchJson(url) {
   return response.json();
 }
 
-export async function fetchGovernance(apiBase = process.env.QUORUM_WATCH_API_BASE ?? DEFAULT_API_BASE) {
+export async function fetchGovernance(apiBase = process.env.QUORUM_WATCH_API_BASE ?? DEFAULT_API_BASE, rosterPath = DEFAULT_ROSTER) {
   const base = apiBase.replace(/\/$/, "");
   const [proposalSummaries, organizations] = await Promise.all([
     fetchJson(`${base}/proposal/get/all`),
@@ -116,11 +186,13 @@ export async function fetchGovernance(apiBase = process.env.QUORUM_WATCH_API_BAS
   const proposalDetails = await Promise.all(
     proposalSummaries.map((proposal) => fetchJson(`${base}/proposal/get?proposal_id=${encodeURIComponent(proposal.proposal_id)}`)),
   );
-  const snapshot = buildSnapshot(proposalSummaries, proposalDetails, organizations);
+  const roster = JSON.parse(await readFile(rosterPath, "utf8"));
+  const snapshot = buildSnapshot(proposalSummaries, proposalDetails, organizations, roster);
   snapshot.sources = {
     proposals: `${base}/proposal/get/all`,
     proposalDetails: `${base}/proposal/get?proposal_id={id}`,
     organizations: `${base}/organization/get/all`,
+    currentCouncil: roster.sourceUrl,
   };
   return snapshot;
 }

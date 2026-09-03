@@ -77,3 +77,22 @@ unknown voter IDs fail the run.
 The remote repository has been created at
 `https://github.com/fritzorama/quorum-watch`. It was empty at takeover time;
 the local Slice 0 commit is the only existing history and seeds the remote.
+
+### 2026-09-03 — Branch preview and approval gate
+
+`main` is the approved/public version. Every slice is developed on a branch
+created from the latest `origin/main`, pushed for a preview, tested by the user,
+and merged only after explicit approval. This supersedes the earlier repository
+instruction to commit ordinary development directly to `main`.
+
+### 2026-09-03 — Council identity and historical attribution
+
+Council seats are reconciled by the Neo N3 candidate public key, not by display
+name or governance-API organization ID. A roster observation is effective as
+evidence of membership at its observation time; it is not backdated across old
+proposals. A positive governance vote may be assigned to a current member when
+the vote organization and current roster share the same public key. An absent
+vote must not be called a missed vote or used in a participation rate until a
+dated seat interval proves eligibility for that proposal. Votes whose public
+key is outside the current roster remain in an explicit audit list. This is why
+Nash.io's four records are preserved but not attributed to any current seat.

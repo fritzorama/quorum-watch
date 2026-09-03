@@ -39,12 +39,12 @@ fact, once we adopted a disciplined workflow.
 
 ---
 
-## Slice 1 — Real governance vote data (in progress)
+## Slice 1 — Real governance vote data (implemented; awaiting user preview)
 
 **Problem:** The prototype attaches synthetic activity figures to real named
 organizations, so it cannot yet support its central claim.
 
-**Current scope:**
+**What was implemented:**
 
 1. Fetch proposal summaries, proposal details, and the organization directory
    from the public neo.community governance API.
@@ -53,11 +53,27 @@ organizations, so it cannot yet support its central claim.
    snapshot if any invariant breaks.
 3. Save a deterministic JSON snapshot with proposal source links and per-org
    participation counts.
-4. Verify representative output by hand, then replace only the frontend vote
-   metric. Do not implement uptime or discussion in this slice.
+4. Reconcile the current 21-seat roster by candidate public key and retain the
+   roster observation time.
+5. Connect only recorded governance votes to the frontend, with snapshot
+   freshness and per-proposal source links. Uptime and discussion remain `not
+   tracked`; combined score remains `unavailable`.
 
 **Takeover finding:** The original scraping assumption was stale. The current
 site exposes a public API, which is both less fragile and more complete than
 parsing HTML. See `docs/DECISIONS.md`.
 
-Filled in with results and learnings when the slice closes.
+**Integrity result:** The API contains four Nash.io vote records, but Nash.io is
+currently rank 22. Those records are preserved in `excludedVotes`, not assigned
+to a current member. The UI reports positive recorded votes only; it does not
+infer historical misses or rates from an undated seat history.
+
+**How we knew it worked:** Five fixture tests cover valid output, mismatched
+totals, unknown voter organizations, former-seat exclusion, and invalid roster
+size. A fresh snapshot validated all seven proposals. Proposal #7 shows two
+voters; no proposal reaches the 11-seat majority. The rendered page was checked
+in desktop and mobile layouts, row expansion exposed the expected proposal
+links, and mobile horizontal overflow was fixed.
+
+**Release state:** Implementation is ready on `slice-1-governance-data`. It is
+not merged; branch preview and user approval are the remaining release gates.

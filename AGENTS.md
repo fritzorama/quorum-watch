@@ -23,9 +23,12 @@ history and mockup copy as context, not as authoritative project state. Keep
 2. Do not rewrite working parts unless the active slice requires it.
 3. Run the relevant tests and inspect the rendered interface before closing a
    slice.
-4. Commit coherent changes to `main` and push them to `origin`; do not leave
-   GitHub behind the local source of truth.
-5. Record durable decisions and reversals in `docs/DECISIONS.md` instead of
+4. Never develop or merge directly on `main`. Create a slice branch from the
+   latest `origin/main`, push it, provide a preview for user testing, and merge
+   only after explicit user approval. `main` is the approved/public version.
+5. Keep the active slice branch on GitHub; do not leave the remote behind the
+   local source of truth.
+6. Record durable decisions and reversals in `docs/DECISIONS.md` instead of
    silently changing direction.
 
 ## Data integrity
@@ -47,6 +50,7 @@ history and mockup copy as context, not as authoritative project state. Keep
 - Tests: run `npm test` (or `node --test`).
 - Refresh governance data: run `npm run fetch:governance`.
 
-The frontend is still a mockup with synthetic member-level scores. The real
-governance snapshot must not be wired into the UI until the current/historical
-Council roster discrepancy recorded in `docs/STATUS.md` is resolved.
+The Slice 1 branch reads verified governance vote records from the checked-in
+snapshot. Uptime, discussion, and the combined score remain unavailable. Never
+turn an absent historical vote into a missed vote or rate unless a dated seat
+interval proves that the member was eligible for that proposal.

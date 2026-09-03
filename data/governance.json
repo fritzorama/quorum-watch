@@ -1,12 +1,29 @@
 {
-  "schemaVersion": 1,
-  "fetchedAt": "2026-09-02T16:56:47.689Z",
+  "schemaVersion": 2,
+  "fetchedAt": "2026-09-03T07:33:34.857Z",
   "sources": {
     "proposals": "https://neo-governance-api.flamingo.finance/proposal/get/all",
     "proposalDetails": "https://neo-governance-api.flamingo.finance/proposal/get?proposal_id={id}",
-    "organizations": "https://neo-governance-api.flamingo.finance/organization/get/all"
+    "organizations": "https://neo-governance-api.flamingo.finance/organization/get/all",
+    "currentCouncil": "https://neo.community/candidates"
+  },
+  "councilRoster": {
+    "observedAt": "2026-09-03T07:30:00.000Z",
+    "memberCount": 21,
+    "identityKey": "Neo N3 candidate public key"
+  },
+  "attribution": {
+    "rule": "A recorded vote is assigned to a current member only when the vote organization and current roster share the same candidate public key.",
+    "historicalAbsencePolicy": "No historical non-vote or participation rate is inferred without a dated seat interval covering that proposal."
   },
   "proposalCount": 7,
+  "majorityThreshold": 11,
+  "proposalsReachingMajority": 0,
+  "latestProposal": {
+    "number": 7,
+    "voterCount": 2,
+    "sourceUrl": "https://neo.community/proposals/698248d380b112125a296fc4"
+  },
   "proposals": [
     {
       "id": "69243355008ce4201f06946b",
@@ -24,12 +41,16 @@
         {
           "organizationId": "68ef43be9765e8c33f3b1039",
           "organizationName": "Flamingo",
-          "choice": "for"
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "choice": "for",
+          "currentCouncilMember": true
         },
         {
           "organizationId": "68f5fda72dafd413c4109a62",
           "organizationName": "Nash.io",
-          "choice": "neutral"
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "choice": "neutral",
+          "currentCouncilMember": false
         }
       ],
       "sourceUrl": "https://neo.community/proposals/69243355008ce4201f06946b"
@@ -80,7 +101,9 @@
         {
           "organizationId": "68f5fda72dafd413c4109a62",
           "organizationName": "Nash.io",
-          "choice": "neutral"
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "choice": "neutral",
+          "currentCouncilMember": false
         }
       ],
       "sourceUrl": "https://neo.community/proposals/692451eed13ef5502534d91c"
@@ -101,37 +124,51 @@
         {
           "organizationId": "68ef43be9765e8c33f3b1039",
           "organizationName": "Flamingo",
-          "choice": "neutral"
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "choice": "neutral",
+          "currentCouncilMember": true
         },
         {
           "organizationId": "68f5fda72dafd413c4109a62",
           "organizationName": "Nash.io",
-          "choice": "for"
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "choice": "for",
+          "currentCouncilMember": false
         },
         {
           "organizationId": "68f5fda32dafd413c4109a55",
           "organizationName": "AxLabs (neow3j)",
-          "choice": "for"
+          "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+          "choice": "for",
+          "currentCouncilMember": true
         },
         {
           "organizationId": "68f5fda82dafd413c4109a64",
           "organizationName": "COZ",
-          "choice": "for"
+          "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+          "choice": "for",
+          "currentCouncilMember": true
         },
         {
           "organizationId": "68f5fda22dafd413c4109a51",
           "organizationName": "NGD4",
-          "choice": "for"
+          "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+          "choice": "for",
+          "currentCouncilMember": true
         },
         {
           "organizationId": "68f5fda82dafd413c4109a65",
           "organizationName": "InfStones",
-          "choice": "for"
+          "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+          "choice": "for",
+          "currentCouncilMember": true
         },
         {
           "organizationId": "68f5fda32dafd413c4109a56",
           "organizationName": "Everstake",
-          "choice": "for"
+          "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+          "choice": "for",
+          "currentCouncilMember": true
         }
       ],
       "sourceUrl": "https://neo.community/proposals/69245578684209924c5fbe0b"
@@ -152,27 +189,37 @@
         {
           "organizationId": "68f5fda82dafd413c4109a65",
           "organizationName": "InfStones",
-          "choice": "for"
+          "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+          "choice": "for",
+          "currentCouncilMember": true
         },
         {
           "organizationId": "68f5fda72dafd413c4109a62",
           "organizationName": "Nash.io",
-          "choice": "for"
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "choice": "for",
+          "currentCouncilMember": false
         },
         {
           "organizationId": "68ef43be9765e8c33f3b1039",
           "organizationName": "Flamingo",
-          "choice": "for"
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "choice": "for",
+          "currentCouncilMember": true
         },
         {
           "organizationId": "68f5fda12dafd413c4109a4b",
           "organizationName": "Neo News Today",
-          "choice": "for"
+          "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+          "choice": "for",
+          "currentCouncilMember": true
         },
         {
           "organizationId": "68f5fda32dafd413c4109a55",
           "organizationName": "AxLabs (neow3j)",
-          "choice": "for"
+          "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+          "choice": "for",
+          "currentCouncilMember": true
         }
       ],
       "sourceUrl": "https://neo.community/proposals/692dbc8fe505a19890ccce5b"
@@ -193,12 +240,16 @@
         {
           "organizationId": "68ef43be9765e8c33f3b1039",
           "organizationName": "Flamingo",
-          "choice": "for"
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "choice": "for",
+          "currentCouncilMember": true
         },
         {
           "organizationId": "68f5fda12dafd413c4109a4b",
           "organizationName": "Neo News Today",
-          "choice": "for"
+          "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+          "choice": "for",
+          "currentCouncilMember": true
         }
       ],
       "sourceUrl": "https://neo.community/proposals/698248d380b112125a296fc4"
@@ -206,9 +257,170 @@
   ],
   "participation": [
     {
-      "organizationId": "68ef43be9765e8c33f3b1039",
-      "organizationName": "Flamingo",
-      "proposalsVoted": 4,
+      "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+      "name": "NF1",
+      "location": "Global",
+      "rank": 1,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e",
+      "name": "NeoSPCC",
+      "location": "Europe",
+      "rank": 2,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+      "name": "The Neo Order",
+      "location": "Shanghai",
+      "rank": 3,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "036eaee5b856e29a030307630bbaf0a63534c011af1c2c96782d36ebfb37d2ebb0",
+      "name": "Red4Sec",
+      "location": "Europe",
+      "rank": 4,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+      "name": "NGD8",
+      "location": "Singapore",
+      "rank": 5,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+      "name": "NGD4",
+      "location": "Singapore",
+      "rank": 6,
+      "recordedVotes": 1,
+      "proposalNumbers": [
+        5
+      ]
+    },
+    {
+      "publicKey": "0362087e1f9ae6e7d0c1d05bbd17a724e0d5f92662e766980e47a5194d22c8fa80",
+      "name": "R3E",
+      "location": "Detroit, USA",
+      "rank": 7,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+      "name": "COZ",
+      "location": "United States",
+      "rank": 8,
+      "recordedVotes": 1,
+      "proposalNumbers": [
+        5
+      ]
+    },
+    {
+      "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830",
+      "name": "NGD6",
+      "location": "Hongkong",
+      "rank": 9,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82",
+      "name": "lazynode",
+      "location": "Earth",
+      "rank": 10,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971",
+      "name": "NEXT（NeoLine）",
+      "location": "China",
+      "rank": 11,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+      "name": "AxLabs (neow3j)",
+      "location": "Switzerland",
+      "rank": 12,
+      "recordedVotes": 2,
+      "proposalNumbers": [
+        5,
+        6
+      ]
+    },
+    {
+      "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115",
+      "name": "Switcheo Labs",
+      "location": "Singapore",
+      "rank": 13,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+      "name": "Everstake",
+      "location": "Ukraine",
+      "rank": 14,
+      "recordedVotes": 1,
+      "proposalNumbers": [
+        5
+      ]
+    },
+    {
+      "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+      "name": "Neo News Today",
+      "location": "USA",
+      "rank": 15,
+      "recordedVotes": 2,
+      "proposalNumbers": [
+        6,
+        7
+      ]
+    },
+    {
+      "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+      "name": "InfStones",
+      "location": "United States",
+      "rank": 16,
+      "recordedVotes": 2,
+      "proposalNumbers": [
+        5,
+        6
+      ]
+    },
+    {
+      "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257",
+      "name": "bNEO representative",
+      "location": "Global",
+      "rank": 17,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3",
+      "name": "BinanceStaking1",
+      "location": "Global",
+      "rank": 18,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+      "name": "Flamingo",
+      "location": "Norway",
+      "rank": 19,
+      "recordedVotes": 4,
       "proposalNumbers": [
         1,
         5,
@@ -217,66 +429,50 @@
       ]
     },
     {
+      "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08",
+      "name": "MakeNeoGreatAgain",
+      "location": "Global",
+      "rank": 20,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    },
+    {
+      "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378",
+      "name": "HashKey Cloud",
+      "location": "HongKong",
+      "rank": 21,
+      "recordedVotes": 0,
+      "proposalNumbers": []
+    }
+  ],
+  "excludedVotes": [
+    {
+      "proposalNumber": 1,
       "organizationId": "68f5fda72dafd413c4109a62",
       "organizationName": "Nash.io",
-      "proposalsVoted": 4,
-      "proposalNumbers": [
-        1,
-        4,
-        5,
-        6
-      ]
+      "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+      "reason": "not-in-current-council-roster"
     },
     {
-      "organizationId": "68f5fda32dafd413c4109a55",
-      "organizationName": "AxLabs (neow3j)",
-      "proposalsVoted": 2,
-      "proposalNumbers": [
-        5,
-        6
-      ]
+      "proposalNumber": 4,
+      "organizationId": "68f5fda72dafd413c4109a62",
+      "organizationName": "Nash.io",
+      "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+      "reason": "not-in-current-council-roster"
     },
     {
-      "organizationId": "68f5fda82dafd413c4109a65",
-      "organizationName": "InfStones",
-      "proposalsVoted": 2,
-      "proposalNumbers": [
-        5,
-        6
-      ]
+      "proposalNumber": 5,
+      "organizationId": "68f5fda72dafd413c4109a62",
+      "organizationName": "Nash.io",
+      "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+      "reason": "not-in-current-council-roster"
     },
     {
-      "organizationId": "68f5fda12dafd413c4109a4b",
-      "organizationName": "Neo News Today",
-      "proposalsVoted": 2,
-      "proposalNumbers": [
-        6,
-        7
-      ]
-    },
-    {
-      "organizationId": "68f5fda82dafd413c4109a64",
-      "organizationName": "COZ",
-      "proposalsVoted": 1,
-      "proposalNumbers": [
-        5
-      ]
-    },
-    {
-      "organizationId": "68f5fda32dafd413c4109a56",
-      "organizationName": "Everstake",
-      "proposalsVoted": 1,
-      "proposalNumbers": [
-        5
-      ]
-    },
-    {
-      "organizationId": "68f5fda22dafd413c4109a51",
-      "organizationName": "NGD4",
-      "proposalsVoted": 1,
-      "proposalNumbers": [
-        5
-      ]
+      "proposalNumber": 6,
+      "organizationId": "68f5fda72dafd413c4109a62",
+      "organizationName": "Nash.io",
+      "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+      "reason": "not-in-current-council-roster"
     }
   ]
 }

@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>Quorum Watch</title>
 <meta name="description" content="A public attendance record for Neo's elected Council — governance votes, node uptime, and discussion engagement in one ledger.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -352,9 +353,9 @@
 
   @media (max-width: 640px){
     .ledger-head, .row-main{
-      grid-template-columns: 22px 1fr 60px 40px;
+      grid-template-columns: 22px 1fr 60px;
     }
-    .col-uptime, .col-discuss, .num.uptime, .num.discuss{ display:none; }
+    .col-uptime, .col-discuss, .col-score, .num.uptime, .num.discuss{ display:none; }
     .detail-pad{ padding-left: 30px; }
   }
 
@@ -374,7 +375,7 @@
   <div class="masthead">
     <div class="masthead-top">
       <h1>Quorum Watch</h1>
-      <span class="tag">MVP mockup · GrantShares draft</span>
+      <span class="tag">Slice 1 preview · verified vote records</span>
     </div>
     <p class="lede">
       A public attendance record for Neo's 21 elected Council members — how often they vote
@@ -383,46 +384,39 @@
     </p>
   </div>
 
-  <div class="demo-banner">
+  <div class="demo-banner" id="data-status">
     <span>🗳️</span>
     <div>
-      <strong>SAMPLE DATA.</strong> Every score below is illustrative, generated to show how the
-      page works — it is not a live measurement of any of these organizations' real conduct.
-      A working version would pull governance votes from neo.community, node uptime from a
-      public Neo RPC endpoint, and thread activity from GitHub. See the formula methodology below.
+      <strong>LOADING VERIFIED DATA.</strong> Reading the checked-in governance snapshot.
     </div>
   </div>
 
   <div class="why">
     <div class="why-cell crit">
-      <div class="why-num">2 / 21</div>
-      <div class="why-label">Council members who voted on Proposal #7, neo.community's most recent governance vote</div>
+      <div class="why-num" id="latest-votes">—</div>
+      <div class="why-label" id="latest-label">Council members recorded as voting on the latest proposal</div>
     </div>
     <div class="why-cell crit">
-      <div class="why-num">0 / 6</div>
+      <div class="why-num" id="majority-record">—</div>
       <div class="why-label">Proposals that have ever reached majority on the Council's own governance portal</div>
     </div>
     <div class="why-cell">
-      <div class="why-num">11</div>
+      <div class="why-num" id="majority-threshold">—</div>
       <div class="why-label">Votes needed for a majority, out of 21 seats — the quorum this ledger measures against</div>
     </div>
   </div>
 
   <div class="formula">
-    <h2>The score</h2>
+    <h2>Metric availability</h2>
     <div class="formula-row">
-      <span class="formula-term"><span class="swatch" style="background:var(--metric-vote)"></span>Governance votes cast · 40%</span>
-      <span class="formula-plus">+</span>
-      <span class="formula-term"><span class="swatch" style="background:var(--metric-uptime)"></span>Node uptime · 30%</span>
-      <span class="formula-plus">+</span>
-      <span class="formula-term"><span class="swatch" style="background:var(--metric-discuss)"></span>Discussion engagement · 30%</span>
-      <span class="formula-plus">=</span>
-      <span class="formula-term" style="font-weight:600;">Total score</span>
+      <span class="formula-term"><span class="swatch" style="background:var(--metric-vote)"></span>Governance votes · verified records</span>
+      <span class="formula-term"><span class="swatch" style="background:var(--metric-uptime)"></span>Node uptime · not tracked</span>
+      <span class="formula-term"><span class="swatch" style="background:var(--metric-discuss)"></span>Discussion · not tracked</span>
+      <span class="formula-term" style="font-weight:600;">Combined score · unavailable</span>
     </div>
     <p class="formula-note">
-      Weights are fixed and shown here on purpose — nothing about how a member's score is built
-      is hidden behind the number. A member with no mappable GitHub handle shows that metric as
-      <em>not tracked</em> rather than being penalized for a data gap that isn't their fault.
+      Only positive vote records are shown in this slice. We do not calculate historical
+      participation rates or missed votes until dated Council-seat eligibility can be proven.
     </p>
   </div>
 
@@ -436,70 +430,30 @@
       <span></span>
       <button data-sort="name">Member <span class="sort-arrow">↕</span></button>
       <button class="col-num col-vote" data-sort="vote">Votes <span class="sort-arrow">↕</span></button>
-      <button class="col-num col-uptime" data-sort="uptime">Uptime <span class="sort-arrow">↕</span></button>
-      <button class="col-num col-discuss" data-sort="discuss">Threads <span class="sort-arrow">↕</span></button>
-      <button class="col-num" data-sort="score">Score <span class="sort-arrow">↓</span></button>
+      <span class="col-num col-uptime">Uptime</span>
+      <span class="col-num col-discuss">Discussion</span>
+      <span class="col-num col-score">Score</span>
     </div>
     <div id="rows"></div>
   </div>
 
   <footer>
-    Roster and locations are the real, public Neo Council candidate list from
+    Current roster and locations are verified against the public Neo Council candidate list at
     <a href="https://neo.community/candidates" target="_blank" rel="noopener">neo.community/candidates</a>.
-    Scores are synthetic placeholder data for this mockup only. Proposal record (2/21, 0/6, 11-seat
-    majority) reflects neo.community Proposal #7 and its governance history as of this draft.
-    Draft for a Neo GrantShares submission — not an official Neo Foundation, NGD, or Council product.
+    Governance records come from the public neo.community governance API. Uptime, discussion,
+    and combined scores are not tracked. Independent preview — not an official Neo Foundation,
+    NGD, or Council product.
   </footer>
 
 </div>
 
 <script>
-  // Real public roster (name, org location) — from neo.community/candidates.
-  // vote/uptime/discuss are SYNTHETIC SAMPLE VALUES for this mockup only.
-  const members = [
-    { name:"NF1", loc:"Global", vote:4, uptime:99.2, discuss:3 },
-    { name:"NeoSPCC", loc:"Europe", vote:5, uptime:99.8, discuss:4 },
-    { name:"The Neo Order", loc:"Shanghai", vote:2, uptime:95.1, discuss:1 },
-    { name:"Red4Sec", loc:"Europe", vote:3, uptime:98.7, discuss:2 },
-    { name:"NGD4", loc:"Singapore", vote:3, uptime:97.4, discuss:2 },
-    { name:"R3E", loc:"Detroit, USA", vote:5, uptime:99.6, discuss:5 },
-    { name:"NGD8", loc:"Singapore", vote:2, uptime:96.8, discuss:1 },
-    { name:"COZ", loc:"United States", vote:6, uptime:99.9, discuss:5 },
-    { name:"NGD6", loc:"Hongkong", vote:2, uptime:94.3, discuss:0 },
-    { name:"lazynode", loc:"Earth", vote:1, uptime:88.2, discuss:0 },
-    { name:"NEXT (NeoLine)", loc:"China", vote:3, uptime:97.9, discuss:2 },
-    { name:"AxLabs (neow3j)", loc:"Switzerland", vote:5, uptime:99.5, discuss:4 },
-    { name:"Everstake", loc:"Ukraine", vote:2, uptime:99.1, discuss:1 },
-    { name:"BinanceStaking1", loc:"Global", vote:0, uptime:99.7, discuss:0 },
-    { name:"MakeNeoGreatAgain", loc:"Global", vote:1, uptime:91.4, discuss:0 },
-    { name:"Switcheo Labs", loc:"Singapore", vote:2, uptime:98.0, discuss:1 },
-    { name:"HashKey Cloud", loc:"Hongkong", vote:1, uptime:99.3, discuss:0 },
-    { name:"Neo News Today", loc:"USA", vote:4, uptime:97.6, discuss:3 },
-    { name:"Flamingo", loc:"Norway", vote:5, uptime:96.2, discuss:4 },
-    { name:"bNEO representative", loc:"Global", vote:0, uptime:98.9, discuss:0 },
-    { name:"InfStones", loc:"United States", vote:1, uptime:99.4, discuss:0 },
-  ];
-  const PROPOSALS = 6, THREADS = 5;
-
-  members.forEach(m=>{
-    m.votePct = m.vote / PROPOSALS * 100;
-    m.discussPct = m.discuss / THREADS * 100;
-    m.score = Math.round(m.votePct*0.4 + m.uptime*0.3 + m.discussPct*0.3);
-  });
-
-  function statusOf(score){
-    if(score >= 66) return "good";
-    if(score >= 33) return "warn";
-    return "critical";
-  }
-
-  let sortKey = "score", sortDir = -1;
+  let members = [];
+  let proposals = [];
+  let sortKey = "vote", sortDir = -1;
   const sortMap = {
     name: m => m.name.toLowerCase(),
-    vote: m => m.votePct,
-    uptime: m => m.uptime,
-    discuss: m => m.discussPct,
-    score: m => m.score,
+    vote: m => m.recordedVotes,
   };
 
   const rowsEl = document.getElementById("rows");
@@ -521,24 +475,21 @@
           <span class="rank">${String(i+1).padStart(2,"0")}</span>
           <span class="who">
             <div class="name">${m.name}</div>
-            <div class="loc">${m.loc}</div>
+            <div class="loc">${m.location}</div>
           </span>
-          <span class="num col-vote">${m.vote}/${PROPOSALS}</span>
-          <span class="num col-uptime">${m.uptime.toFixed(1)}%</span>
-          <span class="num col-discuss">${m.discuss}/${THREADS}</span>
-          <span class="total">
-            <span class="score">${m.score}</span>
-            <span class="pill ${statusOf(m.score)}"></span>
-          </span>
+          <span class="num col-vote">${m.recordedVotes}</span>
+          <span class="num col-uptime">Not tracked</span>
+          <span class="num col-discuss">Not tracked</span>
+          <span class="num col-score">Unavailable</span>
         </button>
         <div class="row-detail">
           <div class="row-detail-inner">
             <div class="detail-pad">
-              ${metricLine("Vote participation", "var(--metric-vote)", m.votePct, `${m.vote} of ${PROPOSALS} proposals`)}
-              ${metricLine("Node uptime", "var(--metric-uptime)", m.uptime, `${m.uptime.toFixed(1)}% of assigned blocks`)}
-              ${metricLine("Discussion engagement", "var(--metric-discuss)", m.discussPct, `${m.discuss} of ${THREADS} major threads`)}
-              <p class="detail-note">Sample figures for mockup purposes. A live build would cite each
-              proposal, block range, and GitHub thread this member's numbers came from, right here.</p>
+              ${metricLine("Recorded votes", "var(--metric-vote)", voteLinks(m))}
+              ${metricLine("Node uptime", "var(--metric-uptime)", "Not tracked")}
+              ${metricLine("Discussion", "var(--metric-discuss)", "Not tracked")}
+              <p class="detail-note">Recorded votes are matched by the candidate's stable Neo N3 public key.
+              No historical absence or participation rate is inferred because dated seat eligibility is not yet available.</p>
             </div>
           </div>
         </div>
@@ -556,13 +507,21 @@
     });
   }
 
-  function metricLine(label, color, pct, valText){
+  function metricLine(label, color, valText){
     return `
       <div class="metric-line">
         <span class="metric-label"><span class="swatch" style="background:${color}"></span>${label}</span>
-        <span class="bar-track"><span class="bar-fill" style="width:${Math.max(pct,2)}%;background:${color}"></span></span>
+        <span></span>
         <span class="metric-val">${valText}</span>
       </div>`;
+  }
+
+  function voteLinks(member){
+    if(!member.proposalNumbers.length) return "No recorded votes";
+    return member.proposalNumbers.map(number => {
+      const proposal = proposals.find(item => item.number === number);
+      return `<a href="${proposal.sourceUrl}" target="_blank" rel="noopener">#${number}</a>`;
+    }).join(" · ");
   }
 
   document.querySelectorAll("[data-sort]").forEach(btn=>{
@@ -576,5 +535,28 @@
     });
   });
 
-  render();
+  function showError(error){
+    document.getElementById("data-status").innerHTML = `<span>⚠️</span><div><strong>DATA UNAVAILABLE.</strong> ${error.message}</div>`;
+    rowsEl.innerHTML = '<p class="detail-note" style="padding:16px">The governance snapshot could not be validated, so no member data is shown.</p>';
+  }
+
+  async function init(){
+    const response = await fetch("../data/governance.json", { cache: "no-store" });
+    if(!response.ok) throw new Error(`Snapshot request failed (${response.status}).`);
+    const snapshot = await response.json();
+    if(snapshot.schemaVersion !== 2 || snapshot.councilRoster?.memberCount !== 21 || snapshot.participation?.length !== 21){
+      throw new Error("Snapshot validation failed.");
+    }
+    members = snapshot.participation;
+    proposals = snapshot.proposals;
+    document.getElementById("latest-votes").textContent = `${snapshot.latestProposal.voterCount} / 21`;
+    document.getElementById("latest-label").innerHTML = `Council members recorded as voting on <a href="${snapshot.latestProposal.sourceUrl}" target="_blank" rel="noopener">Proposal #${snapshot.latestProposal.number}</a>`;
+    document.getElementById("majority-record").textContent = `${snapshot.proposalsReachingMajority} / ${snapshot.proposalCount}`;
+    document.getElementById("majority-threshold").textContent = snapshot.majorityThreshold;
+    const fresh = new Date(snapshot.fetchedAt);
+    document.getElementById("data-status").innerHTML = `<span>✓</span><div><strong>VERIFIED SNAPSHOT.</strong> Governance records refreshed <time datetime="${snapshot.fetchedAt}">${fresh.toLocaleString(undefined, {dateStyle:"medium", timeStyle:"short", timeZone:"UTC"})} UTC</time>. Current Council roster observed ${new Date(snapshot.councilRoster.observedAt).toLocaleDateString(undefined, {dateStyle:"medium", timeZone:"UTC"})}.</div>`;
+    render();
+  }
+
+  init().catch(showError);
 </script>

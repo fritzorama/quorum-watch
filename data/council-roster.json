@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-09-03T07:30:00.000Z",
+  "sourceUrl": "https://neo.community/candidates",
+  "members": [
+    { "rank": 1, "name": "NF1", "location": "Global", "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c" },
+    { "rank": 2, "name": "NeoSPCC", "location": "Europe", "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e" },
+    { "rank": 3, "name": "The Neo Order", "location": "Shanghai", "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b" },
+    { "rank": 4, "name": "Red4Sec", "location": "Europe", "publicKey": "036eaee5b856e29a030307630bbaf0a63534c011af1c2c96782d36ebfb37d2ebb0" },
+    { "rank": 5, "name": "NGD8", "location": "Singapore", "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a" },
+    { "rank": 6, "name": "NGD4", "location": "Singapore", "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7" },
+    { "rank": 7, "name": "R3E", "location": "Detroit, USA", "publicKey": "0362087e1f9ae6e7d0c1d05bbd17a724e0d5f92662e766980e47a5194d22c8fa80" },
+    { "rank": 8, "name": "COZ", "location": "United States", "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659" },
+    { "rank": 9, "name": "NGD6", "location": "Hongkong", "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830" },
+    { "rank": 10, "name": "lazynode", "location": "Earth", "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82" },
+    { "rank": 11, "name": "NEXT（NeoLine）", "location": "China", "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971" },
+    { "rank": 12, "name": "AxLabs (neow3j)", "location": "Switzerland", "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0" },
+    { "rank": 13, "name": "Switcheo Labs", "location": "Singapore", "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115" },
+    { "rank": 14, "name": "Everstake", "location": "Ukraine", "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513" },
+    { "rank": 15, "name": "Neo News Today", "location": "USA", "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4" },
+    { "rank": 16, "name": "InfStones", "location": "United States", "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8" },
+    { "rank": 17, "name": "bNEO representative", "location": "Global", "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257" },
+    { "rank": 18, "name": "BinanceStaking1", "location": "Global", "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3" },
+    { "rank": 19, "name": "Flamingo", "location": "Norway", "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad" },
+    { "rank": 20, "name": "MakeNeoGreatAgain", "location": "Global", "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08" },
+    { "rank": 21, "name": "HashKey Cloud", "location": "HongKong", "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378" }
+  ]
+}
