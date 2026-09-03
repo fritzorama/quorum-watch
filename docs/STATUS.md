@@ -12,8 +12,10 @@ Update it at the end of every slice — before committing.
     — from neo.community/candidates.
   - Verified headline stats from the snapshot: 2 of 21 recorded voters on
     Proposal #7, 0 of 7 proposal records reaching the 11-seat majority.
-  - Sortable vote counts, click-to-expand proposal source links, data
-    freshness, light/dark themes, and a checked mobile layout.
+  - Sortable comparative vote-count bars, visible expand controls, per-member
+    proposal source links, data freshness, light/dark themes, and a checked
+    mobile layout. Bars compare recorded counts; they are not participation
+    percentages.
   - Uptime and discussion are clearly `not tracked`; the combined score is
     `unavailable`. No synthetic member-level values remain.
 - The local repository's original Slice 0 commit is `c5e8288`. Slice 1 is on
