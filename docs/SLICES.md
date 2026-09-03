@@ -56,9 +56,9 @@ organizations, so it cannot yet support its central claim.
 4. Reconcile the current 21-seat roster by candidate public key and retain the
    roster observation time.
 5. Connect only recorded governance votes to the frontend, with snapshot
-   freshness, comparative count bars, dropdown details, and per-proposal source
-   links. Uptime and discussion remain `not tracked`; combined score remains
-   `unavailable`.
+   freshness, compact roll-call rows, expanded metric details, and a nested
+   proposal-evidence disclosure with source links. Uptime and discussion remain
+   `not tracked`; combined score remains `unavailable`.
 
 **Takeover finding:** The original scraping assumption was stale. The current
 site exposes a public API, which is both less fragile and more complete than

@@ -217,7 +217,7 @@
   }
   .ledger-head{
     display:grid;
-    grid-template-columns: 32px 1fr 160px 96px 96px 78px;
+    grid-template-columns: 32px 1fr 96px 96px 96px 78px;
     gap: 10px;
     padding: 9px 12px;
     font-family:"IBM Plex Mono", monospace;
@@ -245,7 +245,7 @@
   .row:nth-child(even) .row-main{ background: color-mix(in srgb, var(--paper-2) 55%, transparent); }
   .row-main{
     display:grid;
-    grid-template-columns: 32px 1fr 160px 96px 96px 78px;
+    grid-template-columns: 32px 1fr 96px 96px 96px 78px;
     gap: 10px;
     align-items:center;
     padding: 10px 12px;
@@ -274,30 +274,6 @@
     font-variant-numeric: tabular-nums;
     color: var(--ink-muted);
   }
-  .vote-cell{
-    display:grid;
-    grid-template-columns: 1fr 20px;
-    align-items:center;
-    gap:8px;
-  }
-  .vote-track{
-    height:7px;
-    background:var(--paper-3);
-    border:1px solid var(--line);
-    border-radius:4px;
-    overflow:hidden;
-  }
-  .vote-fill{
-    height:100%;
-    background:var(--metric-vote);
-    border-radius:4px;
-  }
-  .vote-count{
-    font-family:"IBM Plex Mono", monospace;
-    font-size:12.5px;
-    text-align:right;
-    color:var(--ink-muted);
-  }
   .total{
     display:flex;
     align-items:center;
@@ -316,20 +292,6 @@
   .pill.good{ background: var(--good); }
   .pill.warn{ background: var(--warn); }
   .pill.critical{ background: var(--critical); }
-  .caret{
-    width:24px;
-    height:24px;
-    display:grid;
-    place-items:center;
-    border:1px solid var(--line-strong);
-    border-radius:3px;
-    font-size: 12px;
-    color: var(--ink-faint);
-    transition: transform .15s ease;
-    justify-self:center;
-  }
-  .row.open .caret{ transform: rotate(90deg); }
-
   .row-detail{
     display:grid;
     grid-template-rows: 0fr;
@@ -380,20 +342,40 @@
     line-height:1.5;
     max-width:56ch;
   }
-  .proposal-evidence{
-    margin:-3px 0 2px 138px;
-    font-family:"IBM Plex Mono", monospace;
-    font-size:12px;
+  .metric-label.vote-label{ color:var(--ink); }
+  .evidence-toggle{
+    all:unset;
+    width:16px;
+    height:16px;
+    display:grid;
+    place-items:center;
+    border-radius:2px;
     color:var(--ink-muted);
+    cursor:pointer;
+    font-size:10px;
   }
-  .proposal-evidence a{ font-weight:600; }
+  .evidence-toggle:hover{ color:var(--ink); background:var(--paper-3); }
+  .evidence-toggle:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
+  .evidence-toggle .evidence-chevron{ transition:transform .15s ease; }
+  .evidence-toggle[aria-expanded="true"] .evidence-chevron{ transform:rotate(90deg); }
+  .proposal-evidence{
+    margin:-4px 0 2px 138px;
+    padding:0;
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    font-size:12px;
+    line-height:1.4;
+  }
+  .proposal-evidence a{ font-weight:500; text-decoration-thickness:1px; }
+  .proposal-empty{ color:var(--ink-faint); }
 
   @media (max-width: 640px){
     .ledger-head, .row-main{
-      grid-template-columns: 22px 1fr 70px;
+      grid-template-columns: 22px 1fr 60px;
     }
     .col-uptime, .col-discuss, .col-score, .num.uptime, .num.discuss{ display:none; }
-    .vote-cell{ grid-template-columns:1fr 18px; gap:5px; }
     .detail-pad{ padding-left: 30px; }
     .proposal-evidence{ margin-left:0; }
   }
@@ -468,9 +450,9 @@
     <div class="ledger-head">
       <span></span>
       <button data-sort="name">Member <span class="sort-arrow">↕</span></button>
-      <button class="col-num col-vote" data-sort="vote">Recorded votes <span class="sort-arrow">↕</span></button>
+      <button class="col-num col-vote" data-sort="vote">Votes <span class="sort-arrow">↕</span></button>
       <span class="col-num col-uptime">Uptime</span>
-      <span class="col-num col-discuss">Discussion</span>
+      <span class="col-num col-discuss">Threads</span>
       <span class="col-num col-score">Score</span>
     </div>
     <div id="rows"></div>
@@ -497,6 +479,7 @@
 
   const rowsEl = document.getElementById("rows");
   const openState = new Set();
+  const evidenceOpenState = new Set();
 
   function render(){
     const sorted = [...members].sort((a,b)=>{
@@ -508,18 +491,17 @@
 
     rowsEl.innerHTML = sorted.map((m, i)=>{
       const isOpen = openState.has(m.name);
+      const isEvidenceOpen = evidenceOpenState.has(m.publicKey);
+      const evidenceId = `proposal-evidence-${m.publicKey.slice(-10)}`;
       return `
       <div class="row ${isOpen ? "open" : ""}" data-name="${m.name}">
         <button class="row-main" aria-expanded="${isOpen}">
-          <span class="caret" aria-hidden="true">▶</span>
+          <span class="rank">${String(i+1).padStart(2,"0")}</span>
           <span class="who">
             <div class="name">${m.name}</div>
             <div class="loc">${m.location}</div>
           </span>
-          <span class="vote-cell col-vote" title="${m.recordedVotes} recorded vote${m.recordedVotes === 1 ? "" : "s"}; comparative count, not a participation rate">
-            <span class="vote-track"><span class="vote-fill" style="width:${voteBarWidth(m)}%"></span></span>
-            <span class="vote-count">${m.recordedVotes}</span>
-          </span>
+          <span class="num col-vote">${m.recordedVotes}</span>
           <span class="num col-uptime">Not tracked</span>
           <span class="num col-discuss">Not tracked</span>
           <span class="num col-score">Unavailable</span>
@@ -527,10 +509,10 @@
         <div class="row-detail">
           <div class="row-detail-inner">
             <div class="detail-pad">
-              ${metricLine("Recorded votes", "var(--metric-vote)", voteBarWidth(m), `${m.recordedVotes} recorded vote${m.recordedVotes === 1 ? "" : "s"}`)}
-              <p class="proposal-evidence">Proposals: ${voteLinks(m)}</p>
+              ${voteMetricLine(m, isEvidenceOpen, evidenceId)}
+              ${proposalEvidence(m, isEvidenceOpen, evidenceId)}
               ${metricLine("Node uptime", "var(--metric-uptime)", 0, "Not tracked")}
-              ${metricLine("Discussion", "var(--metric-discuss)", 0, "Not tracked")}
+              ${metricLine("Discussion engagement", "var(--metric-discuss)", 0, "Not tracked")}
               <p class="detail-note">Recorded votes are matched by the candidate's stable Neo N3 public key.
               No historical absence or participation rate is inferred because dated seat eligibility is not yet available.</p>
             </div>
@@ -548,6 +530,14 @@
         render();
       });
     });
+    rowsEl.querySelectorAll(".evidence-toggle").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const publicKey = btn.dataset.publicKey;
+        if(evidenceOpenState.has(publicKey)){ evidenceOpenState.delete(publicKey); }
+        else{ evidenceOpenState.add(publicKey); }
+        render();
+      });
+    });
   }
 
   function metricLine(label, color, pct, valText){
@@ -559,12 +549,33 @@
       </div>`;
   }
 
-  function voteLinks(member){
-    if(!member.proposalNumbers.length) return "No recorded votes";
-    return member.proposalNumbers.map(number => {
+  function voteMetricLine(member, isEvidenceOpen, evidenceId){
+    return `
+      <div class="metric-line">
+        <span class="metric-label vote-label">
+          <span class="swatch" style="background:var(--metric-vote)"></span>
+          Vote participation
+          <button class="evidence-toggle" type="button" data-public-key="${member.publicKey}"
+            aria-expanded="${isEvidenceOpen}" aria-controls="${evidenceId}"
+            aria-label="${isEvidenceOpen ? "Hide" : "Show"} recorded proposal evidence for ${member.name}">
+            <span class="evidence-chevron" aria-hidden="true">▶</span>
+          </button>
+        </span>
+        <span class="bar-track" title="Comparative recorded-vote count; not a participation percentage"><span class="bar-fill" style="width:${voteBarWidth(member)}%;background:var(--metric-vote)"></span></span>
+        <span class="metric-val">${member.recordedVotes} recorded vote${member.recordedVotes === 1 ? "" : "s"}</span>
+      </div>`;
+  }
+
+  function proposalEvidence(member, isEvidenceOpen, evidenceId){
+    if(!isEvidenceOpen) return "";
+    if(!member.proposalNumbers.length){
+      return `<p class="proposal-evidence proposal-empty" id="${evidenceId}">No recorded proposal votes.</p>`;
+    }
+    const items = member.proposalNumbers.map(number => {
       const proposal = proposals.find(item => item.number === number);
-      return `<a href="${proposal.sourceUrl}" target="_blank" rel="noopener">#${number}</a>`;
-    }).join(" · ");
+      return `<li><a href="${proposal.sourceUrl}" target="_blank" rel="noopener">Proposal #${number} — ${proposal.title}</a></li>`;
+    }).join("");
+    return `<ul class="proposal-evidence" id="${evidenceId}">${items}</ul>`;
   }
 
   function voteBarWidth(member){
