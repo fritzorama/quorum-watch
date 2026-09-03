@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-09-03 (Cloudflare production established; Slice 1 preview deploying)
+Last updated: 2026-09-03 (Cloudflare production and Slice 1 preview established)
 
 This file is the single source of truth for where the project actually is.
 Update it at the end of every slice — before committing.
@@ -36,17 +36,16 @@ Update it at the end of every slice — before committing.
   participation rates are not inferred. The current roster observation does
   not prove who held every seat at each older proposal date.
 - Cloudflare Pages now hosts the approved `main` branch at
-  `https://quorum-watch.pages.dev`; `https://neoquorumwatch.com` is attached and
-  awaiting completion of Cloudflare's DNS/TLS initialization. Non-`main`
-  branches are reserved for preview deployments.
+  `https://neoquorumwatch.com` (provider fallback:
+  `https://quorum-watch.pages.dev`). Slice 1 is available at the stable branch
+  preview `https://slice-1-governance-data.quorum-watch.pages.dev`.
 
 ## NEXT (the slice we are currently building)
 
 **Preview and approval for Slice 1.** The implementation is complete on
-`slice-1-governance-data`. Cloudflare Pages is selected and configured; push
-this hosting-documentation update to trigger the branch preview, verify its
-URL, let the user test it, then merge only after explicit approval. Do not
-merge this branch as part of implementation.
+`slice-1-governance-data`. Its Cloudflare branch preview is deployed and
+verified. Let the user test it, then merge only after explicit approval. Do
+not merge this branch as part of implementation.
 
 ## LATER (recorded, not started)
 

@@ -78,5 +78,6 @@ links, and mobile horizontal overflow was fixed.
 
 **Release state:** Implementation is ready on `slice-1-governance-data`.
 Cloudflare Pages is configured with `main` as production and branch previews
-enabled. It is not merged; successful preview verification and explicit user
-approval are the remaining release gates.
+enabled. The stable Slice 1 preview was deployed and its nested proposal links
+were checked. It is not merged; explicit user approval is the remaining
+release gate.
