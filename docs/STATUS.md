@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-09-03 (Cloudflare production and Slice 1 preview established)
+Last updated: 2026-09-03 (Slice 1 approved; preparing Slice 2)
 
 This file is the single source of truth for where the project actually is.
 Update it at the end of every slice — before committing.
@@ -42,15 +42,14 @@ Update it at the end of every slice — before committing.
 
 ## NEXT (the slice we are currently building)
 
-**Preview and approval for Slice 1.** The implementation is complete on
-`slice-1-governance-data`. Its Cloudflare branch preview is deployed and
-verified. Let the user test it, then merge only after explicit approval. Do
-not merge this branch as part of implementation.
+**Slice 2 — Node uptime.** Prepare a dedicated `slice-2-node-uptime` branch
+from the approved Slice 1 release and route `dev.neoquorumwatch.com` to its
+Cloudflare branch preview. Before displaying any uptime figure, define a
+reproducible observation window, authoritative RPC/consensus evidence, stable
+seat attribution, missing-data behavior, and fail-closed validation tests.
 
 ## LATER (recorded, not started)
 
-- Node uptime metric (Neo RPC — clean API, lower risk, do this once vote
-  data is trusted)
 - Discussion engagement metric + the org→GitHub-handle mapping table
 - Scheduled/automated refresh (GitHub Actions cron + static redeploy is still
   the leading option)

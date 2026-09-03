@@ -76,8 +76,6 @@ voters; no proposal reaches the 11-seat majority. The rendered page was checked
 in desktop and mobile layouts, row expansion exposed the expected proposal
 links, and mobile horizontal overflow was fixed.
 
-**Release state:** Implementation is ready on `slice-1-governance-data`.
-Cloudflare Pages is configured with `main` as production and branch previews
-enabled. The stable Slice 1 preview was deployed and its nested proposal links
-were checked. It is not merged; explicit user approval is the remaining
-release gate.
+**Release state:** Approved by the user on 2026-09-03 and released to `main`.
+The production site remains tied only to `main`; subsequent development moves
+to a new slice branch and preview channel.
