@@ -105,3 +105,12 @@ Cloudflare Pages is the static host. The `quorum-watch` Pages project deploys
 branches receive preview deployments. This closes the earlier open hosting
 decision. Production remains the approved `main` branch; a preview URL is a
 testing channel, not permission to merge or promote a slice.
+
+### 2026-09-03 — Stable development domain follows the active slice branch
+
+`https://dev.neoquorumwatch.com` is the user-facing test channel. For Slice 2,
+its proxied DNS record targets the stable Cloudflare branch alias
+`slice-2-node-uptime.quorum-watch.pages.dev`. It must not target the production
+Pages hostname, because that would make the development domain serve `main`.
+Changing the development branch requires an explicit DNS retarget; production
+continues to follow only `main` and still requires user approval before merge.

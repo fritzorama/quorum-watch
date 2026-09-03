@@ -50,7 +50,7 @@ history and mockup copy as context, not as authoritative project state. Keep
 - Tests: run `npm test` (or `node --test`).
 - Refresh governance data: run `npm run fetch:governance`.
 
-The Slice 1 branch reads verified governance vote records from the checked-in
+The production site and later slice branches read verified governance vote records from the checked-in
 snapshot. Uptime, discussion, and the combined score remain unavailable. Never
 turn an absent historical vote into a missed vote or rate unless a dated seat
 interval proves that the member was eligible for that proposal.
@@ -60,7 +60,13 @@ interval proves that the member was eligible for that proposal.
 - Cloudflare Pages project: `quorum-watch`
 - Production branch: `main`
 - Production domain: `https://neoquorumwatch.com`
+- Active development domain: `https://dev.neoquorumwatch.com`
+- Active development branch: `slice-2-node-uptime`
 - Cloudflare Pages fallback: `https://quorum-watch.pages.dev`
+- The development domain is a proxied CNAME to the active branch alias
+  (`slice-2-node-uptime.quorum-watch.pages.dev`), not to the production Pages
+  hostname. Update this mapping deliberately when the active long-lived slice
+  branch changes.
 - Non-`main` branches deploy as preview builds for user testing. Do not attach
   a preview branch to the production domain or promote it without explicit user
   approval.

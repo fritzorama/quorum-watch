@@ -39,7 +39,7 @@ fact, once we adopted a disciplined workflow.
 
 ---
 
-## Slice 1 — Real governance vote data (implemented; awaiting user preview)
+## Slice 1 — Real governance vote data (released)
 
 **Problem:** The prototype attaches synthetic activity figures to real named
 organizations, so it cannot yet support its central claim.

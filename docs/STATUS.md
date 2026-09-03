@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-09-03 (Slice 1 approved; preparing Slice 2)
+Last updated: 2026-09-03 (Slice 2 environment ready)
 
 This file is the single source of truth for where the project actually is.
 Update it at the end of every slice — before committing.
@@ -37,16 +37,17 @@ Update it at the end of every slice — before committing.
   not prove who held every seat at each older proposal date.
 - Cloudflare Pages now hosts the approved `main` branch at
   `https://neoquorumwatch.com` (provider fallback:
-  `https://quorum-watch.pages.dev`). Slice 1 is available at the stable branch
-  preview `https://slice-1-governance-data.quorum-watch.pages.dev`.
+  `https://quorum-watch.pages.dev`). Slice 2 development is isolated on
+  `slice-2-node-uptime` and published at `https://dev.neoquorumwatch.com`
+  through its stable Cloudflare branch alias.
 
 ## NEXT (the slice we are currently building)
 
-**Slice 2 — Node uptime.** Prepare a dedicated `slice-2-node-uptime` branch
-from the approved Slice 1 release and route `dev.neoquorumwatch.com` to its
-Cloudflare branch preview. Before displaying any uptime figure, define a
-reproducible observation window, authoritative RPC/consensus evidence, stable
-seat attribution, missing-data behavior, and fail-closed validation tests.
+**Slice 2 — Node uptime.** The dedicated branch and development domain are
+ready. Before displaying any uptime figure, define a reproducible observation
+window, authoritative RPC/consensus evidence, stable seat attribution,
+missing-data behavior, and fail-closed validation tests. Implement the metric
+only after those rules can be tested against captured fixtures.
 
 ## LATER (recorded, not started)
 
