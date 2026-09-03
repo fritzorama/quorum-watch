@@ -1,0 +1,52 @@
+# Quorum Watch project instructions
+
+This repository is **Quorum Watch**, an independent public record of Neo
+Council participation. It is unrelated to Wandering Lords. Do not use files,
+requirements, terminology, or assumptions from Wandering Lords in this repo.
+
+## Source of truth
+
+- GitHub: `https://github.com/fritzorama/quorum-watch`
+- Local checkout: `C:\Users\Usuario\Documents\DevChimp\Neo Quorum Watch`
+- Current state and plan: `docs/STATUS.md`
+- Architecture and product decisions: `docs/DECISIONS.md`
+- Completed and active vertical slices: `docs/SLICES.md`
+
+Read those three documents before beginning substantial work. Treat old chat
+history and mockup copy as context, not as authoritative project state. Keep
+`docs/STATUS.md` accurate whenever a slice materially changes.
+
+## Working method
+
+1. Work in small vertical slices that produce something testable or visibly
+   useful.
+2. Do not rewrite working parts unless the active slice requires it.
+3. Run the relevant tests and inspect the rendered interface before closing a
+   slice.
+4. Commit coherent changes to `main` and push them to `origin`; do not leave
+   GitHub behind the local source of truth.
+5. Record durable decisions and reversals in `docs/DECISIONS.md` instead of
+   silently changing direction.
+
+## Data integrity
+
+- Never present synthetic, incomplete, stale, or unmapped data as a real
+  measurement of a named organization.
+- Fail closed when source totals, voter records, identities, or Council-seat
+  mappings disagree.
+- Preserve source URLs and snapshot timestamps so public claims are auditable.
+- Missing data means `not tracked`, not zero.
+- Reconcile organizations by stable public key and effective date before
+  attributing historical participation across Council-seat changes.
+
+## Current technical baseline
+
+- Frontend: dependency-free HTML/CSS/JavaScript in `web/index.html`.
+- Data fetcher: Node.js 20+ script in `scripts/fetch-governance.mjs`.
+- Snapshot: `data/governance.json`.
+- Tests: run `npm test` (or `node --test`).
+- Refresh governance data: run `npm run fetch:governance`.
+
+The frontend is still a mockup with synthetic member-level scores. The real
+governance snapshot must not be wired into the UI until the current/historical
+Council roster discrepancy recorded in `docs/STATUS.md` is resolved.
