@@ -96,3 +96,12 @@ vote must not be called a missed vote or used in a participation rate until a
 dated seat interval proves eligibility for that proposal. Votes whose public
 key is outside the current roster remain in an explicit audit list. This is why
 Nash.io's four records are preserved but not attributed to any current seat.
+
+### 2026-09-03 — Cloudflare Pages hosting and release channels
+
+Cloudflare Pages is the static host. The `quorum-watch` Pages project deploys
+`main` to `https://neoquorumwatch.com` (with
+`https://quorum-watch.pages.dev` as the provider hostname), while non-`main`
+branches receive preview deployments. This closes the earlier open hosting
+decision. Production remains the approved `main` branch; a preview URL is a
+testing channel, not permission to merge or promote a slice.

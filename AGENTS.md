@@ -54,3 +54,15 @@ The Slice 1 branch reads verified governance vote records from the checked-in
 snapshot. Uptime, discussion, and the combined score remain unavailable. Never
 turn an absent historical vote into a missed vote or rate unless a dated seat
 interval proves that the member was eligible for that proposal.
+
+## Hosting and previews
+
+- Cloudflare Pages project: `quorum-watch`
+- Production branch: `main`
+- Production domain: `https://neoquorumwatch.com`
+- Cloudflare Pages fallback: `https://quorum-watch.pages.dev`
+- Non-`main` branches deploy as preview builds for user testing. Do not attach
+  a preview branch to the production domain or promote it without explicit user
+  approval.
+- The Pages build copies `web/index.html` to the deployment root and includes
+  `data/governance.json`; keep both paths deployable when changing the layout.

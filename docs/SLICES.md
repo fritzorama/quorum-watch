@@ -76,5 +76,7 @@ voters; no proposal reaches the 11-seat majority. The rendered page was checked
 in desktop and mobile layouts, row expansion exposed the expected proposal
 links, and mobile horizontal overflow was fixed.
 
-**Release state:** Implementation is ready on `slice-1-governance-data`. It is
-not merged; branch preview and user approval are the remaining release gates.
+**Release state:** Implementation is ready on `slice-1-governance-data`.
+Cloudflare Pages is configured with `main` as production and branch previews
+enabled. It is not merged; successful preview verification and explicit user
+approval are the remaining release gates.
