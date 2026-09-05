@@ -78,4 +78,5 @@ zero uptime, and do not publish a percentage before the full seven-day window.
   a preview branch to the production domain or promote it without explicit user
   approval.
 - The Pages build copies `web/index.html` to the deployment root and includes
-  `data/governance.json`; keep both paths deployable when changing the layout.
+  every checked-in `data/*.json` snapshot; keep those paths deployable when
+  changing the layout or adding a metric.

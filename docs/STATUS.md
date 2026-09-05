@@ -49,6 +49,9 @@ Update it at the end of every slice — before committing.
 - The development UI identifies the seven observable consensus nodes as
   `Collecting` and the other fourteen seats as `Not observable`. No uptime
   percentage is exposed until the prospective seven-day window is complete.
+- Cloudflare's build now publishes every checked-in JSON snapshot under
+  `/data/`, so the development page can load the uptime observation without
+  changing how the approved production branch is selected.
 
 ## NEXT (the slice we are currently building)
 
