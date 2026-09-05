@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "fetchedAt": "2026-09-05T19:53:07.536Z",
+  "status": "collecting",
+  "metric": {
+    "label": "Consensus primary-duty success",
+    "limitation": "This is on-chain evidence of scheduled speaker duties for the seven consensus nodes, not direct host or RPC availability for all 21 Council members.",
+    "nonValidatorPolicy": "not-observable"
+  },
+  "sources": {
+    "rpcUrls": [
+      "https://mainnet2.neo.coz.io:443",
+      "https://rpc1.n3.nspcc.ru:10331",
+      "https://n3seed1.ngd.network:10332"
+    ],
+    "corroborationRule": "Three independent RPC responses must agree on validator ordering and the selected boundary block hash; their reported heights may differ by at most three blocks.",
+    "validatorMethod": "getnextblockvalidators",
+    "blockMethod": "getblock(height, 1)",
+    "methodology": "https://developers.neo.org/docs/n3/foundation/consensus/consensus_algorithm",
+    "blockSchema": "https://developers.neo.org/docs/n3/foundation/Blocks"
+  },
+  "window": {
+    "targetMilliseconds": 604800000,
+    "startedAt": "2026-09-05T19:52:55.622Z",
+    "startHeight": 12980715,
+    "endedAt": "2026-09-05T19:52:55.622Z",
+    "endHeight": 12980715,
+    "elapsedMilliseconds": 0,
+    "blockCount": 1,
+    "complete": false
+  },
+  "validators": [
+    {
+      "index": 0,
+      "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+      "name": "The Neo Order",
+      "rank": 3,
+      "assignedPrimaryDuties": 0,
+      "completedPrimaryDuties": 0,
+      "missedPrimaryDuties": 0,
+      "dutySuccessPercent": null
+    },
+    {
+      "index": 1,
+      "publicKey": "0362087e1f9ae6e7d0c1d05bbd17a724e0d5f92662e766980e47a5194d22c8fa80",
+      "name": "R3E",
+      "rank": 7,
+      "assignedPrimaryDuties": 0,
+      "completedPrimaryDuties": 0,
+      "missedPrimaryDuties": 0,
+      "dutySuccessPercent": null
+    },
+    {
+      "index": 2,
+      "publicKey": "036eaee5b856e29a030307630bbaf0a63534c011af1c2c96782d36ebfb37d2ebb0",
+      "name": "Red4Sec",
+      "rank": 4,
+      "assignedPrimaryDuties": 0,
+      "completedPrimaryDuties": 0,
+      "missedPrimaryDuties": 0,
+      "dutySuccessPercent": null
+    },
+    {
+      "index": 3,
+      "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+      "name": "NGD4",
+      "rank": 6,
+      "assignedPrimaryDuties": 0,
+      "completedPrimaryDuties": 0,
+      "missedPrimaryDuties": 0,
+      "dutySuccessPercent": null
+    },
+    {
+      "index": 4,
+      "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+      "name": "NGD8",
+      "rank": 5,
+      "assignedPrimaryDuties": 0,
+      "completedPrimaryDuties": 0,
+      "missedPrimaryDuties": 0,
+      "dutySuccessPercent": null
+    },
+    {
+      "index": 5,
+      "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+      "name": "NF1",
+      "rank": 1,
+      "assignedPrimaryDuties": 0,
+      "completedPrimaryDuties": 0,
+      "missedPrimaryDuties": 0,
+      "dutySuccessPercent": null
+    },
+    {
+      "index": 6,
+      "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e",
+      "name": "NeoSPCC",
+      "rank": 2,
+      "assignedPrimaryDuties": 1,
+      "completedPrimaryDuties": 1,
+      "missedPrimaryDuties": 0,
+      "dutySuccessPercent": null
+    }
+  ],
+  "consensusAddress": "NXZSaAQyqS8aF9t9MPJSUffiK15f1eiwWc",
+  "missedDutyEvidence": [],
+  "boundaryEvidence": {
+    "first": {
+      "height": 12980715,
+      "hash": "0x42a8b6ad2e2526f39c6afc9ba75f62e6d5c047012eff6345f1eee48533566951"
+    },
+    "last": {
+      "height": 12980715,
+      "hash": "0x42a8b6ad2e2526f39c6afc9ba75f62e6d5c047012eff6345f1eee48533566951"
+    }
+  }
+}

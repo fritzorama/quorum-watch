@@ -49,11 +49,18 @@ history and mockup copy as context, not as authoritative project state. Keep
 - Snapshot: `data/governance.json`.
 - Tests: run `npm test` (or `node --test`).
 - Refresh governance data: run `npm run fetch:governance`.
+- Extend the consensus-duty observation: run `npm run fetch:uptime`.
 
 The production site and later slice branches read verified governance vote records from the checked-in
-snapshot. Uptime, discussion, and the combined score remain unavailable. Never
+snapshot. A Slice 2 branch may show uptime collection status, but production
+uptime, discussion, and the combined score remain unavailable. Never
 turn an absent historical vote into a missed vote or rate unless a dated seat
 interval proves that the member was eligible for that proposal.
+
+Slice 2's uptime label means consensus primary-duty success, derived from block
+height and the block header's actual primary index. It applies only to the seven
+current consensus nodes. Do not imply that the other fourteen Council nodes have
+zero uptime, and do not publish a percentage before the full seven-day window.
 
 ## Hosting and previews
 

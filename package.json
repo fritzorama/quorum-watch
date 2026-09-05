@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "fetch:governance": "node scripts/fetch-governance.mjs",
+    "fetch:uptime": "node scripts/fetch-uptime.mjs",
     "test": "node --test"
   },
   "engines": {

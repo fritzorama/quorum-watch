@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-09-03 (Slice 2 environment ready)
+Last updated: 2026-09-05 (Slice 2 observation started)
 
 This file is the single source of truth for where the project actually is.
 Update it at the end of every slice — before committing.
@@ -40,14 +40,23 @@ Update it at the end of every slice — before committing.
   `https://quorum-watch.pages.dev`). Slice 2 development is isolated on
   `slice-2-node-uptime` and published at `https://dev.neoquorumwatch.com`
   through its stable Cloudflare branch alias.
+- Slice 2 has a dependency-free Neo RPC collector and a checked-in observation
+  beginning at block 12,980,715 on 2026-09-05 19:52:55 UTC. It measures
+  scheduled primary-duty completion for the seven consensus nodes only. Three
+  independent RPC sources corroborate the validator order and boundary block;
+  stale or divergent sources, validator changes, consensus-contract changes,
+  gaps, and invalid totals fail closed.
+- The development UI identifies the seven observable consensus nodes as
+  `Collecting` and the other fourteen seats as `Not observable`. No uptime
+  percentage is exposed until the prospective seven-day window is complete.
 
 ## NEXT (the slice we are currently building)
 
-**Slice 2 — Node uptime.** The dedicated branch and development domain are
-ready. Before displaying any uptime figure, define a reproducible observation
-window, authoritative RPC/consensus evidence, stable seat attribution,
-missing-data behavior, and fail-closed validation tests. Implement the metric
-only after those rules can be tested against captured fixtures.
+**Slice 2 — Node uptime.** Continue the prospective observation through at
+least 2026-09-12 19:52:55 UTC, then refresh the snapshot, inspect all missed-duty
+evidence, and publish percentages only if the full window validates. Until
+then, keep the UI in its explicit collecting/not-observable state and refine
+the methodology copy in the branch preview.
 
 ## LATER (recorded, not started)
 

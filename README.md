@@ -11,10 +11,10 @@ proposal records has reached a Council majority; the latest drew 2 of 21).
 
 ## Status
 
-Slice 1 is implemented on a preview branch and awaits user testing before it
-can be merged to `main`. See [`docs/STATUS.md`](docs/STATUS.md) for what's real,
-what's next, and what's deliberately deferred — that file is the source of
-truth, not this README or old chat history.
+Slice 1 is live on `main`. Slice 2 is collecting a seven-day consensus-duty
+observation on its preview branch. See [`docs/STATUS.md`](docs/STATUS.md) for
+what's real, what's next, and what's deliberately deferred — that file is the
+source of truth, not this README or old chat history.
 
 ## Repository map
 
@@ -32,6 +32,7 @@ Requires Node.js 20 or newer. No third-party packages are needed yet.
 ```sh
 npm test
 npm run fetch:governance
+npm run fetch:uptime
 ```
 
 The fetch command writes a validated, traceable snapshot to
@@ -46,7 +47,7 @@ a slice is previewed and tested by the user before merge.
 | Metric | Source | Access |
 |---|---|---|
 | Governance vote participation | neo.community public governance API | JSON; proposal details + organization directory |
-| Node uptime | any public Neo N3 RPC endpoint | clean JSON-RPC |
+| Node uptime | three corroborating public Neo N3 RPC endpoints | Block primary-duty evidence; consensus nodes only |
 | Discussion engagement | github.com/neo-project/neo (Discussion-labeled issues) | GitHub API, + a small hand-maintained org→handle map |
 
 ## Not affiliated

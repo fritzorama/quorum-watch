@@ -396,7 +396,7 @@
   <div class="masthead">
     <div class="masthead-top">
       <h1>Quorum Watch</h1>
-      <span class="tag">Slice 1 preview · verified vote records</span>
+      <span class="tag">Slice 2 preview · consensus observation</span>
     </div>
     <p class="lede">
       A public attendance record for Neo's 21 elected Council members — how often they vote
@@ -409,6 +409,13 @@
     <span>🗳️</span>
     <div>
       <strong>LOADING VERIFIED DATA.</strong> Reading the checked-in governance snapshot.
+    </div>
+  </div>
+
+  <div class="demo-banner" id="uptime-status">
+    <span>⏱️</span>
+    <div>
+      <strong>LOADING CONSENSUS OBSERVATION.</strong> Checking the seven-day on-chain duty window.
     </div>
   </div>
 
@@ -431,13 +438,14 @@
     <h2>Metric availability</h2>
     <div class="formula-row">
       <span class="formula-term"><span class="swatch" style="background:var(--metric-vote)"></span>Governance votes · verified records</span>
-      <span class="formula-term"><span class="swatch" style="background:var(--metric-uptime)"></span>Node uptime · not tracked</span>
+      <span class="formula-term"><span class="swatch" style="background:var(--metric-uptime)"></span>Node uptime · seven-day observation</span>
       <span class="formula-term"><span class="swatch" style="background:var(--metric-discuss)"></span>Discussion · not tracked</span>
       <span class="formula-term" style="font-weight:600;">Combined score · unavailable</span>
     </div>
     <p class="formula-note">
       Only positive vote records are shown in this slice. We do not calculate historical
       participation rates or missed votes until dated Council-seat eligibility can be proven.
+      Uptime evidence is limited to scheduled primary duties for the seven consensus nodes.
     </p>
   </div>
 
@@ -461,8 +469,9 @@
   <footer>
     Current roster and locations are verified against the public Neo Council candidate list at
     <a href="https://neo.community/candidates" target="_blank" rel="noopener">neo.community/candidates</a>.
-    Governance records come from the public neo.community governance API. Uptime, discussion,
-    and combined scores are not tracked. Independent preview — not an official Neo Foundation,
+    Governance records come from the public neo.community governance API. Consensus-duty evidence
+    comes from three corroborating Neo N3 RPC nodes. Discussion and combined scores are not tracked.
+    Independent preview — not an official Neo Foundation,
     NGD, or Council product.
   </footer>
 
@@ -471,6 +480,7 @@
 <script>
   let members = [];
   let proposals = [];
+  let uptimeSnapshot = null;
   let sortKey = "vote", sortDir = -1;
   const sortMap = {
     name: m => m.name.toLowerCase(),
@@ -502,7 +512,7 @@
             <div class="loc">${m.location}</div>
           </span>
           <span class="num col-vote">${m.recordedVotes}</span>
-          <span class="num col-uptime">Not tracked</span>
+          <span class="num col-uptime">${uptimeValue(m)}</span>
           <span class="num col-discuss">Not tracked</span>
           <span class="num col-score">Unavailable</span>
         </button>
@@ -511,7 +521,7 @@
             <div class="detail-pad">
               ${voteMetricLine(m, isEvidenceOpen, evidenceId)}
               ${proposalEvidence(m, isEvidenceOpen, evidenceId)}
-              ${metricLine("Node uptime", "var(--metric-uptime)", 0, "Not tracked")}
+              ${uptimeMetricLine(m)}
               ${metricLine("Discussion engagement", "var(--metric-discuss)", 0, "Not tracked")}
               <p class="detail-note">Recorded votes are matched by the candidate's stable Neo N3 public key.
               No historical absence or participation rate is inferred because dated seat eligibility is not yet available.</p>
@@ -547,6 +557,22 @@
         <span class="bar-track"><span class="bar-fill" style="width:${pct}%;background:${color}"></span></span>
         <span class="metric-val">${valText}</span>
       </div>`;
+  }
+
+  function uptimeValue(member){
+    if(!member.uptime) return "Not observable";
+    if(uptimeSnapshot?.status !== "complete") return "Collecting";
+    return `${member.uptime.dutySuccessPercent}%`;
+  }
+
+  function uptimeMetricLine(member){
+    if(!member.uptime){
+      return metricLine("Node uptime", "var(--metric-uptime)", 0, "Not observable · not a consensus node");
+    }
+    if(uptimeSnapshot?.status !== "complete"){
+      return metricLine("Node uptime", "var(--metric-uptime)", 0, `${member.uptime.completedPrimaryDuties}/${member.uptime.assignedPrimaryDuties} duties recorded · collecting`);
+    }
+    return metricLine("Node uptime", "var(--metric-uptime)", member.uptime.dutySuccessPercent, `${member.uptime.dutySuccessPercent}% primary-duty success`);
   }
 
   function voteMetricLine(member, isEvidenceOpen, evidenceId){
@@ -606,7 +632,20 @@
     if(snapshot.schemaVersion !== 2 || snapshot.councilRoster?.memberCount !== 21 || snapshot.participation?.length !== 21){
       throw new Error("Snapshot validation failed.");
     }
-    members = snapshot.participation;
+    let uptimeError = null;
+    try {
+      const uptimeResponse = await fetch("../data/uptime.json", { cache: "no-store" });
+      if(!uptimeResponse.ok) throw new Error(`Uptime snapshot request failed (${uptimeResponse.status}).`);
+      uptimeSnapshot = await uptimeResponse.json();
+      if(uptimeSnapshot.schemaVersion !== 1 || !["collecting", "complete"].includes(uptimeSnapshot.status) || uptimeSnapshot.validators?.length !== 7){
+        throw new Error("Uptime snapshot validation failed.");
+      }
+    } catch(error) {
+      uptimeSnapshot = null;
+      uptimeError = error;
+    }
+    const uptimeByKey = new Map((uptimeSnapshot?.validators ?? []).map(record => [record.publicKey, record]));
+    members = snapshot.participation.map(member => ({ ...member, uptime: uptimeByKey.get(member.publicKey) ?? null }));
     proposals = snapshot.proposals;
     document.getElementById("latest-votes").textContent = `${snapshot.latestProposal.voterCount} / 21`;
     document.getElementById("latest-label").innerHTML = `Council members recorded as voting on <a href="${snapshot.latestProposal.sourceUrl}" target="_blank" rel="noopener">Proposal #${snapshot.latestProposal.number}</a>`;
@@ -614,6 +653,14 @@
     document.getElementById("majority-threshold").textContent = snapshot.majorityThreshold;
     const fresh = new Date(snapshot.fetchedAt);
     document.getElementById("data-status").innerHTML = `<span>✓</span><div><strong>VERIFIED SNAPSHOT.</strong> Governance records refreshed <time datetime="${snapshot.fetchedAt}">${fresh.toLocaleString(undefined, {dateStyle:"medium", timeStyle:"short", timeZone:"UTC"})} UTC</time>. Current Council roster observed ${new Date(snapshot.councilRoster.observedAt).toLocaleDateString(undefined, {dateStyle:"medium", timeZone:"UTC"})}.</div>`;
+    if(uptimeError){
+      document.getElementById("uptime-status").innerHTML = `<span>⚠️</span><div><strong>UPTIME UNAVAILABLE.</strong> ${uptimeError.message}</div>`;
+    } else if(uptimeSnapshot.status === "collecting"){
+      const elapsedDays = Math.floor(uptimeSnapshot.window.elapsedMilliseconds / 86400000);
+      document.getElementById("uptime-status").innerHTML = `<span>⏱️</span><div><strong>CONSENSUS OBSERVATION COLLECTING.</strong> Day ${elapsedDays} of 7 · blocks ${uptimeSnapshot.window.startHeight.toLocaleString()}–${uptimeSnapshot.window.endHeight.toLocaleString()}. No percentage is published before the full window closes.</div>`;
+    } else {
+      document.getElementById("uptime-status").innerHTML = `<span>✓</span><div><strong>CONSENSUS OBSERVATION VERIFIED.</strong> Seven-day primary-duty window complete · blocks ${uptimeSnapshot.window.startHeight.toLocaleString()}–${uptimeSnapshot.window.endHeight.toLocaleString()}.</div>`;
+    }
     render();
   }
 

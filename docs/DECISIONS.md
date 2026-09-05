@@ -114,3 +114,21 @@ its proxied DNS record targets the stable Cloudflare branch alias
 Pages hostname, because that would make the development domain serve `main`.
 Changing the development branch requires an explicit DNS retarget; production
 continues to follow only `main` and still requires user approval before merge.
+
+### 2026-09-05 — “Node uptime” is consensus primary-duty success
+
+The observable metric is the percentage of scheduled primary/speaker duties
+completed by each of the seven current consensus nodes during a prospective
+seven-day window. Neo's dBFT rule schedules the view-zero speaker as block
+height modulo the ordered validator count; each block header records the actual
+primary index. A different actual primary is preserved as missed-duty evidence.
+This does not prove continuous host or RPC availability, so the UI describes
+the limitation and the other fourteen Council seats read `Not observable`, not
+zero. No percentage is published before a complete window.
+
+The collector corroborates validator ordering and a boundary block across
+three public Neo N3 RPC nodes, rejects chain tips older than five minutes or
+more than three blocks apart, and requires the block range to be consecutive.
+The validator keys must map to the current Council roster and both their order
+and the block header's next-consensus address must remain unchanged throughout
+the window. Any disagreement fails without replacing the previous snapshot.
