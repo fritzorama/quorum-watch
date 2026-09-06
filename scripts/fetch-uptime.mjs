@@ -135,9 +135,11 @@ export function buildUptimeSnapshot({ existing = null, rawValidators, rawBlocks,
     fetchedAt: observedAt,
     status: complete ? "complete" : "collecting",
     metric: {
-      label: "Consensus primary-duty success",
+      category: "consensus-performance",
+      label: "Primary duty success",
       limitation: "This is on-chain evidence of scheduled speaker duties for the seven consensus nodes, not direct host or RPC availability for all 21 Council members.",
-      nonValidatorPolicy: "not-observable",
+      nonValidatorPolicy: "not-applicable",
+      councilNodeHealthPolicy: "not-tracked-without-an-independently-attributed-public-endpoint",
     },
     sources: {
       rpcUrls,

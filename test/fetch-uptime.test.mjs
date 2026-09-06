@@ -19,6 +19,10 @@ const block = (index, primary = index % 7, time = Date.UTC(2026, 8, 5) + index *
 test("starts a fail-closed seven-day observation without publishing a percentage", () => {
   const snapshot = buildUptimeSnapshot({ roster, rawValidators, rawBlocks: [block(100)], observedAt: "2026-09-05T00:00:00.000Z" });
   assert.equal(snapshot.status, "collecting");
+  assert.equal(snapshot.metric.category, "consensus-performance");
+  assert.equal(snapshot.metric.label, "Primary duty success");
+  assert.equal(snapshot.metric.nonValidatorPolicy, "not-applicable");
+  assert.match(snapshot.metric.councilNodeHealthPolicy, /not-tracked/);
   assert.equal(snapshot.window.complete, false);
   assert.equal(snapshot.validators[2].assignedPrimaryDuties, 1);
   assert.equal(snapshot.validators[2].completedPrimaryDuties, 1);

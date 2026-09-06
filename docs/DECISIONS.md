@@ -132,3 +132,16 @@ more than three blocks apart, and requires the block range to be consecutive.
 The validator keys must map to the current Council roster and both their order
 and the block header's next-consensus address must remain unchanged throughout
 the window. Any disagreement fails without replacing the previous snapshot.
+
+### 2026-09-06 — Separate Council node health from Consensus performance
+
+This supersedes the 2026-09-05 naming decision, but preserves its collected
+evidence and validation rules. Council node health applies conceptually to all
+21 Council members and may only be measured when a public endpoint is
+independently attributable to its operator; otherwise it reads `Not tracked`.
+Consensus performance applies only to the validator set dynamically returned by
+Neo N3 RPC and reads `N/A` for other Council members. The current seven-day
+on-chain observation measures only `Primary duty success`, not host uptime or
+complete Prepare/Commit participation, so it is presented as that narrow
+submetric. Consensus membership and future endpoint attribution must be
+effective-dated to prevent role changes from rewriting historical evidence.

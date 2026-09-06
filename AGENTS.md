@@ -57,10 +57,13 @@ uptime, discussion, and the combined score remain unavailable. Never
 turn an absent historical vote into a missed vote or rate unless a dated seat
 interval proves that the member was eligible for that proposal.
 
-Slice 2's uptime label means consensus primary-duty success, derived from block
-height and the block header's actual primary index. It applies only to the seven
-current consensus nodes. Do not imply that the other fourteen Council nodes have
-zero uptime, and do not publish a percentage before the full seven-day window.
+Council node health and Consensus performance are separate metrics. Council
+node health remains `not tracked` unless a public endpoint can be independently
+attributed to its operator. Slice 2's existing chain observation is the narrower
+Consensus `Primary duty success` measurement, derived from block height and the
+block header's actual primary index. It applies only to the seven dynamically
+identified current Consensus nodes. For other Council members it is `N/A`, not
+zero. Do not publish a percentage before the full seven-day window.
 
 ## Hosting and previews
 

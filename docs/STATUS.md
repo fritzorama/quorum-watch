@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-09-05 (Slice 2 observation started)
+Last updated: 2026-09-06 (Slice 2 metric model corrected)
 
 This file is the single source of truth for where the project actually is.
 Update it at the end of every slice — before committing.
@@ -46,24 +46,31 @@ Update it at the end of every slice — before committing.
   independent RPC sources corroborate the validator order and boundary block;
   stale or divergent sources, validator changes, consensus-contract changes,
   gaps, and invalid totals fail closed.
-- The development UI identifies the seven observable consensus nodes as
-  `Collecting` and the other fourteen seats as `Not observable`. No uptime
-  percentage is exposed until the prospective seven-day window is complete.
+- The development UI derives the seven current Consensus members from the RPC
+  validator set and marks them with a compact badge. Council node health is
+  separate and remains `Not tracked` for all 21 until public endpoints can be
+  independently attributed. The existing chain observation appears only as
+  `Primary duty success`: `Collecting` for Consensus members and `N/A` for the
+  other fourteen. No percentage is exposed until the prospective seven-day
+  window is complete.
 - Cloudflare's build now publishes every checked-in JSON snapshot under
   `/data/`, so the development page can load the uptime observation without
   changing how the approved production branch is selected.
 
 ## NEXT (the slice we are currently building)
 
-**Slice 2 — Node uptime.** Continue the prospective observation through at
-least 2026-09-12 19:52:55 UTC, then refresh the snapshot, inspect all missed-duty
-evidence, and publish percentages only if the full window validates. Until
-then, keep the UI in its explicit collecting/not-observable state and refine
-the methodology copy in the branch preview.
+**Slice 2 — Node health and Consensus performance.** Continue the prospective
+primary-duty observation through at least 2026-09-12 19:52:55 UTC, then refresh
+the snapshot and inspect all missed-duty evidence. Publish that narrow
+percentage only if the full window validates. Separately define a sourced,
+effective-dated registry of independently attributable Council endpoints before
+collecting or scoring node health; an unidentified endpoint remains `Not tracked`.
 
 ## LATER (recorded, not started)
 
 - Discussion engagement metric + the org→GitHub-handle mapping table
+- Broader Consensus participation (Prepare/Commit and view-change evidence),
+  which may require a continuously running consensus-message listener
 - Scheduled/automated refresh (GitHub Actions cron + static redeploy is still
   the leading option)
 - Historical trend view (score over time, not just current snapshot)
