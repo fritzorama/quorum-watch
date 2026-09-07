@@ -41,21 +41,38 @@ history and mockup copy as context, not as authoritative project state. Keep
 - Missing data means `not tracked`, not zero.
 - Reconcile organizations by stable public key and effective date before
   attributing historical participation across Council-seat changes.
+- Historical Council-seat state (e.g. committee membership at a past block) must be corroborated
+  byte-for-byte across at least two independently operated full-state RPC sources before it is
+  trusted; a single source, or two sources that disagree, fails the run closed.
 
 ## Current technical baseline
 
 - Frontend: dependency-free HTML/CSS/JavaScript in `web/index.html`.
 - Data fetcher: Node.js 20+ script in `scripts/fetch-governance.mjs`.
 - Snapshot: `data/governance.json`.
+- Historical Council eligibility fetcher: `scripts/fetch-council-history.mjs`.
+- Historical eligibility snapshot: `data/council-history.json`.
 - Tests: run `npm test` (or `node --test`).
 - Refresh governance data: run `npm run fetch:governance`.
 - Extend the consensus-duty observation: run `npm run fetch:uptime`.
+- Refresh historical Council eligibility: run `npm run fetch:council-history`.
 
 The production site and later slice branches read verified governance vote records from the checked-in
 snapshot. A Slice 2 branch may show uptime collection status, but production
-uptime, discussion, and the combined score remain unavailable. Never
-turn an absent historical vote into a missed vote or rate unless a dated seat
-interval proves that the member was eligible for that proposal.
+uptime, discussion, and the combined score remain unavailable.
+
+**Historical Council eligibility (dated seat interval rule, implemented).** A member is eligible
+for a proposal only if their candidate public key was present in the Council committee (top 21) at
+the last block at or before that proposal's UTC creation time. This is reconstructed via
+`scripts/fetch-council-history.mjs`, which reads the NeoToken native contract's cached committee
+storage (key `0x0E`) at a past state root through the StateService RPC methods (`getstateroot`,
+`getstate`), corroborated byte-for-byte across two independent full-state (`FullState: true`)
+archival nodes — `https://mainnet2.neo.coz.io:443` and `https://n3seed1.ngd.network:10332`. See
+`docs/COUNCIL-HISTORY-RECONSTRUCTION.md` for the investigation this method is based on. A recorded
+vote from a public key absent from that proposal's verified committee is a data conflict, not a
+silent miscount: the collector fails closed and preserves the conflicting evidence rather than
+publishing it. Never turn an absent historical vote into a missed vote or rate for a proposal this
+collector has not verified eligibility for.
 
 Council node health and Consensus performance are separate metrics. Council
 node health remains `not tracked` unless a public endpoint can be independently

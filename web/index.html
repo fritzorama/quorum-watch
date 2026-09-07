@@ -299,6 +299,10 @@
   .pill.good{ background: var(--good); }
   .pill.warn{ background: var(--warn); }
   .pill.critical{ background: var(--critical); }
+  .bar-fill.band-green{ background: var(--good); }
+  .bar-fill.band-yellow{ background: var(--warn); }
+  .bar-fill.band-red{ background: var(--critical); }
+  .bar-fill.band-empty, .bar-fill.band-not-eligible{ background: var(--ink-faint); }
   .row-detail{
     display:grid;
     grid-template-rows: 0fr;
@@ -314,7 +318,7 @@
   }
   .metric-line{
     display:grid;
-    grid-template-columns: 128px 1fr 128px;
+    grid-template-columns: 128px 1fr minmax(96px, max-content);
     align-items:center;
     gap: 10px;
   }
@@ -342,6 +346,8 @@
     text-align:right;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
+    overflow-wrap: anywhere;
+    min-width:0;
   }
   .detail-note{
     font-size:11.5px;
@@ -375,16 +381,25 @@
     font-size:12px;
     line-height:1.4;
   }
-  .proposal-evidence a{ font-weight:500; text-decoration-thickness:1px; }
+  .proposal-evidence a{ font-weight:500; text-decoration-thickness:1px; overflow-wrap:anywhere; }
   .proposal-empty{ color:var(--ink-faint); }
 
-  @media (max-width: 640px){
+  @media (max-width: 760px){
     .ledger-head, .row-main{
       grid-template-columns: 22px 1fr 60px;
     }
     .col-uptime, .col-discuss, .col-score, .num.uptime, .num.discuss{ display:none; }
     .detail-pad{ padding-left: 30px; }
     .proposal-evidence{ margin-left:0; }
+    .metric-line{
+      grid-template-columns: 1fr;
+      row-gap: 4px;
+    }
+    .metric-val{
+      text-align:left;
+      white-space: normal;
+    }
+    .formula-term{ white-space: normal; }
   }
 
   footer{
@@ -443,14 +458,15 @@
   <div class="formula">
     <h2>Metric availability</h2>
     <div class="formula-row">
-      <span class="formula-term"><span class="swatch" style="background:var(--metric-vote)"></span>Governance votes · verified records</span>
+      <span class="formula-term"><span class="swatch" style="background:var(--metric-vote)"></span>Governance votes · verified eligible-participation %</span>
       <span class="formula-term"><span class="swatch" style="background:var(--metric-uptime)"></span>Node health · not tracked</span>
       <span class="formula-term"><span class="swatch" style="background:var(--metric-discuss)"></span>Discussion · not tracked</span>
       <span class="formula-term" style="font-weight:600;">Combined score · unavailable</span>
     </div>
     <p class="formula-note">
-      Only positive vote records are shown in this slice. We do not calculate historical
-      participation rates or missed votes until dated Council-seat eligibility can be proven.
+      Vote participation is the share of proposals a member voted on, among only the proposals
+      opened while that member's Council seat is independently verified on-chain — not a raw vote
+      count. A seat not yet proven for any proposal reads as not eligible, never as a missed vote.
       Public Council endpoints have not yet been independently attributed, so node health is not tracked.
       A separate primary-duty observation is collecting for the dynamically identified Consensus nodes.
     </p>
@@ -531,8 +547,10 @@
               ${metricLine("Council node health", "var(--metric-uptime)", 0, "Not tracked")}
               ${consensusMetricLine(m)}
               ${metricLine("Discussion engagement", "var(--metric-discuss)", 0, "Not tracked")}
-              <p class="detail-note">Recorded votes are matched by the candidate's stable Neo N3 public key.
-              No historical absence or participation rate is inferred because dated seat eligibility is not yet available.</p>
+              <p class="detail-note">Recorded votes are matched only by the candidate's stable Neo N3 public key.
+              Eligible-proposal counts reflect the Council committee independently verified on-chain at each
+              proposal's opening block — a member is only counted against a proposal opened while their seat
+              is proven to have existed.</p>
             </div>
           </div>
         </div>
@@ -578,19 +596,37 @@
   }
 
   function voteMetricLine(member, isEvidenceOpen, evidenceId){
+    const el = member.eligibility;
+    const toggle = `
+      <button class="evidence-toggle" type="button" data-public-key="${member.publicKey}"
+        aria-expanded="${isEvidenceOpen}" aria-controls="${evidenceId}"
+        aria-label="${isEvidenceOpen ? "Hide" : "Show"} recorded proposal evidence for ${member.name}">
+        <span class="evidence-chevron" aria-hidden="true">▶</span>
+      </button>`;
+    const label = `<span class="metric-label vote-label"><span class="swatch" style="background:var(--metric-vote)"></span>Vote participation${toggle}</span>`;
+    if(!el){
+      return `
+      <div class="metric-line">
+        ${label}
+        <span class="bar-track" title="Eligible-proposal history could not be verified"><span class="bar-fill band-not-eligible" style="width:0%"></span></span>
+        <span class="metric-val">Eligibility data unavailable</span>
+      </div>`;
+    }
+    if(el.eligibleProposalCount === 0){
+      return `
+      <div class="metric-line">
+        ${label}
+        <span class="bar-track" title="Not yet a Council committee member for any recorded proposal"><span class="bar-fill band-not-eligible" style="width:0%"></span></span>
+        <span class="metric-val">Not eligible for any recorded proposal</span>
+      </div>`;
+    }
     return `
       <div class="metric-line">
-        <span class="metric-label vote-label">
-          <span class="swatch" style="background:var(--metric-vote)"></span>
-          Vote participation
-          <button class="evidence-toggle" type="button" data-public-key="${member.publicKey}"
-            aria-expanded="${isEvidenceOpen}" aria-controls="${evidenceId}"
-            aria-label="${isEvidenceOpen ? "Hide" : "Show"} recorded proposal evidence for ${member.name}">
-            <span class="evidence-chevron" aria-hidden="true">▶</span>
-          </button>
+        ${label}
+        <span class="bar-track" title="Share of proposals recorded as voted on, among proposals where this member's Council seat is verified on-chain">
+          <span class="bar-fill band-${el.participationBand}" style="width:${el.participationPercent}%"></span>
         </span>
-        <span class="bar-track" title="Comparative recorded-vote count; not a participation percentage"><span class="bar-fill" style="width:${voteBarWidth(member)}%;background:var(--metric-vote)"></span></span>
-        <span class="metric-val">${member.recordedVotes} recorded vote${member.recordedVotes === 1 ? "" : "s"}</span>
+        <span class="metric-val">${el.recordedEligibleVoteCount}/${el.eligibleProposalCount} eligible proposals · ${el.participationPercent}%</span>
       </div>`;
   }
 
@@ -606,11 +642,6 @@
     return `<ul class="proposal-evidence" id="${evidenceId}">${items}</ul>`;
   }
 
-  function voteBarWidth(member){
-    const highestRecordedCount = Math.max(1, ...members.map(item => item.recordedVotes));
-    return member.recordedVotes / highestRecordedCount * 100;
-  }
-
   document.querySelectorAll("[data-sort]").forEach(btn=>{
     btn.addEventListener("click", ()=>{
       const key = btn.dataset.sort;
@@ -621,6 +652,43 @@
       render();
     });
   });
+
+  // Kept byte-for-byte in sync with scripts/validate-council-history-match.mjs, which is the
+  // unit-tested home of this exact algorithm (node:test) — see that file's header comment for why
+  // this dependency-free single-file frontend can't just import it at runtime.
+  function checkCouncilHistoryMatchesGovernance(governanceSnapshot, eligibilitySnapshot){
+    if(!governanceSnapshot || !Array.isArray(governanceSnapshot.proposals)){
+      return { ok:false, reason:"governance snapshot has no proposals array" };
+    }
+    if(!eligibilitySnapshot || !Array.isArray(eligibilitySnapshot.proposals)){
+      return { ok:false, reason:"council history has no proposals array" };
+    }
+    const governanceByNumber = new Map();
+    for(const proposal of governanceSnapshot.proposals){
+      if(!Number.isInteger(proposal?.number)) return { ok:false, reason:"governance proposal is missing a numeric number" };
+      if(governanceByNumber.has(proposal.number)) return { ok:false, reason:`duplicate governance proposal #${proposal.number}` };
+      governanceByNumber.set(proposal.number, proposal);
+    }
+    const eligibilityByNumber = new Map();
+    for(const record of eligibilitySnapshot.proposals){
+      if(!Number.isInteger(record?.number)) return { ok:false, reason:"council history record is missing a numeric number" };
+      if(eligibilityByNumber.has(record.number)) return { ok:false, reason:`duplicate council history proposal #${record.number}` };
+      eligibilityByNumber.set(record.number, record);
+    }
+    if(governanceByNumber.size !== eligibilityByNumber.size){
+      return { ok:false, reason:`proposal count mismatch (${governanceByNumber.size} governance vs ${eligibilityByNumber.size} council history)` };
+    }
+    for(const [number, proposal] of governanceByNumber){
+      const record = eligibilityByNumber.get(number);
+      if(!record) return { ok:false, reason:`council history is missing proposal #${number}` };
+      if(record.proposalId !== proposal.id) return { ok:false, reason:`proposal #${number} ID mismatch` };
+      if(record.createdAt !== proposal.createdAt) return { ok:false, reason:`proposal #${number} createdAt mismatch` };
+    }
+    for(const number of eligibilityByNumber.keys()){
+      if(!governanceByNumber.has(number)) return { ok:false, reason:`council history has an extra proposal #${number} not in governance` };
+    }
+    return { ok:true };
+  }
 
   function showError(error){
     document.getElementById("data-status").innerHTML = `<span>⚠️</span><div><strong>DATA UNAVAILABLE.</strong> ${error.message}</div>`;
@@ -649,8 +717,27 @@
       uptimeSnapshot = null;
       uptimeError = error;
     }
+    let eligibilitySnapshot = null;
+    try {
+      const eligibilityResponse = await fetch("../data/council-history.json", { cache: "no-store" });
+      if(!eligibilityResponse.ok) throw new Error(`Council history request failed (${eligibilityResponse.status}).`);
+      eligibilitySnapshot = await eligibilityResponse.json();
+      if(eligibilitySnapshot.schemaVersion !== 1 || eligibilitySnapshot.method !== "neotoken-storage-cross-node-corroboration" ||
+        !Array.isArray(eligibilitySnapshot.participation) || eligibilitySnapshot.participation.length !== 21){
+        throw new Error("Council history validation failed.");
+      }
+      const match = checkCouncilHistoryMatchesGovernance(snapshot, eligibilitySnapshot);
+      if(!match.ok) throw new Error(`Council history does not match the governance snapshot: ${match.reason}`);
+    } catch(error) {
+      eligibilitySnapshot = null;
+    }
+    const eligibilityByKey = new Map((eligibilitySnapshot?.participation ?? []).map(record => [record.publicKey, record]));
     const consensusByKey = new Map((uptimeSnapshot?.validators ?? []).map(record => [record.publicKey, record]));
-    members = snapshot.participation.map(member => ({ ...member, consensus: consensusByKey.get(member.publicKey) ?? null }));
+    members = snapshot.participation.map(member => ({
+      ...member,
+      consensus: consensusByKey.get(member.publicKey) ?? null,
+      eligibility: eligibilityByKey.get(member.publicKey) ?? null,
+    }));
     proposals = snapshot.proposals;
     document.getElementById("latest-votes").textContent = `${snapshot.latestProposal.voterCount} / 21`;
     document.getElementById("latest-label").innerHTML = `Council members recorded as voting on <a href="${snapshot.latestProposal.sourceUrl}" target="_blank" rel="noopener">Proposal #${snapshot.latestProposal.number}</a>`;

@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-09-06 (Slice 2 metric model corrected)
+Last updated: 2026-09-07 (historical Council eligibility reconstructed)
 
 This file is the single source of truth for where the project actually is.
 Update it at the end of every slice — before committing.
@@ -14,10 +14,30 @@ Update it at the end of every slice — before committing.
     Proposal #7, 0 of 7 proposal records reaching the 11-seat majority.
   - Compact sortable roll-call rows, expandable metric details, a nested
     disclosure of each member's linked proposal evidence, data freshness,
-    light/dark themes, and a checked mobile layout. Vote bars compare recorded
-    counts; they are not participation percentages.
+    light/dark themes, and a checked mobile layout. The vote-participation bar
+    now shows a verified eligible-proposal percentage (`{recorded}/{eligible}
+    eligible proposals · {percent}%`), colored green/yellow/red/empty by the
+    documented thresholds — see the historical-eligibility bullet below.
   - Uptime and discussion are clearly `not tracked`; the combined score is
     `unavailable`. No synthetic member-level values remain.
+- A dependency-free historical Council collector
+  (`scripts/fetch-council-history.mjs`) reconstructs, for each of the seven
+  checked-in governance proposals, the Council committee (top 21) in effect at
+  the last block at or before the proposal's UTC creation time — read from the
+  NeoToken native contract's cached committee storage (key `0x0E`) at that
+  historical state root via StateService `getstateroot`/`getstate`, required to
+  agree byte-for-byte across two independent full-state archival nodes
+  (`mainnet2.neo.coz.io`, `n3seed1.ngd.network`). A member is eligible for a
+  proposal only if their public key held a seat at that moment; a recorded vote
+  from an ineligible key fails the run closed instead of being silently
+  miscounted. `data/council-history.json` is schema v1 and carries block
+  height, timestamp, state root, and both source URLs per proposal for
+  auditing. Running against live chain state on 2026-09-07 found zero
+  eligibility conflicts across all seven proposals; one current member (R3E)
+  is not yet eligible for any of them, and two (NeoSPCC, Red4Sec) have fewer
+  than seven eligible proposals because their seats began after the earliest
+  ones. See `docs/COUNCIL-HISTORY-RECONSTRUCTION.md` for the underlying
+  investigation and `docs/DECISIONS.md` (2026-09-07) for the durable rule.
 - The local repository's original Slice 0 commit is `c5e8288`. Slice 1 is on
   `slice-1-governance-data`, connected to
   `https://github.com/fritzorama/quorum-watch` as `origin`.
@@ -32,9 +52,12 @@ Update it at the end of every slice — before committing.
   current seats by public key, preserves source URLs and freshness, and keeps
   four Nash.io vote records in `excludedVotes` because Nash is currently rank
   22 rather than silently attributing them to a current seat.
-- Positive vote records are displayed, but historical non-votes and
-  participation rates are not inferred. The current roster observation does
-  not prove who held every seat at each older proposal date.
+- Recorded votes and eligible-proposal participation percentages are now shown
+  for all 21 current members. A non-vote is still never inferred as "missed"
+  outside a proposal the historical Council collector has verified the member
+  was eligible for; the current roster observation alone still does not prove
+  who held every seat at each older proposal date — the collector above proves
+  it per proposal, on-chain.
 - Cloudflare Pages now hosts the approved `main` branch at
   `https://neoquorumwatch.com` (provider fallback:
   `https://quorum-watch.pages.dev`). Slice 2 development is isolated on
@@ -79,5 +102,7 @@ collecting or scoring node health; an unidentified endpoint remains `Not tracked
 - Mobile layout polish
 - A short methodology page explaining exactly how each metric is computed
 - The actual GrantShares application draft
-- Handling contested/ambiguous cases (e.g. a council seat changes hands
-  mid-period — how do we attribute historical votes?)
+- ~~Handling contested/ambiguous cases (e.g. a council seat changes hands
+  mid-period — how do we attribute historical votes?)~~ — resolved 2026-09-07
+  by the historical Council eligibility collector; see the CURRENT section and
+  `docs/DECISIONS.md` (2026-09-07).

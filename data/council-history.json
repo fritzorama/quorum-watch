@@ -1,0 +1,1275 @@
+{
+  "schemaVersion": 1,
+  "fetchedAt": "2026-09-07T10:18:00.986Z",
+  "method": "neotoken-storage-cross-node-corroboration",
+  "eligibilityRule": "A member is eligible for a proposal only if their candidate public key was present in the Council committee (top 21) at the last block at or before the proposal's UTC creation time. Eligibility and recorded votes are matched only by stable candidate public key.",
+  "sources": {
+    "rpcUrls": [
+      "https://mainnet2.neo.coz.io:443",
+      "https://n3seed1.ngd.network:10332"
+    ],
+    "corroborationRule": "Both RPC sources must be running StateService with FullState:true and must return byte-identical raw committee storage bytes (NeoToken storage key 0x0E) at the same state root; any HTTP/RPC error or disagreement fails the run closed without replacing the previous snapshot.",
+    "neoTokenContractHash": "0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5",
+    "committeeStorageKeyBase64": "Dg==",
+    "stateRootMethod": "getstateroot",
+    "stateReadMethod": "getstate",
+    "boundaryMethod": "getblockheader(height, true).time, binary-searched against the proposal's UTC createdAt",
+    "methodology": "docs/COUNCIL-HISTORY-RECONSTRUCTION.md"
+  },
+  "proposals": [
+    {
+      "number": 1,
+      "proposalId": "69243355008ce4201f06946b",
+      "createdAt": "2025-11-24T10:28:37.045000",
+      "createdAtUtc": "2025-11-24T10:28:37.045Z",
+      "blockHeight": 8395095,
+      "blockTimeUtc": "2025-11-24T10:28:22.718Z",
+      "stateRoot": "0xabfa2816d21b945670143811f46138f12d1a2a46e9a8bc376fa8adae33e47455",
+      "sources": [
+        "https://mainnet2.neo.coz.io:443",
+        "https://n3seed1.ngd.network:10332"
+      ],
+      "rawValueBase64": "QBVBAighAjmjdDZlL0GzuALKRMvLfWXTqguIyaA4AkO9vhqqXLNbIQN1HjZBAighA7IJ/U9TpxcOpERODLCmu2pTwr0BaSaYnPhfmw+6F6cMIQN7QS5BAighA9nosWvZsi0zRdbUzeMb4cPh0WFTLj0MzsuV7OLrWDNuIQPa1iBBAighA55uIaSaVpjThAg31OiXcKddZqrzUgodxFuA6nwWxEkIIQN4hR5BAighAptGvyCxn7PaGkWRusCazYbEYK4py3THY01lhwIgXsL3IQOyEBpBAighAuwUPwC4hSTK82oBIcLeCe7wUZ3b4ccQoA8OJmMgHuTAIQMvBxpBAighAqk9ODrYK7K4WUPIP7spcyG7N/zKH4wesYn/0rZ0ZtWKIQO4YxlBAighAlF/VSwj3jV026QNnQ3gKApaAXCiCfA4aqhMCcqrlegwIQOFeA9BAighA4m6AIVvWL3Ct8P9bC5z7UgpJS84CDweKVV0ylmek/6CIQPkVw9BAighA11XTMapBOgt/YLX9vycLKBC1EEKSRDsyMB6B9tJ3GUTIQP0Sw1BAighApRiSPcb3xSTPmc12phn6BzJ7qC1iVMpqn9x53Rc9AZZIQNhCQ1BAighAkijfgTHpfuf3J8DI7KVWpTLsiltKtH+rOok7HdKh8SkIQPtvgxBAighAkA27oiZPkh6hi8v/9oIpPzEwxEcxGX16dwRbp97M1N4IQN9ngxBAighAx3op2baZospNTUazY8jwm2+3VS4IIsTXwpja1RMng2tIQPHkgxBAighA09+pMpFBu8ojF1e1haGufOaC8X3ZwhYMF4y6lBKtUPzIQMJkgxBAighA/0E3pg/TgTJYpqzz8g/Qb50Mblr+FKpGHPDjKj3N+4sIQNOjQxBAighAswQ0OkpynUs/TQIvt2gZGPi2T/UNeTCuGqJWzeS3uTIIQMqhQxBAighA/J+eQ9QD1+JvDPhtl6VwO5SWEkTKIeCVruNAyZ3ausIIQMhgAxBAighA5L70dgJo8Yvfc3o8lRUoVcIMKIeSwFLPzYqebr0E+EVIQOgeQxBAighAiNzCaBjP/kw1RhW2wHRfIKaWy5cwmOOnAO0z6jpyflxIQM6dwxBAighA3NNS2N9usBNDrRRmL/pxaQqypB+j9HnQetS3vWDNHJXIQO3dQw=",
+      "committee": [
+        {
+          "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+          "votes": "3546741",
+          "rankByVotes": 1
+        },
+        {
+          "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+          "votes": "3031419",
+          "rankByVotes": 2
+        },
+        {
+          "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e",
+          "votes": "2152154",
+          "rankByVotes": 3
+        },
+        {
+          "publicKey": "039e6e21a49a5698d3840837d4e89770a75d66aaf3520a1dc45b80ea7c16c44908",
+          "votes": "2000248",
+          "rankByVotes": 4
+        },
+        {
+          "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+          "votes": "1708210",
+          "rankByVotes": 5
+        },
+        {
+          "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+          "votes": "1705775",
+          "rankByVotes": 6
+        },
+        {
+          "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+          "votes": "1663928",
+          "rankByVotes": 7
+        },
+        {
+          "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830",
+          "votes": "1013893",
+          "rankByVotes": 8
+        },
+        {
+          "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82",
+          "votes": "1005540",
+          "rankByVotes": 9
+        },
+        {
+          "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+          "votes": "871412",
+          "rankByVotes": 10
+        },
+        {
+          "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+          "votes": "854369",
+          "rankByVotes": 11
+        },
+        {
+          "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+          "votes": "835309",
+          "rankByVotes": 12
+        },
+        {
+          "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378",
+          "votes": "827005",
+          "rankByVotes": 13
+        },
+        {
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "votes": "824007",
+          "rankByVotes": 14
+        },
+        {
+          "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3",
+          "votes": "823817",
+          "rankByVotes": 15
+        },
+        {
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "votes": "822606",
+          "rankByVotes": 16
+        },
+        {
+          "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+          "votes": "820522",
+          "rankByVotes": 17
+        },
+        {
+          "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08",
+          "votes": "819233",
+          "rankByVotes": 18
+        },
+        {
+          "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115",
+          "votes": "817568",
+          "rankByVotes": 19
+        },
+        {
+          "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971",
+          "votes": "816954",
+          "rankByVotes": 20
+        },
+        {
+          "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257",
+          "votes": "816567",
+          "rankByVotes": 21
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "proposalId": "692433721ea69cca3a40afa0",
+      "createdAt": "2025-11-04T10:29:06.635000",
+      "createdAtUtc": "2025-11-04T10:29:06.635Z",
+      "blockHeight": 8283174,
+      "blockTimeUtc": "2025-11-04T10:29:03.528Z",
+      "stateRoot": "0xcc5b4ca9e95b0ed19a52ff74c7c1d5d4f9fd159a7a11cdb42499633b18da271f",
+      "sources": [
+        "https://mainnet2.neo.coz.io:443",
+        "https://n3seed1.ngd.network:10332"
+      ],
+      "rawValueBase64": "QBVBAighAjmjdDZlL0GzuALKRMvLfWXTqguIyaA4AkO9vhqqXLNbIQPSKjZBAighA7IJ/U9TpxcOpERODLCmu2pTwr0BaSaYnPhfmw+6F6cMIQMSPC5BAighA7jZ1Xcdj1E6oIabnMjVCYZAO3jG2jaJBjjD1Gpa3OBKIQO8vB5BAighA55uIaSaVpjThAg31OiXcKddZqrzUgodxFuA6nwWxEkIIQN4hR5BAighAptGvyCxn7PaGkWRusCazYbEYK4py3THY01lhwIgXsL3IQM4DBpBAighAuwUPwC4hSTK82oBIcLeCe7wUZ3b4ccQoA8OJmMgHuTAIQN+/hlBAighAqk9ODrYK7K4WUPIP7spcyG7N/zKH4wesYn/0rZ0ZtWKIQMCgRlBAighAlF/VSwj3jV026QNnQ3gKApaAXCiCfA4aqhMCcqrlegwIQPoeQ9BAighA4m6AIVvWL3Ct8P9bC5z7UgpJS84CDweKVV0ylmek/6CIQPkVw9BAighApRiSPcb3xSTPmc12phn6BzJ7qC1iVMpqn9x53Rc9AZZIQMzQg1BAighAswQ0OkpynUs/TQIvt2gZGPi2T/UNeTCuGqJWzeS3uTIIQOgKA1BAighAkijfgTHpfuf3J8DI7KVWpTLsiltKtH+rOok7HdKh8SkIQO5CQ1BAighA/J+eQ9QD1+JvDPhtl6VwO5SWEkTKIeCVruNAyZ3ausIIQNC4AxBAighA09+pMpFBu8ojF1e1haGufOaC8X3ZwhYMF4y6lBKtUPzIQNP3gxBAighA11XTMapBOgt/YLX9vycLKBC1EEKSRDsyMB6B9tJ3GUTIQPw1wxBAighAx3op2baZospNTUazY8jwm2+3VS4IIsTXwpja1RMng2tIQOV1gxBAighA5L70dgJo8Yvfc3o8lRUoVcIMKIeSwFLPzYqebr0E+EVIQND1QxBAighAiNzCaBjP/kw1RhW2wHRfIKaWy5cwmOOnAO0z6jpyflxIQN40QxBAighAkA27oiZPkh6hi8v/9oIpPzEwxEcxGX16dwRbp97M1N4IQNwzwxBAighA/0E3pg/TgTJYpqzz8g/Qb50Mblr+FKpGHPDjKj3N+4sIQPiywxBAighA3NNS2N9usBNDrRRmL/pxaQqypB+j9HnQetS3vWDNHJXIQPvsgw=",
+      "committee": [
+        {
+          "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+          "votes": "3549906",
+          "rankByVotes": 1
+        },
+        {
+          "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+          "votes": "3030034",
+          "rankByVotes": 2
+        },
+        {
+          "publicKey": "03b8d9d5771d8f513aa0869b9cc8d50986403b78c6da36890638c3d46a5adce04a",
+          "votes": "2014396",
+          "rankByVotes": 3
+        },
+        {
+          "publicKey": "039e6e21a49a5698d3840837d4e89770a75d66aaf3520a1dc45b80ea7c16c44908",
+          "votes": "2000248",
+          "rankByVotes": 4
+        },
+        {
+          "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+          "votes": "1707064",
+          "rankByVotes": 5
+        },
+        {
+          "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+          "votes": "1703550",
+          "rankByVotes": 6
+        },
+        {
+          "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+          "votes": "1671426",
+          "rankByVotes": 7
+        },
+        {
+          "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830",
+          "votes": "1014248",
+          "rankByVotes": 8
+        },
+        {
+          "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82",
+          "votes": "1005540",
+          "rankByVotes": 9
+        },
+        {
+          "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+          "votes": "868915",
+          "rankByVotes": 10
+        },
+        {
+          "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+          "votes": "862368",
+          "rankByVotes": 11
+        },
+        {
+          "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+          "votes": "854457",
+          "rankByVotes": 12
+        },
+        {
+          "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08",
+          "votes": "843842",
+          "rankByVotes": 13
+        },
+        {
+          "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3",
+          "votes": "843343",
+          "rankByVotes": 14
+        },
+        {
+          "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+          "votes": "841712",
+          "rankByVotes": 15
+        },
+        {
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "votes": "841365",
+          "rankByVotes": 16
+        },
+        {
+          "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115",
+          "votes": "841027",
+          "rankByVotes": 17
+        },
+        {
+          "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971",
+          "votes": "840056",
+          "rankByVotes": 18
+        },
+        {
+          "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378",
+          "votes": "839536",
+          "rankByVotes": 19
+        },
+        {
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "votes": "838626",
+          "rankByVotes": 20
+        },
+        {
+          "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257",
+          "votes": "832239",
+          "rankByVotes": 21
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "proposalId": "692451dbc3a821b26a8e9adc",
+      "createdAt": "2025-11-24T12:38:51.472000",
+      "createdAtUtc": "2025-11-24T12:38:51.472Z",
+      "blockHeight": 8395612,
+      "blockTimeUtc": "2025-11-24T12:38:36.700Z",
+      "stateRoot": "0xcbecf81e05a395509de3f540645614144616d7942ece8d4e977d65da2ddced8f",
+      "sources": [
+        "https://mainnet2.neo.coz.io:443",
+        "https://n3seed1.ngd.network:10332"
+      ],
+      "rawValueBase64": "QBVBAighAjmjdDZlL0GzuALKRMvLfWXTqguIyaA4AkO9vhqqXLNbIQN1HjZBAighA7IJ/U9TpxcOpERODLCmu2pTwr0BaSaYnPhfmw+6F6cMIQN7QS5BAighA9nosWvZsi0zRdbUzeMb4cPh0WFTLj0MzsuV7OLrWDNuIQPa1iBBAighA55uIaSaVpjThAg31OiXcKddZqrzUgodxFuA6nwWxEkIIQN4hR5BAighAptGvyCxn7PaGkWRusCazYbEYK4py3THY01lhwIgXsL3IQOyEBpBAighAuwUPwC4hSTK82oBIcLeCe7wUZ3b4ccQoA8OJmMgHuTAIQMvBxpBAighAqk9ODrYK7K4WUPIP7spcyG7N/zKH4wesYn/0rZ0ZtWKIQO4YxlBAighAlF/VSwj3jV026QNnQ3gKApaAXCiCfA4aqhMCcqrlegwIQOFeA9BAighA4m6AIVvWL3Ct8P9bC5z7UgpJS84CDweKVV0ylmek/6CIQPkVw9BAighA11XTMapBOgt/YLX9vycLKBC1EEKSRDsyMB6B9tJ3GUTIQP0Sw1BAighApRiSPcb3xSTPmc12phn6BzJ7qC1iVMpqn9x53Rc9AZZIQNhCQ1BAighAkijfgTHpfuf3J8DI7KVWpTLsiltKtH+rOok7HdKh8SkIQPtvgxBAighAkA27oiZPkh6hi8v/9oIpPzEwxEcxGX16dwRbp97M1N4IQN9ngxBAighAx3op2baZospNTUazY8jwm2+3VS4IIsTXwpja1RMng2tIQPHkgxBAighA09+pMpFBu8ojF1e1haGufOaC8X3ZwhYMF4y6lBKtUPzIQMJkgxBAighA/0E3pg/TgTJYpqzz8g/Qb50Mblr+FKpGHPDjKj3N+4sIQNOjQxBAighAswQ0OkpynUs/TQIvt2gZGPi2T/UNeTCuGqJWzeS3uTIIQMxhQxBAighA/J+eQ9QD1+JvDPhtl6VwO5SWEkTKIeCVruNAyZ3ausIIQPJfgxBAighA5L70dgJo8Yvfc3o8lRUoVcIMKIeSwFLPzYqebr0E+EVIQPmegxBAighAiNzCaBjP/kw1RhW2wHRfIKaWy5cwmOOnAO0z6jpyflxIQM6dwxBAighA3NNS2N9usBNDrRRmL/pxaQqypB+j9HnQetS3vWDNHJXIQOrdgw=",
+      "committee": [
+        {
+          "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+          "votes": "3546741",
+          "rankByVotes": 1
+        },
+        {
+          "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+          "votes": "3031419",
+          "rankByVotes": 2
+        },
+        {
+          "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e",
+          "votes": "2152154",
+          "rankByVotes": 3
+        },
+        {
+          "publicKey": "039e6e21a49a5698d3840837d4e89770a75d66aaf3520a1dc45b80ea7c16c44908",
+          "votes": "2000248",
+          "rankByVotes": 4
+        },
+        {
+          "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+          "votes": "1708210",
+          "rankByVotes": 5
+        },
+        {
+          "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+          "votes": "1705775",
+          "rankByVotes": 6
+        },
+        {
+          "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+          "votes": "1663928",
+          "rankByVotes": 7
+        },
+        {
+          "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830",
+          "votes": "1013893",
+          "rankByVotes": 8
+        },
+        {
+          "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82",
+          "votes": "1005540",
+          "rankByVotes": 9
+        },
+        {
+          "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+          "votes": "871412",
+          "rankByVotes": 10
+        },
+        {
+          "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+          "votes": "854369",
+          "rankByVotes": 11
+        },
+        {
+          "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+          "votes": "835309",
+          "rankByVotes": 12
+        },
+        {
+          "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378",
+          "votes": "827005",
+          "rankByVotes": 13
+        },
+        {
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "votes": "824007",
+          "rankByVotes": 14
+        },
+        {
+          "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3",
+          "votes": "823817",
+          "rankByVotes": 15
+        },
+        {
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "votes": "822606",
+          "rankByVotes": 16
+        },
+        {
+          "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+          "votes": "820529",
+          "rankByVotes": 17
+        },
+        {
+          "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08",
+          "votes": "818889",
+          "rankByVotes": 18
+        },
+        {
+          "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115",
+          "votes": "817894",
+          "rankByVotes": 19
+        },
+        {
+          "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971",
+          "votes": "816954",
+          "rankByVotes": 20
+        },
+        {
+          "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257",
+          "votes": "816811",
+          "rankByVotes": 21
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "proposalId": "692451eed13ef5502534d91c",
+      "createdAt": "2025-11-24T12:39:10.449000",
+      "createdAtUtc": "2025-11-24T12:39:10.449Z",
+      "blockHeight": 8395614,
+      "blockTimeUtc": "2025-11-24T12:39:06.774Z",
+      "stateRoot": "0x6aa71ba1148f42275d5d425feec69706d655f4538247fe4f0960ddccc50f62ce",
+      "sources": [
+        "https://mainnet2.neo.coz.io:443",
+        "https://n3seed1.ngd.network:10332"
+      ],
+      "rawValueBase64": "QBVBAighAjmjdDZlL0GzuALKRMvLfWXTqguIyaA4AkO9vhqqXLNbIQN1HjZBAighA7IJ/U9TpxcOpERODLCmu2pTwr0BaSaYnPhfmw+6F6cMIQN7QS5BAighA9nosWvZsi0zRdbUzeMb4cPh0WFTLj0MzsuV7OLrWDNuIQPa1iBBAighA55uIaSaVpjThAg31OiXcKddZqrzUgodxFuA6nwWxEkIIQN4hR5BAighAptGvyCxn7PaGkWRusCazYbEYK4py3THY01lhwIgXsL3IQOyEBpBAighAuwUPwC4hSTK82oBIcLeCe7wUZ3b4ccQoA8OJmMgHuTAIQMvBxpBAighAqk9ODrYK7K4WUPIP7spcyG7N/zKH4wesYn/0rZ0ZtWKIQO4YxlBAighAlF/VSwj3jV026QNnQ3gKApaAXCiCfA4aqhMCcqrlegwIQOFeA9BAighA4m6AIVvWL3Ct8P9bC5z7UgpJS84CDweKVV0ylmek/6CIQPkVw9BAighA11XTMapBOgt/YLX9vycLKBC1EEKSRDsyMB6B9tJ3GUTIQP0Sw1BAighApRiSPcb3xSTPmc12phn6BzJ7qC1iVMpqn9x53Rc9AZZIQNhCQ1BAighAkijfgTHpfuf3J8DI7KVWpTLsiltKtH+rOok7HdKh8SkIQPtvgxBAighAkA27oiZPkh6hi8v/9oIpPzEwxEcxGX16dwRbp97M1N4IQN9ngxBAighAx3op2baZospNTUazY8jwm2+3VS4IIsTXwpja1RMng2tIQPHkgxBAighA09+pMpFBu8ojF1e1haGufOaC8X3ZwhYMF4y6lBKtUPzIQMJkgxBAighA/0E3pg/TgTJYpqzz8g/Qb50Mblr+FKpGHPDjKj3N+4sIQNOjQxBAighAswQ0OkpynUs/TQIvt2gZGPi2T/UNeTCuGqJWzeS3uTIIQMxhQxBAighA/J+eQ9QD1+JvDPhtl6VwO5SWEkTKIeCVruNAyZ3ausIIQPJfgxBAighA5L70dgJo8Yvfc3o8lRUoVcIMKIeSwFLPzYqebr0E+EVIQPmegxBAighAiNzCaBjP/kw1RhW2wHRfIKaWy5cwmOOnAO0z6jpyflxIQM6dwxBAighA3NNS2N9usBNDrRRmL/pxaQqypB+j9HnQetS3vWDNHJXIQOrdgw=",
+      "committee": [
+        {
+          "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+          "votes": "3546741",
+          "rankByVotes": 1
+        },
+        {
+          "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+          "votes": "3031419",
+          "rankByVotes": 2
+        },
+        {
+          "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e",
+          "votes": "2152154",
+          "rankByVotes": 3
+        },
+        {
+          "publicKey": "039e6e21a49a5698d3840837d4e89770a75d66aaf3520a1dc45b80ea7c16c44908",
+          "votes": "2000248",
+          "rankByVotes": 4
+        },
+        {
+          "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+          "votes": "1708210",
+          "rankByVotes": 5
+        },
+        {
+          "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+          "votes": "1705775",
+          "rankByVotes": 6
+        },
+        {
+          "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+          "votes": "1663928",
+          "rankByVotes": 7
+        },
+        {
+          "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830",
+          "votes": "1013893",
+          "rankByVotes": 8
+        },
+        {
+          "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82",
+          "votes": "1005540",
+          "rankByVotes": 9
+        },
+        {
+          "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+          "votes": "871412",
+          "rankByVotes": 10
+        },
+        {
+          "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+          "votes": "854369",
+          "rankByVotes": 11
+        },
+        {
+          "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+          "votes": "835309",
+          "rankByVotes": 12
+        },
+        {
+          "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378",
+          "votes": "827005",
+          "rankByVotes": 13
+        },
+        {
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "votes": "824007",
+          "rankByVotes": 14
+        },
+        {
+          "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3",
+          "votes": "823817",
+          "rankByVotes": 15
+        },
+        {
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "votes": "822606",
+          "rankByVotes": 16
+        },
+        {
+          "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+          "votes": "820529",
+          "rankByVotes": 17
+        },
+        {
+          "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08",
+          "votes": "818889",
+          "rankByVotes": 18
+        },
+        {
+          "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115",
+          "votes": "817894",
+          "rankByVotes": 19
+        },
+        {
+          "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971",
+          "votes": "816954",
+          "rankByVotes": 20
+        },
+        {
+          "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257",
+          "votes": "816811",
+          "rankByVotes": 21
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "proposalId": "69245578684209924c5fbe0b",
+      "createdAt": "2025-11-24T12:54:16.479000",
+      "createdAtUtc": "2025-11-24T12:54:16.479Z",
+      "blockHeight": 8395674,
+      "blockTimeUtc": "2025-11-24T12:54:13.800Z",
+      "stateRoot": "0x92afbe82e55dffc8730c30114c9ad24a4c8480644b6f32e9b836aeaf084f87d1",
+      "sources": [
+        "https://mainnet2.neo.coz.io:443",
+        "https://n3seed1.ngd.network:10332"
+      ],
+      "rawValueBase64": "QBVBAighAjmjdDZlL0GzuALKRMvLfWXTqguIyaA4AkO9vhqqXLNbIQN1HjZBAighA7IJ/U9TpxcOpERODLCmu2pTwr0BaSaYnPhfmw+6F6cMIQN7QS5BAighA9nosWvZsi0zRdbUzeMb4cPh0WFTLj0MzsuV7OLrWDNuIQPa1iBBAighA55uIaSaVpjThAg31OiXcKddZqrzUgodxFuA6nwWxEkIIQN4hR5BAighAptGvyCxn7PaGkWRusCazYbEYK4py3THY01lhwIgXsL3IQOyEBpBAighAuwUPwC4hSTK82oBIcLeCe7wUZ3b4ccQoA8OJmMgHuTAIQMvBxpBAighAqk9ODrYK7K4WUPIP7spcyG7N/zKH4wesYn/0rZ0ZtWKIQO4YxlBAighAlF/VSwj3jV026QNnQ3gKApaAXCiCfA4aqhMCcqrlegwIQOFeA9BAighA4m6AIVvWL3Ct8P9bC5z7UgpJS84CDweKVV0ylmek/6CIQPkVw9BAighA11XTMapBOgt/YLX9vycLKBC1EEKSRDsyMB6B9tJ3GUTIQP0Sw1BAighApRiSPcb3xSTPmc12phn6BzJ7qC1iVMpqn9x53Rc9AZZIQNhCQ1BAighAkijfgTHpfuf3J8DI7KVWpTLsiltKtH+rOok7HdKh8SkIQPtvgxBAighAkA27oiZPkh6hi8v/9oIpPzEwxEcxGX16dwRbp97M1N4IQN9ngxBAighAx3op2baZospNTUazY8jwm2+3VS4IIsTXwpja1RMng2tIQPHkgxBAighA09+pMpFBu8ojF1e1haGufOaC8X3ZwhYMF4y6lBKtUPzIQMJkgxBAighA/0E3pg/TgTJYpqzz8g/Qb50Mblr+FKpGHPDjKj3N+4sIQNOjQxBAighAswQ0OkpynUs/TQIvt2gZGPi2T/UNeTCuGqJWzeS3uTIIQMvhQxBAighA5L70dgJo8Yvfc3o8lRUoVcIMKIeSwFLPzYqebr0E+EVIQN4gQxBAighA/J+eQ9QD1+JvDPhtl6VwO5SWEkTKIeCVruNAyZ3ausIIQPKfgxBAighAiNzCaBjP/kw1RhW2wHRfIKaWy5cwmOOnAO0z6jpyflxIQM6dwxBAighA3NNS2N9usBNDrRRmL/pxaQqypB+j9HnQetS3vWDNHJXIQMacAw=",
+      "committee": [
+        {
+          "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+          "votes": "3546741",
+          "rankByVotes": 1
+        },
+        {
+          "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+          "votes": "3031419",
+          "rankByVotes": 2
+        },
+        {
+          "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e",
+          "votes": "2152154",
+          "rankByVotes": 3
+        },
+        {
+          "publicKey": "039e6e21a49a5698d3840837d4e89770a75d66aaf3520a1dc45b80ea7c16c44908",
+          "votes": "2000248",
+          "rankByVotes": 4
+        },
+        {
+          "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+          "votes": "1708210",
+          "rankByVotes": 5
+        },
+        {
+          "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+          "votes": "1705775",
+          "rankByVotes": 6
+        },
+        {
+          "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+          "votes": "1663928",
+          "rankByVotes": 7
+        },
+        {
+          "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830",
+          "votes": "1013893",
+          "rankByVotes": 8
+        },
+        {
+          "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82",
+          "votes": "1005540",
+          "rankByVotes": 9
+        },
+        {
+          "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+          "votes": "871412",
+          "rankByVotes": 10
+        },
+        {
+          "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+          "votes": "854369",
+          "rankByVotes": 11
+        },
+        {
+          "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+          "votes": "835309",
+          "rankByVotes": 12
+        },
+        {
+          "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378",
+          "votes": "827005",
+          "rankByVotes": 13
+        },
+        {
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "votes": "824007",
+          "rankByVotes": 14
+        },
+        {
+          "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3",
+          "votes": "823817",
+          "rankByVotes": 15
+        },
+        {
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "votes": "822606",
+          "rankByVotes": 16
+        },
+        {
+          "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+          "votes": "820527",
+          "rankByVotes": 17
+        },
+        {
+          "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115",
+          "votes": "819576",
+          "rankByVotes": 18
+        },
+        {
+          "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08",
+          "votes": "818890",
+          "rankByVotes": 19
+        },
+        {
+          "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971",
+          "votes": "816954",
+          "rankByVotes": 20
+        },
+        {
+          "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257",
+          "votes": "815130",
+          "rankByVotes": 21
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "proposalId": "692dbc8fe505a19890ccce5b",
+      "createdAt": "2025-12-01T16:04:31.012000",
+      "createdAtUtc": "2025-12-01T16:04:31.012Z",
+      "blockHeight": 8436150,
+      "blockTimeUtc": "2025-12-01T16:04:21.091Z",
+      "stateRoot": "0x76e8c477c73aeb00453b44e73ba60f88a30d1c5b78261aa8d15413698f453f51",
+      "sources": [
+        "https://mainnet2.neo.coz.io:443",
+        "https://n3seed1.ngd.network:10332"
+      ],
+      "rawValueBase64": "QBVBAighAjmjdDZlL0GzuALKRMvLfWXTqguIyaA4AkO9vhqqXLNbIQPHHjZBAighA7IJ/U9TpxcOpERODLCmu2pTwr0BaSaYnPhfmw+6F6cMIQOJQS5BAighA9nosWvZsi0zRdbUzeMb4cPh0WFTLj0MzsuV7OLrWDNuIQN+1iBBAighA26u5bhW4poDAwdjC7rwpjU0wBGvHCyWeC026/s30uuwIQMuhx5BAighAptGvyCxn7PaGkWRusCazYbEYK4py3THY01lhwIgXsL3IQOyEBpBAighAuwUPwC4hSTK82oBIcLeCe7wUZ3b4ccQoA8OJmMgHuTAIQOp+RlBAighAqk9ODrYK7K4WUPIP7spcyG7N/zKH4wesYn/0rZ0ZtWKIQPKOhlBAighAlF/VSwj3jV026QNnQ3gKApaAXCiCfA4aqhMCcqrlegwIQOFeA9BAighA4m6AIVvWL3Ct8P9bC5z7UgpJS84CDweKVV0ylmek/6CIQPkVw9BAighApRiSPcb3xSTPmc12phn6BzJ7qC1iVMpqn9x53Rc9AZZIQMhFA1BAighA11XTMapBOgt/YLX9vycLKBC1EEKSRDsyMB6B9tJ3GUTIQNotwxBAighA/0E3pg/TgTJYpqzz8g/Qb50Mblr+FKpGHPDjKj3N+4sIQOErgxBAighAx3op2baZospNTUazY8jwm2+3VS4IIsTXwpja1RMng2tIQO8kQxBAighAiNzCaBjP/kw1RhW2wHRfIKaWy5cwmOOnAO0z6jpyflxIQMsjAxBAighA09+pMpFBu8ojF1e1haGufOaC8X3ZwhYMF4y6lBKtUPzIQO3igxBAighA/J+eQ9QD1+JvDPhtl6VwO5SWEkTKIeCVruNAyZ3ausIIQOSdAxBAighAkA27oiZPkh6hi8v/9oIpPzEwxEcxGX16dwRbp97M1N4IQMCcgxBAighAswQ0OkpynUs/TQIvt2gZGPi2T/UNeTCuGqJWzeS3uTIIQMWaQxBAighA5L70dgJo8Yvfc3o8lRUoVcIMKIeSwFLPzYqebr0E+EVIQM0ZgxBAighAkijfgTHpfuf3J8DI7KVWpTLsiltKtH+rOok7HdKh8SkIQM9ZAxBAighA3NNS2N9usBNDrRRmL/pxaQqypB+j9HnQetS3vWDNHJXIQM4ZAw=",
+      "committee": [
+        {
+          "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+          "votes": "3546823",
+          "rankByVotes": 1
+        },
+        {
+          "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+          "votes": "3031433",
+          "rankByVotes": 2
+        },
+        {
+          "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e",
+          "votes": "2152062",
+          "rankByVotes": 3
+        },
+        {
+          "publicKey": "036eaee5b856e29a030307630bbaf0a63534c011af1c2c96782d36ebfb37d2ebb0",
+          "votes": "2000686",
+          "rankByVotes": 4
+        },
+        {
+          "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+          "votes": "1708210",
+          "rankByVotes": 5
+        },
+        {
+          "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+          "votes": "1702313",
+          "rankByVotes": 6
+        },
+        {
+          "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+          "votes": "1653450",
+          "rankByVotes": 7
+        },
+        {
+          "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830",
+          "votes": "1013893",
+          "rankByVotes": 8
+        },
+        {
+          "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82",
+          "votes": "1005540",
+          "rankByVotes": 9
+        },
+        {
+          "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+          "votes": "857121",
+          "rankByVotes": 10
+        },
+        {
+          "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+          "votes": "833384",
+          "rankByVotes": 11
+        },
+        {
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "votes": "831108",
+          "rankByVotes": 12
+        },
+        {
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "votes": "823740",
+          "rankByVotes": 13
+        },
+        {
+          "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971",
+          "votes": "822316",
+          "rankByVotes": 14
+        },
+        {
+          "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3",
+          "votes": "821943",
+          "rankByVotes": 15
+        },
+        {
+          "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08",
+          "votes": "816274",
+          "rankByVotes": 16
+        },
+        {
+          "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378",
+          "votes": "815618",
+          "rankByVotes": 17
+        },
+        {
+          "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+          "votes": "813334",
+          "rankByVotes": 18
+        },
+        {
+          "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115",
+          "votes": "812596",
+          "rankByVotes": 19
+        },
+        {
+          "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+          "votes": "812093",
+          "rankByVotes": 20
+        },
+        {
+          "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257",
+          "votes": "812088",
+          "rankByVotes": 21
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "proposalId": "698248d380b112125a296fc4",
+      "createdAt": "2026-02-03T19:13:23.003000",
+      "createdAtUtc": "2026-02-03T19:13:23.003Z",
+      "blockHeight": 8800500,
+      "blockTimeUtc": "2026-02-03T19:13:12.792Z",
+      "stateRoot": "0xc588f90a1042b52fca79e23389f1e66991eae0e51cd59d9b75ea0a0606562dd5",
+      "sources": [
+        "https://mainnet2.neo.coz.io:443",
+        "https://n3seed1.ngd.network:10332"
+      ],
+      "rawValueBase64": "QBVBAighAjmjdDZlL0GzuALKRMvLfWXTqguIyaA4AkO9vhqqXLNbIQPFaDZBAighA7IJ/U9TpxcOpERODLCmu2pTwr0BaSaYnPhfmw+6F6cMIQNmRS5BAighA9nosWvZsi0zRdbUzeMb4cPh0WFTLj0MzsuV7OLrWDNuIQOMyiBBAighA26u5bhW4poDAwdjC7rwpjU0wBGvHCyWeC026/s30uuwIQOtih5BAighAptGvyCxn7PaGkWRusCazYbEYK4py3THY01lhwIgXsL3IQPMVhpBAighAqk9ODrYK7K4WUPIP7spcyG7N/zKH4wesYn/0rZ0ZtWKIQPvORlBAighAuwUPwC4hSTK82oBIcLeCe7wUZ3b4ccQoA8OJmMgHuTAIQNNPBhBAighAlF/VSwj3jV026QNnQ3gKApaAXCiCfA4aqhMCcqrlegwIQOUeA9BAighA4m6AIVvWL3Ct8P9bC5z7UgpJS84CDweKVV0ylmek/6CIQN+Vg9BAighA/J+eQ9QD1+JvDPhtl6VwO5SWEkTKIeCVruNAyZ3ausIIQOZSA5BAighAkA27oiZPkh6hi8v/9oIpPzEwxEcxGX16dwRbp97M1N4IQMgww1BAighAkijfgTHpfuf3J8DI7KVWpTLsiltKtH+rOok7HdKh8SkIQNXqQ1BAighAx3op2baZospNTUazY8jwm2+3VS4IIsTXwpja1RMng2tIQPYkw1BAighA/0E3pg/TgTJYpqzz8g/Qb50Mblr+FKpGHPDjKj3N+4sIQNAkg1BAighA3NNS2N9usBNDrRRmL/pxaQqypB+j9HnQetS3vWDNHJXIQNbjQ1BAighApRiSPcb3xSTPmc12phn6BzJ7qC1iVMpqn9x53Rc9AZZIQPijA1BAighA09+pMpFBu8ojF1e1haGufOaC8X3ZwhYMF4y6lBKtUPzIQMLjA1BAighAswQ0OkpynUs/TQIvt2gZGPi2T/UNeTCuGqJWzeS3uTIIQN4ig1BAighAiNzCaBjP/kw1RhW2wHRfIKaWy5cwmOOnAO0z6jpyflxIQM+iQ1BAighA5L70dgJo8Yvfc3o8lRUoVcIMKIeSwFLPzYqebr0E+EVIQMbeA1BAighA11XTMapBOgt/YLX9vycLKBC1EEKSRDsyMB6B9tJ3GUTIQMwag0=",
+      "committee": [
+        {
+          "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+          "votes": "3565765",
+          "rankByVotes": 1
+        },
+        {
+          "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+          "votes": "3032422",
+          "rankByVotes": 2
+        },
+        {
+          "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e",
+          "votes": "2149004",
+          "rankByVotes": 3
+        },
+        {
+          "publicKey": "036eaee5b856e29a030307630bbaf0a63534c011af1c2c96782d36ebfb37d2ebb0",
+          "votes": "2001581",
+          "rankByVotes": 4
+        },
+        {
+          "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+          "votes": "1726156",
+          "rankByVotes": 5
+        },
+        {
+          "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+          "votes": "1653231",
+          "rankByVotes": 6
+        },
+        {
+          "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+          "votes": "1588301",
+          "rankByVotes": 7
+        },
+        {
+          "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830",
+          "votes": "1013908",
+          "rankByVotes": 8
+        },
+        {
+          "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82",
+          "votes": "1005182",
+          "rankByVotes": 9
+        },
+        {
+          "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08",
+          "votes": "936089",
+          "rankByVotes": 10
+        },
+        {
+          "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378",
+          "votes": "901920",
+          "rankByVotes": 11
+        },
+        {
+          "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+          "votes": "895319",
+          "rankByVotes": 12
+        },
+        {
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "votes": "889816",
+          "rankByVotes": 13
+        },
+        {
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "votes": "889408",
+          "rankByVotes": 14
+        },
+        {
+          "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257",
+          "votes": "888155",
+          "rankByVotes": 15
+        },
+        {
+          "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+          "votes": "888034",
+          "rankByVotes": 16
+        },
+        {
+          "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3",
+          "votes": "887819",
+          "rankByVotes": 17
+        },
+        {
+          "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+          "votes": "887416",
+          "rankByVotes": 18
+        },
+        {
+          "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971",
+          "votes": "887102",
+          "rankByVotes": 19
+        },
+        {
+          "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115",
+          "votes": "882715",
+          "rankByVotes": 20
+        },
+        {
+          "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+          "votes": "879152",
+          "rankByVotes": 21
+        }
+      ]
+    }
+  ],
+  "participation": [
+    {
+      "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+      "name": "NF1",
+      "rank": 1,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e",
+      "name": "NeoSPCC",
+      "rank": 2,
+      "eligibleProposalCount": 6,
+      "eligibleProposalNumbers": [
+        1,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+      "name": "The Neo Order",
+      "rank": 3,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "036eaee5b856e29a030307630bbaf0a63534c011af1c2c96782d36ebfb37d2ebb0",
+      "name": "Red4Sec",
+      "rank": 4,
+      "eligibleProposalCount": 2,
+      "eligibleProposalNumbers": [
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+      "name": "NGD8",
+      "rank": 5,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+      "name": "NGD4",
+      "rank": 6,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 1,
+      "recordedEligibleVoteNumbers": [
+        5
+      ],
+      "participationPercent": 14,
+      "participationBand": "red"
+    },
+    {
+      "publicKey": "0362087e1f9ae6e7d0c1d05bbd17a724e0d5f92662e766980e47a5194d22c8fa80",
+      "name": "R3E",
+      "rank": 7,
+      "eligibleProposalCount": 0,
+      "eligibleProposalNumbers": [],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": null,
+      "participationBand": "not-eligible"
+    },
+    {
+      "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+      "name": "COZ",
+      "rank": 8,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 1,
+      "recordedEligibleVoteNumbers": [
+        5
+      ],
+      "participationPercent": 14,
+      "participationBand": "red"
+    },
+    {
+      "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830",
+      "name": "NGD6",
+      "rank": 9,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82",
+      "name": "lazynode",
+      "rank": 10,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971",
+      "name": "NEXT（NeoLine）",
+      "rank": 11,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+      "name": "AxLabs (neow3j)",
+      "rank": 12,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 2,
+      "recordedEligibleVoteNumbers": [
+        5,
+        6
+      ],
+      "participationPercent": 29,
+      "participationBand": "red"
+    },
+    {
+      "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115",
+      "name": "Switcheo Labs",
+      "rank": 13,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+      "name": "Everstake",
+      "rank": 14,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 1,
+      "recordedEligibleVoteNumbers": [
+        5
+      ],
+      "participationPercent": 14,
+      "participationBand": "red"
+    },
+    {
+      "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+      "name": "Neo News Today",
+      "rank": 15,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 2,
+      "recordedEligibleVoteNumbers": [
+        6,
+        7
+      ],
+      "participationPercent": 29,
+      "participationBand": "red"
+    },
+    {
+      "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+      "name": "InfStones",
+      "rank": 16,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 2,
+      "recordedEligibleVoteNumbers": [
+        5,
+        6
+      ],
+      "participationPercent": 29,
+      "participationBand": "red"
+    },
+    {
+      "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257",
+      "name": "bNEO representative",
+      "rank": 17,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3",
+      "name": "BinanceStaking1",
+      "rank": 18,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+      "name": "Flamingo",
+      "rank": 19,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 4,
+      "recordedEligibleVoteNumbers": [
+        1,
+        5,
+        6,
+        7
+      ],
+      "participationPercent": 57,
+      "participationBand": "yellow"
+    },
+    {
+      "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08",
+      "name": "MakeNeoGreatAgain",
+      "rank": 20,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    },
+    {
+      "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378",
+      "name": "HashKey Cloud",
+      "rank": 21,
+      "eligibleProposalCount": 7,
+      "eligibleProposalNumbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "recordedEligibleVoteCount": 0,
+      "recordedEligibleVoteNumbers": [],
+      "participationPercent": 0,
+      "participationBand": "empty"
+    }
+  ]
+}

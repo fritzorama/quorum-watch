@@ -145,3 +145,38 @@ on-chain observation measures only `Primary duty success`, not host uptime or
 complete Prepare/Commit participation, so it is presented as that narrow
 submetric. Consensus membership and future endpoint attribution must be
 effective-dated to prevent role changes from rewriting historical evidence.
+
+### 2026-09-07 — Historical Council eligibility: reconstructed via NeoToken cross-node corroboration, not inferred
+
+Proves out the open question left by the 2026-09-03 Council-identity decision ("An absent vote must
+not be called a missed vote... until a dated seat interval proves eligibility for that proposal").
+That dated seat interval is now real, not aspirational.
+
+**Method.** `getCommittee` has no historical parameter — it always reads live chain state — but the
+value it returns is a cached NeoToken contract storage slot (`Prefix_Committee = 0x0E`) that *is*
+queryable at a past state root via the StateService plugin's `getstateroot`/`getstate`, on any node
+running `FullState: true`. Confirmed live against `neo-project/neo`'s own C# source (storage prefix,
+21-block refresh cadence, and the exact `Struct{ByteString(33), Integer}` serialization) before being
+trusted — see `docs/COUNCIL-HISTORY-RECONSTRUCTION.md` for the full investigation this implements.
+
+**Eligibility rule.** A member is eligible for a proposal only if their candidate public key was
+present in the Council committee (top 21) at the last block at or before that proposal's UTC
+creation time. Eligibility and recorded votes are matched only by stable candidate public key, never
+by name or organization ID — consistent with the existing Council-identity rule.
+
+**Corroboration and fail-closed behavior.** Every historical committee read is required to come back
+byte-identical from two independently operated full-state archival nodes
+(`mainnet2.neo.coz.io`, `n3seed1.ngd.network`) before it is trusted. A third RPC source already in
+this project's use, `rpc1.n3.nspcc.ru`, was checked and confirmed to run `KeepOnlyLatestState`
+(error `-606` on any historical `getstate` call) — it cannot participate in this corroboration and is
+deliberately excluded from `fetch-council-history.mjs`'s RPC list. If a recorded vote's public key is
+absent from its proposal's verified committee, the collector treats that as a data conflict — it
+fails closed and preserves the conflicting evidence for diagnosis rather than silently dropping or
+miscounting the vote. Running this against the real 2026-09-07 chain state for all seven checked-in
+proposals produced zero such conflicts.
+
+**UI change.** The "Vote participation" bar and value now read `{recorded}/{eligible} eligible
+proposals · {percent}%`, colored green (75–100%), yellow (50–74.99%), red (>0–<50%), or a neutral
+empty state (0%, or 0 eligible proposals to date — e.g. a member whose seat began after every
+currently checked-in proposal). This replaces the earlier "comparative recorded-vote count; not a
+participation percentage" bar now that a genuine, verified percentage exists.
