@@ -7,6 +7,7 @@
     "fetch:governance": "node scripts/fetch-governance.mjs",
     "fetch:uptime": "node scripts/fetch-uptime.mjs",
     "fetch:council-history": "node scripts/fetch-council-history.mjs",
+    "fetch:discussion": "node scripts/fetch-discussion.mjs",
     "test": "node --test"
   },
   "engines": {

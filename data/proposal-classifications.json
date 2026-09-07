@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "approvedAt": "2026-09-07T00:00:00.000Z",
+  "approvedBy": "project-owner",
+  "proposals": [
+    { "number": 1, "id": "69243355008ce4201f06946b", "status": "test", "reason": "Platform debug proposal; title and recorded messages are explicit interface tests." },
+    { "number": 2, "id": "692433721ea69cca3a40afa0", "status": "unreviewed", "reason": "Ambiguous title and no positive evidence proving whether this was real or a platform test." },
+    { "number": 3, "id": "692451dbc3a821b26a8e9adc", "status": "test", "reason": "Placeholder proposal with replaced status and an explicit replacement title." },
+    { "number": 4, "id": "692451eed13ef5502534d91c", "status": "test", "reason": "Replacement of the platform-test proposal; recorded messages are interface-test traffic." },
+    { "number": 5, "id": "69245578684209924c5fbe0b", "status": "real", "reason": "Concrete developer-hub proposal with attributable multi-organization governance discussion and votes." },
+    { "number": 6, "id": "692dbc8fe505a19890ccce5b", "status": "unreviewed", "reason": "Governance-platform MVP proposal contains both test framing and genuine Council votes/commentary." },
+    { "number": 7, "id": "698248d380b112125a296fc4", "status": "real", "reason": "Concrete fee and block-time governance proposal authored by COZ with recorded Council votes." }
+  ]
+}

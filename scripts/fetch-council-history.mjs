@@ -20,7 +20,7 @@ const DEFAULT_OUTPUT = resolve(HERE, "../data/council-history.json");
 // Exactly the two RPC sources this feature was verified against (see the investigation doc).
 // `rpc1.n3.nspcc.ru` is deliberately excluded here: it runs `KeepOnlyLatestState` and returns
 // error -606 for any historical `getstate` call, which was confirmed live, not assumed.
-const DEFAULT_RPC_URLS = ["https://mainnet2.neo.coz.io:443", "https://n3seed1.ngd.network:10332"];
+export const DEFAULT_STATE_RPC_URLS = ["https://mainnet2.neo.coz.io:443", "https://n3seed1.ngd.network:10332"];
 
 const NEO_TOKEN_HASH = "0xef4073a0f2b305a38ec4050e4d3d28bc40ea63f5";
 const COMMITTEE_STORAGE_KEY_BASE64 = "Dg=="; // Prefix_Committee = 14 = 0x0E
@@ -371,6 +371,12 @@ async function rpc(rpcUrl, method, params = []) {
   return payload.result;
 }
 
+export async function getCurrentChainHeight(rpcUrl = DEFAULT_STATE_RPC_URLS[0]) {
+  const currentHeight = (await rpc(rpcUrl, "getblockcount")) - 1;
+  assert(Number.isInteger(currentHeight) && currentHeight > 0, `RPC block count is invalid for ${rpcUrl}`);
+  return currentHeight;
+}
+
 function makeBlockTimeGetter(rpcUrl, cache) {
   return async (height) => {
     const key = `${rpcUrl}:${height}`;
@@ -382,12 +388,19 @@ function makeBlockTimeGetter(rpcUrl, cache) {
   };
 }
 
-async function resolveProposalRecord(proposal, { rpcUrls, currentHeight, timeCache }) {
+export async function resolveHistoricalCommitteeAtTimestamp(timestamp, {
+  rpcUrls = DEFAULT_STATE_RPC_URLS,
+  currentHeight,
+  timeCache = new Map(),
+  context = "historical timestamp",
+} = {}) {
+  assert(Array.isArray(rpcUrls) && rpcUrls.length === 2, "exactly two corroborating StateService RPC sources are required");
   const [primaryUrl, secondaryUrl] = rpcUrls;
-  const targetMs = parseCreatedAtUtc(proposal.createdAt);
+  const targetMs = parseCreatedAtUtc(timestamp);
+  const tipHeight = currentHeight ?? await getCurrentChainHeight(primaryUrl);
 
   const getPrimaryTime = makeBlockTimeGetter(primaryUrl, timeCache);
-  const boundaryHeight = await findBoundaryHeight(targetMs, { minHeight: 0, maxHeight: currentHeight, getBlockTime: getPrimaryTime });
+  const boundaryHeight = await findBoundaryHeight(targetMs, { minHeight: 0, maxHeight: tipHeight, getBlockTime: getPrimaryTime });
 
   const getSecondaryTime = makeBlockTimeGetter(secondaryUrl, timeCache);
   await assertBoundaryAgreement(boundaryHeight, targetMs, getSecondaryTime);
@@ -398,21 +411,19 @@ async function resolveProposalRecord(proposal, { rpcUrls, currentHeight, timeCac
     rpc(primaryUrl, "getstateroot", [boundaryHeight]),
     rpc(secondaryUrl, "getstateroot", [boundaryHeight]),
   ]);
-  assertStateRootAgreement(rootA, rootB, `proposal #${proposal.number} at height ${boundaryHeight}`);
+  assertStateRootAgreement(rootA, rootB, `${context} at height ${boundaryHeight}`);
 
   const [rawA, rawB] = await Promise.all([
     rpc(primaryUrl, "getstate", [rootA.roothash, NEO_TOKEN_HASH, COMMITTEE_STORAGE_KEY_BASE64]),
     rpc(secondaryUrl, "getstate", [rootB.roothash, NEO_TOKEN_HASH, COMMITTEE_STORAGE_KEY_BASE64]),
   ]);
-  assertRawCommitteeAgreement(rawA, rawB, `proposal #${proposal.number} at height ${boundaryHeight}`);
+  assertRawCommitteeAgreement(rawA, rawB, `${context} at height ${boundaryHeight}`);
 
   const committee = validateCommittee(decodeCommitteeValue(rawA));
 
   return {
-    number: proposal.number,
-    proposalId: proposal.id,
-    createdAt: proposal.createdAt,
-    createdAtUtc: new Date(targetMs).toISOString(),
+    checkedAt: timestamp,
+    checkedAtUtc: new Date(targetMs).toISOString(),
     blockHeight: boundaryHeight,
     blockTimeUtc: new Date(boundaryTimeMs).toISOString(),
     stateRoot: rootA.roothash.toLowerCase(),
@@ -422,8 +433,27 @@ async function resolveProposalRecord(proposal, { rpcUrls, currentHeight, timeCac
   };
 }
 
+async function resolveProposalRecord(proposal, options) {
+  const record = await resolveHistoricalCommitteeAtTimestamp(proposal.createdAt, {
+    ...options,
+    context: `proposal #${proposal.number}`,
+  });
+  return {
+    number: proposal.number,
+    proposalId: proposal.id,
+    createdAt: proposal.createdAt,
+    createdAtUtc: record.checkedAtUtc,
+    blockHeight: record.blockHeight,
+    blockTimeUtc: record.blockTimeUtc,
+    stateRoot: record.stateRoot,
+    sources: record.sources,
+    rawValueBase64: record.rawValueBase64,
+    committee: record.committee,
+  };
+}
+
 export async function fetchCouncilHistory({
-  rpcUrls = (process.env.QUORUM_WATCH_STATE_RPC_URLS?.split(",").map((url) => url.trim()).filter(Boolean) ?? DEFAULT_RPC_URLS),
+  rpcUrls = (process.env.QUORUM_WATCH_STATE_RPC_URLS?.split(",").map((url) => url.trim()).filter(Boolean) ?? DEFAULT_STATE_RPC_URLS),
   governancePath = DEFAULT_GOVERNANCE_INPUT,
   rosterPath = DEFAULT_ROSTER,
 } = {}) {
@@ -431,8 +461,7 @@ export async function fetchCouncilHistory({
   const governanceSnapshot = JSON.parse(await readFile(governancePath, "utf8"));
   const roster = JSON.parse(await readFile(rosterPath, "utf8"));
 
-  const currentHeight = (await rpc(rpcUrls[0], "getblockcount")) - 1;
-  assert(Number.isInteger(currentHeight) && currentHeight > 0, `RPC block count is invalid for ${rpcUrls[0]}`);
+  const currentHeight = await getCurrentChainHeight(rpcUrls[0]);
 
   const timeCache = new Map();
   const proposalRecords = [];

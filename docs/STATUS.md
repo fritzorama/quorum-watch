@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-09-07 (historical Council eligibility reconstructed)
+Last updated: 2026-09-07 (discussion collector implemented; live source conflict found)
 
 This file is the single source of truth for where the project actually is.
 Update it at the end of every slice — before committing.
@@ -79,19 +79,34 @@ Update it at the end of every slice — before committing.
 - Cloudflare's build now publishes every checked-in JSON snapshot under
   `/data/`, so the development page can load the uptime observation without
   changing how the approved production branch is selected.
+- Discussion-engagement research identified Tier-A evidence in neo.community's
+  proposal `messages[]` and `proposer_org_id`, using the same organization-ID to
+  candidate-public-key attribution as votes. A dependency-free collector and
+  fixture tests now exist on `slice-3-discussion-engagement`. It preserves
+  authorship/comments, verifies Council eligibility at each item's timestamp,
+  keeps `unreviewed` proposals inert, detects evidence mutation, and computes
+  only raw evidence counts — no percentage or combined score.
+- The first live discussion run failed closed before writing a snapshot because
+  Proposal #5 currently reports `message_count: 13` while returning only 12
+  message records. This may indicate deleted/hidden evidence or a stale API
+  aggregate. The mismatch is preserved as a blocker; the collector must not
+  silently treat the visible 12 records as a complete history.
 
 ## NEXT (the slice we are currently building)
 
-**Slice 2 — Node health and Consensus performance.** Continue the prospective
-primary-duty observation through at least 2026-09-12 19:52:55 UTC, then refresh
-the snapshot and inspect all missed-duty evidence. Publish that narrow
-percentage only if the full window validates. Separately define a sourced,
-effective-dated registry of independently attributable Council endpoints before
-collecting or scoring node health; an unidentified endpoint remains `Not tracked`.
+**Slice 3 — Discussion engagement evidence.** Resolve the live Proposal #5
+message-count conflict before an approved discussion snapshot can be written.
+Confirm with neo.community/Flamingo maintainers whether `message_count` includes
+deleted or hidden messages. Once completeness is established, run and inspect
+the real snapshot before connecting any discussion field to the frontend.
 
 ## LATER (recorded, not started)
 
-- Discussion engagement metric + the org→GitHub-handle mapping table
+- Optional future discussion expansion into lower-confidence GitHub/NEP evidence,
+  kept separate from the Tier-A neo.community counts
+- Resume the prospective Consensus primary-duty observation and independently
+  attributable Council-endpoint research after ecosystem contacts clarify the
+  intended node-health evidence.
 - Broader Consensus participation (Prepare/Commit and view-change evidence),
   which may require a continuously running consensus-message listener
 - Scheduled/automated refresh (GitHub Actions cron + static redeploy is still

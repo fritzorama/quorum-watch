@@ -180,3 +180,21 @@ proposals · {percent}%`, colored green (75–100%), yellow (50–74.99%), red (
 empty state (0%, or 0 eligible proposals to date — e.g. a member whose seat began after every
 currently checked-in proposal). This replaces the earlier "comparative recorded-vote count; not a
 participation percentage" bar now that a genuine, verified percentage exists.
+
+### 2026-09-07 — Discussion engagement begins with objective neo.community evidence, not GitHub scoring
+
+The first discussion source is neo.community proposal authorship and native comments, attributed
+through the same governance organization ID and stable candidate public key used by the vote
+collector. GitHub and other secondary venues remain out of scope. Each evidence item is checked
+against the independently corroborated historical Council committee at its own timestamp.
+
+The pilot publishes only raw proposals-authored, recorded-comments, and distinct-real-proposals-
+commented-on counts. It does not judge comment quality, compute an engagement percentage, or feed a
+combined score because the available source does not yet prove a fair opportunity-to-comment
+denominator. The user approved these initial classifications: `test` = proposals #1, #3, #4;
+`real` = #5, #7; `unreviewed` = #2, #6. New and unreviewed proposals are preserved but inert and do
+not block verified updates concerning already-real proposals.
+
+Missing or changed evidence is not silently accepted. The first live collector run exposed this
+rule immediately: Proposal #5 reports 13 messages but returns only 12 records. Until the source's
+count semantics or missing record are resolved, no discussion snapshot may be published.

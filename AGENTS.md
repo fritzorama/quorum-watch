@@ -56,6 +56,7 @@ history and mockup copy as context, not as authoritative project state. Keep
 - Refresh governance data: run `npm run fetch:governance`.
 - Extend the consensus-duty observation: run `npm run fetch:uptime`.
 - Refresh historical Council eligibility: run `npm run fetch:council-history`.
+- Collect Tier-A discussion evidence: run `npm run fetch:discussion`.
 
 The production site and later slice branches read verified governance vote records from the checked-in
 snapshot. A Slice 2 branch may show uptime collection status, but production
@@ -73,6 +74,17 @@ vote from a public key absent from that proposal's verified committee is a data 
 silent miscount: the collector fails closed and preserves the conflicting evidence rather than
 publishing it. Never turn an absent historical vote into a missed vote or rate for a proposal this
 collector has not verified eligibility for.
+
+Discussion engagement is limited initially to objective Tier-A evidence from
+neo.community proposal authorship and comments. Each item is attributed through
+the governance organization ID and stable candidate public key, and Council
+eligibility is verified at the item's own timestamp through the same two-node
+historical committee method used for votes. Publish raw authorship, comment, and
+distinct-proposal counts only; no discussion percentage or combined score is
+currently defensible. Proposal classifications live in
+`data/proposal-classifications.json`; `unreviewed` proposals remain preserved but
+inert. Source-count disagreement, identity conflict, or evidence mutation fails
+closed without replacing the last approved snapshot.
 
 Council node health and Consensus performance are separate metrics. Council
 node health remains `not tracked` unless a public endpoint can be independently
