@@ -80,3 +80,33 @@ links, and mobile horizontal overflow was fixed.
 **Release state:** Approved by the user on 2026-09-03 and released to `main`.
 The production site remains tied only to `main`; subsequent development moves
 to a new slice branch and preview channel.
+
+---
+
+## Slice 3 — Source-separated governance participation (released)
+
+**Problem:** The neo.community proposal portal does not contain every form of
+Council decision-making. Treating its seven proposals as the entire voting
+record understated participation and risked conflating discussion with actual
+Council approvals.
+
+**What was implemented:** The roll call now presents Governance participation
+as an umbrella with separate evidence categories. Eligible neo.community portal
+votes retain their own percentage. A new fail-closed snapshot records reviewed
+Council transaction approvals and distinguishes signatures included in the
+executed witness from additional verified signatures preserved off-chain. The
+compact rows summarize the two source counts, while nested disclosures link to
+the original portal proposals and Neo3Scan decision record.
+
+**Deliberately not included:** No combined percentage or score, no claim that
+the Council-decision catalogue is complete, and no inference that an absent
+signature proves a member failed to participate.
+
+**How we knew it worked:** The collector validates the approved transaction,
+committee, signature-set fingerprint, and executed-witness quorum. Fifty-four
+tests pass, including fail-closed cases for source disappearance, signature
+mutation, duplicate signers, and an incomplete witness. The rendered desktop
+interface and nested evidence controls were inspected locally and again through
+the Cloudflare branch preview.
+
+**Release state:** Approved by the user on 2026-09-08 for release to `main`.

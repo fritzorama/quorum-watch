@@ -63,8 +63,8 @@ Update it at the end of every slice — before committing.
   `https://neoquorumwatch.com` (provider fallback:
   `https://quorum-watch.pages.dev`). The current terminology-correction preview
   is isolated on `slice-2-vote-scope-correction` and published at
-  `https://dev.neoquorumwatch.com`. The active implementation branch is now
-  `slice-3-governance-participation`.
+  `https://dev.neoquorumwatch.com`. Slice 3 was approved for production on
+  2026-09-08; create the next development branch from the updated `origin/main`.
 - Slice 2 has a dependency-free Neo RPC collector and a checked-in observation
   beginning at block 12,980,715 on 2026-09-05 19:52:55 UTC. It measures
   scheduled primary-duty completion for the seven consensus nodes only. Three
@@ -83,13 +83,6 @@ Update it at the end of every slice — before committing.
   changing how the approved production branch is selected.
 
 ## NEXT (the slice we are currently building)
-
-**Governance participation by source.** Keep eligible neo.community portal-vote
-coverage separate from reviewed Council transaction approvals. The first
-Council-approval snapshot covers Neo3Scan request #12 and distinguishes the 11
-signatures included in the executed witness from two additional independently
-verified signatures recorded off-chain. Show both sources under the broader
-participation heading, with their own evidence links and no combined percentage.
 
 **Slice 2 — Node health and Consensus performance.** Continue the prospective
 primary-duty observation through at least 2026-09-12 19:52:55 UTC, then refresh

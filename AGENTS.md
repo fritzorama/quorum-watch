@@ -91,7 +91,8 @@ zero. Do not publish a percentage before the full seven-day window.
 - Production branch: `main`
 - Production domain: `https://neoquorumwatch.com`
 - Active development domain: `https://dev.neoquorumwatch.com`
-- Active development branch: `slice-3-governance-participation`
+- Active development branch: none immediately after the Slice 3 release; create the next slice branch
+  from the latest `origin/main` before further implementation.
 - Cloudflare Pages fallback: `https://quorum-watch.pages.dev`
 - The development domain is a proxied CNAME to the active branch alias
   (Cloudflare may truncate
