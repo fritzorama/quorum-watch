@@ -55,9 +55,10 @@ organizations, so it cannot yet support its central claim.
    participation counts.
 4. Reconcile the current 21-seat roster by candidate public key and retain the
    roster observation time.
-5. Connect only recorded governance votes to the frontend, with snapshot
+5. Connect only votes recorded on the neo.community governance portal to the frontend, with snapshot
    freshness, compact roll-call rows, expanded metric details, and a nested
-   proposal-evidence disclosure with source links. Uptime and discussion remain
+   proposal-evidence disclosure with source links. This portal-specific evidence
+   is not a complete record of every Council approval mechanism. Uptime and discussion remain
    `not tracked`; combined score remains `unavailable`.
 
 **Takeover finding:** The original scraping assumption was stale. The current

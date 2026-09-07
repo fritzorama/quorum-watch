@@ -57,8 +57,8 @@ history and mockup copy as context, not as authoritative project state. Keep
 - Extend the consensus-duty observation: run `npm run fetch:uptime`.
 - Refresh historical Council eligibility: run `npm run fetch:council-history`.
 
-The production site and later slice branches read verified governance vote records from the checked-in
-snapshot. A Slice 2 branch may show uptime collection status, but production
+The production site and later slice branches read verified neo.community portal vote records from the
+checked-in snapshot. These records do not represent every Council approval mechanism. A Slice 2 branch may show uptime collection status, but production
 uptime, discussion, and the combined score remain unavailable.
 
 **Historical Council eligibility (dated seat interval rule, implemented).** A member is eligible

@@ -180,3 +180,15 @@ proposals · {percent}%`, colored green (75–100%), yellow (50–74.99%), red (
 empty state (0%, or 0 eligible proposals to date — e.g. a member whose seat began after every
 currently checked-in proposal). This replaces the earlier "comparative recorded-vote count; not a
 participation percentage" bar now that a genuine, verified percentage exists.
+
+### 2026-09-07 — Scope portal votes separately from Council approvals
+
+The existing snapshot proves votes recorded by the neo.community proposal portal; it does not prove
+complete Council voting activity. Council decisions can also be executed through committee-authorized
+multisignature transactions, including the three-second block-time/GAS adjustment. Some additional
+valid signatures may be collected off-chain but omitted from the final witness after quorum is reached.
+The UI therefore names the existing metric `neo.community votes` and describes its percentage as
+eligible-portal-proposal coverage. Future executed-witness evidence and additional off-chain signature
+evidence must remain separately labeled; they must not be blended into this percentage or treated as
+proof that a member with no visible signature failed to participate. See
+`docs/COUNCIL-VOTING-MECHANISMS-RESEARCH.md`.

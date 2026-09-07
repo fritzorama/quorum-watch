@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-09-07 (historical Council eligibility reconstructed)
+Last updated: 2026-09-07 (neo.community vote scope clarified)
 
 This file is the single source of truth for where the project actually is.
 Update it at the end of every slice — before committing.
@@ -14,10 +14,11 @@ Update it at the end of every slice — before committing.
     Proposal #7, 0 of 7 proposal records reaching the 11-seat majority.
   - Compact sortable roll-call rows, expandable metric details, a nested
     disclosure of each member's linked proposal evidence, data freshness,
-    light/dark themes, and a checked mobile layout. The vote-participation bar
-    now shows a verified eligible-proposal percentage (`{recorded}/{eligible}
-    eligible proposals · {percent}%`), colored green/yellow/red/empty by the
-    documented thresholds — see the historical-eligibility bullet below.
+    light/dark themes, and a checked mobile layout. The neo.community-vote bar
+    shows verified eligible-portal-proposal coverage (`{recorded}/{eligible}
+    eligible portal proposals · {percent}%`), colored green/yellow/red/empty
+    by the documented thresholds. It is explicitly not presented as coverage
+    of every Council approval mechanism.
   - Uptime and discussion are clearly `not tracked`; the combined score is
     `unavailable`. No synthetic member-level values remain.
 - A dependency-free historical Council collector
@@ -52,8 +53,8 @@ Update it at the end of every slice — before committing.
   current seats by public key, preserves source URLs and freshness, and keeps
   four Nash.io vote records in `excludedVotes` because Nash is currently rank
   22 rather than silently attributing them to a current seat.
-- Recorded votes and eligible-proposal participation percentages are now shown
-  for all 21 current members. A non-vote is still never inferred as "missed"
+- Votes recorded on neo.community and eligible-portal-proposal coverage are
+  shown for all 21 current members. A non-vote is still never inferred as "missed"
   outside a proposal the historical Council collector has verified the member
   was eligible for; the current roster observation alone still does not prove
   who held every seat at each older proposal date — the collector above proves
@@ -81,6 +82,12 @@ Update it at the end of every slice — before committing.
   changing how the approved production branch is selected.
 
 ## NEXT (the slice we are currently building)
+
+**Vote-mechanism scope correction.** Preview the clarified neo.community-only
+vote terminology and retain `docs/COUNCIL-VOTING-MECHANISMS-RESEARCH.md` as the
+research basis for a future, separate Council-approval evidence category. Do
+not blend portal votes, executed multisig witnesses, or additional off-chain
+signatures into one percentage.
 
 **Slice 2 — Node health and Consensus performance.** Continue the prospective
 primary-duty observation through at least 2026-09-12 19:52:55 UTC, then refresh

@@ -1,6 +1,7 @@
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Quorum Watch</title>
-<meta name="description" content="A public record of Neo Council governance votes, independently verifiable node health, and Consensus performance.">
+<meta name="description" content="A public record of Neo Council votes recorded on neo.community, Consensus performance, and other independently verifiable participation evidence.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -421,11 +422,11 @@
   <div class="masthead">
     <div class="masthead-top">
       <h1>Quorum Watch</h1>
-      <span class="tag">Slice 2 preview · consensus observation</span>
+      <span class="tag">Independent public record · verified sources</span>
     </div>
     <p class="lede">
-      A public record of Neo's 21 elected Council members — their recorded governance votes,
-      independently verifiable node health, and participation in public discussion.
+      A public record of Neo's 21 elected Council members — their votes recorded on neo.community,
+      available Consensus evidence, and participation in public discussion.
     </p>
   </div>
 
@@ -446,7 +447,7 @@
   <div class="why">
     <div class="why-cell crit">
       <div class="why-num" id="latest-votes">—</div>
-      <div class="why-label" id="latest-label">Council members recorded as voting on the latest proposal</div>
+      <div class="why-label" id="latest-label">Council members recorded as voting on the latest neo.community proposal</div>
     </div>
     <div class="why-cell crit">
       <div class="why-num" id="majority-record">—</div>
@@ -461,15 +462,16 @@
   <div class="formula">
     <h2>Metric availability</h2>
     <div class="formula-row">
-      <span class="formula-term"><span class="swatch" style="background:var(--metric-vote)"></span>Governance votes · verified eligible-participation %</span>
+      <span class="formula-term"><span class="swatch" style="background:var(--metric-vote)"></span>neo.community votes · verified eligible-proposal coverage</span>
       <span class="formula-term"><span class="swatch" style="background:var(--metric-uptime)"></span>Node health · not tracked</span>
       <span class="formula-term"><span class="swatch" style="background:var(--metric-discuss)"></span>Discussion · not tracked</span>
       <span class="formula-term" style="font-weight:600;">Combined score · unavailable</span>
     </div>
     <p class="formula-note">
-      Vote participation is the share of proposals a member voted on, among only the proposals
-      opened while that member's Council seat is independently verified on-chain — not a raw vote
-      count. A seat not yet proven for any proposal reads as not eligible, never as a missed vote.
+      This percentage covers only proposals recorded on neo.community: it is the share a member
+      voted on among proposals opened while that member's Council seat is independently verified
+      on-chain. It does not cover every Council approval mechanism. A seat not yet proven for any
+      proposal reads as not eligible, never as a missed vote.
       Public Council endpoints have not yet been independently attributed, so node health is not tracked.
       A separate primary-duty observation is collecting for the dynamically identified Consensus nodes.
     </p>
@@ -484,7 +486,7 @@
     <div class="ledger-head">
       <span></span>
       <button data-sort="name">Member <span class="sort-arrow">↕</span></button>
-      <button class="col-num col-vote" data-sort="vote">Votes <span class="sort-arrow">↕</span></button>
+      <button class="col-num col-vote" data-sort="vote">Portal votes <span class="sort-arrow">↕</span></button>
       <span class="col-num col-uptime">Node health</span>
       <span class="col-num col-discuss">Threads</span>
       <span class="col-num col-score">Score</span>
@@ -495,7 +497,8 @@
   <footer>
     Current roster and locations are verified against the public Neo Council candidate list at
     <a href="https://neo.community/candidates" target="_blank" rel="noopener">neo.community/candidates</a>.
-    Governance records come from the public neo.community governance API. Consensus-duty evidence
+    The displayed proposal votes come from the public neo.community governance API and do not represent
+    every Council approval mechanism. Consensus-duty evidence
     comes from three corroborating Neo N3 RPC nodes. Discussion and combined scores are not tracked.
     Independent preview — not an official Neo Foundation,
     NGD, or Council product.
@@ -606,7 +609,7 @@
         aria-label="${isEvidenceOpen ? "Hide" : "Show"} recorded proposal evidence for ${member.name}">
         <span class="evidence-chevron" aria-hidden="true">▶</span>
       </button>`;
-    const label = `<span class="metric-label vote-label"><span class="swatch" style="background:var(--metric-vote)"></span>Vote participation${toggle}</span>`;
+    const label = `<span class="metric-label vote-label"><span class="swatch" style="background:var(--metric-vote)"></span>neo.community votes${toggle}</span>`;
     if(!el){
       return `
       <div class="metric-line">
@@ -620,16 +623,16 @@
       <div class="metric-line">
         ${label}
         <span class="bar-track" title="Not yet a Council committee member for any recorded proposal"><span class="bar-fill band-not-eligible" style="width:0%"></span></span>
-        <span class="metric-val">Not eligible for any recorded proposal</span>
+        <span class="metric-val">Not eligible for any recorded portal proposal</span>
       </div>`;
     }
     return `
       <div class="metric-line">
         ${label}
-        <span class="bar-track" title="Share of proposals recorded as voted on, among proposals where this member's Council seat is verified on-chain">
+        <span class="bar-track" title="Share of neo.community proposals recorded as voted on, among proposals where this member's Council seat is verified on-chain">
           <span class="bar-fill band-${el.participationBand}" style="width:${el.participationPercent}%"></span>
         </span>
-        <span class="metric-val">${el.recordedEligibleVoteCount}/${el.eligibleProposalCount} eligible proposals · ${el.participationPercent}%</span>
+        <span class="metric-val">${el.recordedEligibleVoteCount}/${el.eligibleProposalCount} eligible portal proposals · ${el.participationPercent}%</span>
       </div>`;
   }
 
@@ -743,7 +746,7 @@
     }));
     proposals = snapshot.proposals;
     document.getElementById("latest-votes").textContent = `${snapshot.latestProposal.voterCount} / 21`;
-    document.getElementById("latest-label").innerHTML = `Council members recorded as voting on <a href="${snapshot.latestProposal.sourceUrl}" target="_blank" rel="noopener">Proposal #${snapshot.latestProposal.number}</a>`;
+    document.getElementById("latest-label").innerHTML = `Council members recorded as voting on neo.community <a href="${snapshot.latestProposal.sourceUrl}" target="_blank" rel="noopener">Proposal #${snapshot.latestProposal.number}</a>`;
     document.getElementById("majority-record").textContent = `${snapshot.proposalsReachingMajority} / ${snapshot.proposalCount}`;
     document.getElementById("majority-threshold").textContent = snapshot.majorityThreshold;
     const fresh = new Date(snapshot.fetchedAt);
