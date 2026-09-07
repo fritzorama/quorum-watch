@@ -59,11 +59,12 @@ Update it at the end of every slice — before committing.
   was eligible for; the current roster observation alone still does not prove
   who held every seat at each older proposal date — the collector above proves
   it per proposal, on-chain.
-- Cloudflare Pages now hosts the approved `main` branch at
+- Cloudflare Pages hosts the approved `main` branch at
   `https://neoquorumwatch.com` (provider fallback:
-  `https://quorum-watch.pages.dev`). Slice 2 development is isolated on
-  `slice-2-node-uptime` and published at `https://dev.neoquorumwatch.com`
-  through its stable Cloudflare branch alias.
+  `https://quorum-watch.pages.dev`). The current terminology-correction preview
+  is isolated on `slice-2-vote-scope-correction` and published at
+  `https://dev.neoquorumwatch.com` through Cloudflare's truncated stable branch
+  alias `slice-2-vote-scope-correctio.quorum-watch.pages.dev`.
 - Slice 2 has a dependency-free Neo RPC collector and a checked-in observation
   beginning at block 12,980,715 on 2026-09-05 19:52:55 UTC. It measures
   scheduled primary-duty completion for the seven consensus nodes only. Three

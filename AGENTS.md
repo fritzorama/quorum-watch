@@ -88,10 +88,11 @@ zero. Do not publish a percentage before the full seven-day window.
 - Production branch: `main`
 - Production domain: `https://neoquorumwatch.com`
 - Active development domain: `https://dev.neoquorumwatch.com`
-- Active development branch: `slice-2-node-uptime`
+- Active development branch: `slice-2-vote-scope-correction`
 - Cloudflare Pages fallback: `https://quorum-watch.pages.dev`
 - The development domain is a proxied CNAME to the active branch alias
-  (`slice-2-node-uptime.quorum-watch.pages.dev`), not to the production Pages
+  (`slice-2-vote-scope-correctio.quorum-watch.pages.dev`; Cloudflare truncates
+  the branch alias), not to the production Pages
   hostname. Update this mapping deliberately when the active long-lived slice
   branch changes.
 - Non-`main` branches deploy as preview builds for user testing. Do not attach
