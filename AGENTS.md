@@ -56,9 +56,12 @@ history and mockup copy as context, not as authoritative project state. Keep
 - Refresh governance data: run `npm run fetch:governance`.
 - Extend the consensus-duty observation: run `npm run fetch:uptime`.
 - Refresh historical Council eligibility: run `npm run fetch:council-history`.
+- Refresh reviewed Council-approval evidence: run `npm run fetch:council-approvals`.
 
 The production site and later slice branches read verified neo.community portal vote records from the
-checked-in snapshot. These records do not represent every Council approval mechanism. A Slice 2 branch may show uptime collection status, but production
+checked-in snapshot. Council transaction approvals use the separate checked-in
+`data/council-approvals.json` snapshot and must remain source-labeled; never combine the portal
+percentage with transaction-signature evidence into one percentage. A Slice 2 branch may show uptime collection status, but production
 uptime, discussion, and the combined score remain unavailable.
 
 **Historical Council eligibility (dated seat interval rule, implemented).** A member is eligible
@@ -88,10 +91,10 @@ zero. Do not publish a percentage before the full seven-day window.
 - Production branch: `main`
 - Production domain: `https://neoquorumwatch.com`
 - Active development domain: `https://dev.neoquorumwatch.com`
-- Active development branch: `slice-2-vote-scope-correction`
+- Active development branch: `slice-3-governance-participation`
 - Cloudflare Pages fallback: `https://quorum-watch.pages.dev`
 - The development domain is a proxied CNAME to the active branch alias
-  (`slice-2-vote-scope-correctio.quorum-watch.pages.dev`; Cloudflare truncates
+  (Cloudflare may truncate
   the branch alias), not to the production Pages
   hostname. Update this mapping deliberately when the active long-lived slice
   branch changes.

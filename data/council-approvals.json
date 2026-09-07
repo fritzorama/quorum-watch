@@ -1,0 +1,414 @@
+{
+  "schemaVersion": 1,
+  "fetchedAt": "2026-09-07T22:09:08.820Z",
+  "scope": "Reviewed Neo3Scan Council-approval records; not a complete catalogue of Council decisions.",
+  "combinedPercentageAvailable": false,
+  "sources": {
+    "list": "https://www.neo3scan.com/api/multisig/requests?network=mainnet",
+    "details": "https://www.neo3scan.com/api/multisig/requests/{id}?network=mainnet",
+    "currentCouncil": "https://neo.community/candidates"
+  },
+  "decisionCount": 1,
+  "decisions": [
+    {
+      "id": "neo3scan:12",
+      "source": "neo3scan",
+      "sourceRecordId": 12,
+      "title": "3-Second Consensus: Block Time and GAS Per Block Adjustment",
+      "description": "Set block generation time to 3 seconds (setMillisecondsPerBlock=3000) and GAS per block to 1 GAS (setGasPerBlock=100000000) for the Neo N3 mainnet.",
+      "createdAt": "2026-04-14T15:33:38.012Z",
+      "executedAt": "2026-04-23T05:32:03.000Z",
+      "transactionHash": "0x50f683f5db177d2e23d11882c411e5cec37c446213d9cea3174d9ad30db836f1",
+      "status": "executed",
+      "requiredSignatures": 11,
+      "includedSignatureCount": 11,
+      "additionalSignatureCount": 2,
+      "sourceUrl": "https://www.neo3scan.com/tools/governance/12",
+      "evidence": [
+        {
+          "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-17T13:29:15.126495+00:00"
+        },
+        {
+          "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-20T02:53:20.344086+00:00"
+        },
+        {
+          "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        },
+        {
+          "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-20T05:27:38.166718+00:00"
+        },
+        {
+          "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-17T13:05:39.383703+00:00"
+        },
+        {
+          "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        },
+        {
+          "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        },
+        {
+          "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-20T10:27:16.688545+00:00"
+        },
+        {
+          "publicKey": "0362087e1f9ae6e7d0c1d05bbd17a724e0d5f92662e766980e47a5194d22c8fa80",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-18T00:52:29.773168+00:00"
+        },
+        {
+          "publicKey": "036eaee5b856e29a030307630bbaf0a63534c011af1c2c96782d36ebfb37d2ebb0",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-17T10:52:02.811217+00:00"
+        },
+        {
+          "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        },
+        {
+          "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        },
+        {
+          "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-20T03:39:02.814864+00:00"
+        },
+        {
+          "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-18T03:10:08.688807+00:00"
+        },
+        {
+          "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-20T02:43:41.26875+00:00"
+        },
+        {
+          "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+          "state": "additional-signature-recorded-off-chain",
+          "signedAt": "2026-04-20T03:26:56.311728+00:00"
+        },
+        {
+          "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        },
+        {
+          "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-17T12:30:51.445429+00:00"
+        },
+        {
+          "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+          "state": "additional-signature-recorded-off-chain",
+          "signedAt": "2026-04-17T21:13:23.568077+00:00"
+        },
+        {
+          "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        },
+        {
+          "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        }
+      ]
+    }
+  ],
+  "participation": [
+    {
+      "publicKey": "03b209fd4f53a7170ea4444e0cb0a6bb6a53c2bd016926989cf85f9b0fba17a70c",
+      "includedInExecutedWitness": 0,
+      "additionalSignatures": 0,
+      "documentedApprovals": 0,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        }
+      ]
+    },
+    {
+      "publicKey": "03d9e8b16bd9b22d3345d6d4cde31be1c3e1d161532e3d0ccecb95ece2eb58336e",
+      "includedInExecutedWitness": 1,
+      "additionalSignatures": 0,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-17T12:30:51.445429+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "0239a37436652f41b3b802ca44cbcb7d65d3aa0b88c9a0380243bdbe1aaa5cb35b",
+      "includedInExecutedWitness": 0,
+      "additionalSignatures": 0,
+      "documentedApprovals": 0,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        }
+      ]
+    },
+    {
+      "publicKey": "036eaee5b856e29a030307630bbaf0a63534c011af1c2c96782d36ebfb37d2ebb0",
+      "includedInExecutedWitness": 1,
+      "additionalSignatures": 0,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-17T10:52:02.811217+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "02a93d383ad82bb2b85943c83fbb297321bb37fcca1f8c1eb189ffd2b67466d58a",
+      "includedInExecutedWitness": 0,
+      "additionalSignatures": 1,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "additional-signature-recorded-off-chain",
+          "signedAt": "2026-04-20T03:26:56.311728+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "029b46bf20b19fb3da1a4591bac09acd86c460ae29cb74c7634d658702205ec2f7",
+      "includedInExecutedWitness": 1,
+      "additionalSignatures": 0,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-20T02:43:41.26875+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "0362087e1f9ae6e7d0c1d05bbd17a724e0d5f92662e766980e47a5194d22c8fa80",
+      "includedInExecutedWitness": 1,
+      "additionalSignatures": 0,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-18T00:52:29.773168+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "02946248f71bdf14933e6735da9867e81cc9eea0b5895329aa7f71e7745cf40659",
+      "includedInExecutedWitness": 1,
+      "additionalSignatures": 0,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-18T03:10:08.688807+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "02517f552c23de3574dba40d9d0de0280a5a0170a209f0386aa84c09caab95e830",
+      "includedInExecutedWitness": 0,
+      "additionalSignatures": 0,
+      "documentedApprovals": 0,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        }
+      ]
+    },
+    {
+      "publicKey": "0389ba00856f58bdc2b7c3fd6c2e73ed4829252f38083c1e295574ca599e93fe82",
+      "includedInExecutedWitness": 0,
+      "additionalSignatures": 0,
+      "documentedApprovals": 0,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        }
+      ]
+    },
+    {
+      "publicKey": "02237309a0633ff930d51856db01d17c829a5b2e5cc2638e9c03b4cfa8e9c9f971",
+      "includedInExecutedWitness": 1,
+      "additionalSignatures": 0,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-20T02:53:20.344086+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "02ec143f00b88524caf36a0121c2de09eef0519ddbe1c710a00f0e2663201ee4c0",
+      "includedInExecutedWitness": 0,
+      "additionalSignatures": 1,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "additional-signature-recorded-off-chain",
+          "signedAt": "2026-04-17T21:13:23.568077+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "0392fbd1d809a3c62f7dcde8f25454a1570830a21e4b014b3f362a79baf413e115",
+      "includedInExecutedWitness": 1,
+      "additionalSignatures": 0,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-20T03:39:02.814864+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "035d574cc6a904e82dfd82d7f6fc9c2ca042d4410a4910ecc8c07a07db49dc6513",
+      "includedInExecutedWitness": 1,
+      "additionalSignatures": 0,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-20T10:27:16.688545+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "0248a37e04c7a5fb9fdc9f0323b2955a94cbb2296d2ad1feacea24ec774a87c4a4",
+      "includedInExecutedWitness": 1,
+      "additionalSignatures": 0,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-17T13:05:39.383703+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "02cc10d0e929ca752cfd3408bedda06463e2d93fd435e4c2b86a895b3792dee4c8",
+      "includedInExecutedWitness": 0,
+      "additionalSignatures": 0,
+      "documentedApprovals": 0,
+      "evidence": []
+    },
+    {
+      "publicKey": "03734d4b637dbac04d0eb45198bfe9c5a42aca907e8fd1e741eb52def583347257",
+      "includedInExecutedWitness": 0,
+      "additionalSignatures": 0,
+      "documentedApprovals": 0,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        }
+      ]
+    },
+    {
+      "publicKey": "034f7ea4ca4506ef288c5d5ed61686b9f39a0bc5f7670858305e32ea504ab543f3",
+      "includedInExecutedWitness": 0,
+      "additionalSignatures": 0,
+      "documentedApprovals": 0,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        }
+      ]
+    },
+    {
+      "publicKey": "031de8a766da668b2935351acd8f23c26dbedd54b8208b135f0a636b544c9e0dad",
+      "includedInExecutedWitness": 1,
+      "additionalSignatures": 0,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-17T13:29:15.126495+00:00"
+        }
+      ]
+    },
+    {
+      "publicKey": "03f27e790f500f5f89bc33e1b65e95c0ee5258491328878256bb8d0326776aeb08",
+      "includedInExecutedWitness": 0,
+      "additionalSignatures": 0,
+      "documentedApprovals": 0,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "no-verifiable-signature",
+          "signedAt": null
+        }
+      ]
+    },
+    {
+      "publicKey": "024036ee88993e487a862f2fffda08a4fcc4c3111cc465f5e9dc116e9f7b335378",
+      "includedInExecutedWitness": 1,
+      "additionalSignatures": 0,
+      "documentedApprovals": 1,
+      "evidence": [
+        {
+          "decisionId": "neo3scan:12",
+          "state": "included-in-executed-witness",
+          "signedAt": "2026-04-20T05:27:38.166718+00:00"
+        }
+      ]
+    }
+  ],
+  "historicalOnlyEvidence": [
+    {
+      "decisionId": "neo3scan:12",
+      "publicKey": "03fd04de983f4e04c9629ab3cfc83f41be7431b96bf852a91873c38ca8f737ee2c",
+      "state": "no-verifiable-signature",
+      "signedAt": null
+    }
+  ],
+  "unreviewedRequests": []
+}

@@ -218,7 +218,7 @@
   }
   .ledger-head{
     display:grid;
-    grid-template-columns: 32px 1fr 96px 96px 96px 78px;
+    grid-template-columns: 32px 1fr 150px 90px 90px 70px;
     gap: 10px;
     padding: 9px 12px;
     font-family:"IBM Plex Mono", monospace;
@@ -246,7 +246,7 @@
   .row:nth-child(even) .row-main{ background: color-mix(in srgb, var(--paper-2) 55%, transparent); }
   .row-main{
     display:grid;
-    grid-template-columns: 32px 1fr 96px 96px 96px 78px;
+    grid-template-columns: 32px 1fr 150px 90px 90px 70px;
     gap: 10px;
     align-items:center;
     padding: 10px 12px;
@@ -284,6 +284,13 @@
     font-variant-numeric: tabular-nums;
     color: var(--ink-muted);
   }
+  .participation-summary{
+    display:flex;
+    justify-content:center;
+    gap:5px;
+    flex-wrap:wrap;
+  }
+  .participation-summary span + span::before{ content:"· "; color:var(--ink-faint); }
   .total{
     display:flex;
     align-items:center;
@@ -375,7 +382,7 @@
   .evidence-toggle:focus-visible{ outline:2px solid var(--accent); outline-offset:1px; }
   .evidence-toggle .evidence-chevron{ transition:transform .15s ease; }
   .evidence-toggle[aria-expanded="true"] .evidence-chevron{ transform:rotate(90deg); }
-  .proposal-evidence{
+  .proposal-evidence, .approval-evidence{
     margin:-4px 0 2px 138px;
     padding:0;
     list-style:none;
@@ -385,8 +392,11 @@
     font-size:12px;
     line-height:1.4;
   }
-  .proposal-evidence a{ font-weight:500; text-decoration-thickness:1px; overflow-wrap:anywhere; }
+  .proposal-evidence a, .approval-evidence a{ font-weight:500; text-decoration-thickness:1px; overflow-wrap:anywhere; }
   .proposal-empty{ color:var(--ink-faint); }
+  .evidence-rule{ height:1px; background:var(--line); }
+  .evidence-state{ color:var(--ink-muted); }
+  .evidence-state strong{ color:var(--ink); font-weight:500; }
 
   @media (max-width: 760px){
     .ledger-head, .row-main{
@@ -394,7 +404,7 @@
     }
     .col-uptime, .col-discuss, .col-score, .num.uptime, .num.discuss{ display:none; }
     .detail-pad{ padding-left: 30px; }
-    .proposal-evidence{ margin-left:0; }
+    .proposal-evidence, .approval-evidence{ margin-left:0; }
     .metric-line{
       grid-template-columns: 1fr;
       row-gap: 4px;
@@ -462,16 +472,17 @@
   <div class="formula">
     <h2>Metric availability</h2>
     <div class="formula-row">
-      <span class="formula-term"><span class="swatch" style="background:var(--metric-vote)"></span>neo.community votes · verified eligible-proposal coverage</span>
+      <span class="formula-term"><span class="swatch" style="background:var(--metric-vote)"></span>Governance participation · source-specific evidence</span>
       <span class="formula-term"><span class="swatch" style="background:var(--metric-uptime)"></span>Node health · not tracked</span>
       <span class="formula-term"><span class="swatch" style="background:var(--metric-discuss)"></span>Discussion · not tracked</span>
       <span class="formula-term" style="font-weight:600;">Combined score · unavailable</span>
     </div>
     <p class="formula-note">
-      This percentage covers only proposals recorded on neo.community: it is the share a member
+      The neo.community percentage covers only proposals recorded on that portal: it is the share a member
       voted on among proposals opened while that member's Council seat is independently verified
-      on-chain. It does not cover every Council approval mechanism. A seat not yet proven for any
-      proposal reads as not eligible, never as a missed vote.
+      on-chain. Council transaction approvals are shown separately as executed-witness or additional
+      verified-signature evidence. No combined percentage is published, and no visible absence is
+      described as a missed vote.
       Public Council endpoints have not yet been independently attributed, so node health is not tracked.
       A separate primary-duty observation is collecting for the dynamically identified Consensus nodes.
     </p>
@@ -486,7 +497,7 @@
     <div class="ledger-head">
       <span></span>
       <button data-sort="name">Member <span class="sort-arrow">↕</span></button>
-      <button class="col-num col-vote" data-sort="vote">Portal votes <span class="sort-arrow">↕</span></button>
+      <button class="col-num col-vote" data-sort="vote">Participation <span class="sort-arrow">↕</span></button>
       <span class="col-num col-uptime">Node health</span>
       <span class="col-num col-discuss">Threads</span>
       <span class="col-num col-score">Score</span>
@@ -497,8 +508,9 @@
   <footer>
     Current roster and locations are verified against the public Neo Council candidate list at
     <a href="https://neo.community/candidates" target="_blank" rel="noopener">neo.community/candidates</a>.
-    The displayed proposal votes come from the public neo.community governance API and do not represent
-    every Council approval mechanism. Consensus-duty evidence
+    Portal votes come from the public neo.community governance API. Council-approval evidence comes
+    from the reviewed Neo3Scan record and its executed Neo N3 transaction; the categories stay separate
+    and are not combined into one percentage. Consensus-duty evidence
     comes from three corroborating Neo N3 RPC nodes. Discussion and combined scores are not tracked.
     Independent preview — not an official Neo Foundation,
     NGD, or Council product.
@@ -509,11 +521,13 @@
 <script>
   let members = [];
   let proposals = [];
+  let approvalDecisions = [];
+  let approvalsSnapshot = null;
   let uptimeSnapshot = null;
   let sortKey = "vote", sortDir = -1;
   const sortMap = {
     name: m => m.name.toLowerCase(),
-    vote: m => m.recordedVotes,
+    vote: m => (m.recordedVotes * 100) + (m.approvals?.documentedApprovals ?? 0),
   };
 
   const rowsEl = document.getElementById("rows");
@@ -530,8 +544,14 @@
 
     rowsEl.innerHTML = sorted.map((m, i)=>{
       const isOpen = openState.has(m.name);
-      const isEvidenceOpen = evidenceOpenState.has(m.publicKey);
+      const portalEvidenceKey = `portal:${m.publicKey}`;
+      const approvalEvidenceKey = `approval:${m.publicKey}`;
+      const isEvidenceOpen = evidenceOpenState.has(portalEvidenceKey);
+      const isApprovalEvidenceOpen = evidenceOpenState.has(approvalEvidenceKey);
       const evidenceId = `proposal-evidence-${m.publicKey.slice(-10)}`;
+      const approvalEvidenceId = `approval-evidence-${m.publicKey.slice(-10)}`;
+      const approvalCount = m.approvals?.documentedApprovals;
+      const approvalSummary = approvalCount == null ? "approval N/A" : `${approvalCount} approval${approvalCount === 1 ? "" : "s"}`;
       return `
       <div class="row ${isOpen ? "open" : ""}" data-name="${m.name}">
         <button class="row-main" aria-expanded="${isOpen}">
@@ -540,7 +560,7 @@
             <div class="name">${m.name}${m.consensus ? `<span class="consensus-badge" title="Current Consensus node, derived from Neo N3 RPC validator data">Consensus</span>` : ""}</div>
             <div class="loc">${m.location}</div>
           </span>
-          <span class="num col-vote">${m.recordedVotes}</span>
+          <span class="num col-vote participation-summary"><span>${m.recordedVotes} portal</span><span>${approvalSummary}</span></span>
           <span class="num col-uptime">N/A</span>
           <span class="num col-discuss">N/A</span>
           <span class="num col-score">N/A</span>
@@ -548,15 +568,18 @@
         <div class="row-detail">
           <div class="row-detail-inner">
             <div class="detail-pad">
-              ${voteMetricLine(m, isEvidenceOpen, evidenceId)}
+              ${voteMetricLine(m, isEvidenceOpen, evidenceId, portalEvidenceKey)}
               ${proposalEvidence(m, isEvidenceOpen, evidenceId)}
+              ${councilApprovalMetricLine(m, isApprovalEvidenceOpen, approvalEvidenceId, approvalEvidenceKey)}
+              ${councilApprovalEvidence(m, isApprovalEvidenceOpen, approvalEvidenceId)}
               ${metricLine("Council node health", "var(--metric-uptime)", 0, "Not tracked")}
               ${consensusMetricLine(m)}
               ${metricLine("Discussion engagement", "var(--metric-discuss)", 0, "Not tracked")}
-              <p class="detail-note">Recorded votes are matched only by the candidate's stable Neo N3 public key.
+              <p class="detail-note">Portal votes and Council signatures are matched only by the candidate's stable Neo N3 public key.
               Eligible-proposal counts reflect the Council committee independently verified on-chain at each
               proposal's opening block — a member is only counted against a proposal opened while their seat
-              is proven to have existed.</p>
+              is proven to have existed. Council approvals remain a separate evidence category and do not alter
+              the portal percentage.</p>
             </div>
           </div>
         </div>
@@ -574,9 +597,9 @@
     });
     rowsEl.querySelectorAll(".evidence-toggle").forEach(btn=>{
       btn.addEventListener("click", ()=>{
-        const publicKey = btn.dataset.publicKey;
-        if(evidenceOpenState.has(publicKey)){ evidenceOpenState.delete(publicKey); }
-        else{ evidenceOpenState.add(publicKey); }
+        const evidenceKey = btn.dataset.evidenceKey;
+        if(evidenceOpenState.has(evidenceKey)){ evidenceOpenState.delete(evidenceKey); }
+        else{ evidenceOpenState.add(evidenceKey); }
         render();
       });
     });
@@ -601,15 +624,18 @@
     return metricLine("Primary duty success", "var(--metric-uptime)", member.consensus.dutySuccessPercent, `${member.consensus.dutySuccessPercent}%`);
   }
 
-  function voteMetricLine(member, isEvidenceOpen, evidenceId){
+  function disclosureToggle(member, isEvidenceOpen, evidenceId, evidenceKey, label){
+    return `<button class="evidence-toggle" type="button" data-evidence-key="${evidenceKey}"
+      aria-expanded="${isEvidenceOpen}" aria-controls="${evidenceId}"
+      aria-label="${isEvidenceOpen ? "Hide" : "Show"} ${label} for ${member.name}">
+      <span class="evidence-chevron" aria-hidden="true">▶</span>
+    </button>`;
+  }
+
+  function voteMetricLine(member, isEvidenceOpen, evidenceId, evidenceKey){
     const el = member.eligibility;
-    const toggle = `
-      <button class="evidence-toggle" type="button" data-public-key="${member.publicKey}"
-        aria-expanded="${isEvidenceOpen}" aria-controls="${evidenceId}"
-        aria-label="${isEvidenceOpen ? "Hide" : "Show"} recorded proposal evidence for ${member.name}">
-        <span class="evidence-chevron" aria-hidden="true">▶</span>
-      </button>`;
-    const label = `<span class="metric-label vote-label"><span class="swatch" style="background:var(--metric-vote)"></span>neo.community votes${toggle}</span>`;
+    const toggle = disclosureToggle(member, isEvidenceOpen, evidenceId, evidenceKey, "neo.community proposal evidence");
+    const label = `<span class="metric-label vote-label"><span class="swatch" style="background:var(--metric-vote)"></span>neo.community proposals${toggle}</span>`;
     if(!el){
       return `
       <div class="metric-line">
@@ -646,6 +672,36 @@
       return `<li><a href="${proposal.sourceUrl}" target="_blank" rel="noopener">Proposal #${number} — ${proposal.title}</a></li>`;
     }).join("");
     return `<ul class="proposal-evidence" id="${evidenceId}">${items}</ul>`;
+  }
+
+  function councilApprovalMetricLine(member, isEvidenceOpen, evidenceId, evidenceKey){
+    const approvals = member.approvals;
+    if(!approvals){
+      return `<div class="metric-line"><span class="metric-label"><span class="swatch" style="background:var(--metric-vote)"></span>Council transaction approvals</span><span class="evidence-rule"></span><span class="metric-val">Unavailable</span></div>`;
+    }
+    const toggle = approvals.evidence.length
+      ? disclosureToggle(member, isEvidenceOpen, evidenceId, evidenceKey, "Council approval evidence")
+      : "";
+    let value = "Not eligible for the reviewed decision";
+    if(approvals.includedInExecutedWitness) value = `${approvals.includedInExecutedWitness} included in executed witness`;
+    else if(approvals.additionalSignatures) value = `${approvals.additionalSignatures} additional verified signature`;
+    else if(approvals.evidence.length) value = "No verifiable signature found";
+    return `<div class="metric-line"><span class="metric-label vote-label"><span class="swatch" style="background:var(--metric-vote)"></span>Council transaction approvals${toggle}</span><span class="evidence-rule"></span><span class="metric-val">${value}</span></div>`;
+  }
+
+  function councilApprovalEvidence(member, isEvidenceOpen, evidenceId){
+    if(!isEvidenceOpen || !member.approvals?.evidence.length) return "";
+    const items = member.approvals.evidence.map(record => {
+      const decision = approvalDecisions.find(item => item.id === record.decisionId);
+      if(!decision) return "";
+      const state = record.state === "included-in-executed-witness"
+        ? "Included in executed witness"
+        : record.state === "additional-signature-recorded-off-chain"
+          ? "Additional cryptographically verified signature (preserved by Neo3Scan)"
+          : "No verifiable signature found";
+      return `<li><a href="${decision.sourceUrl}" target="_blank" rel="noopener">${decision.title}</a><br><span class="evidence-state"><strong>${state}</strong> · transaction ${decision.transactionHash.slice(0,10)}…${decision.transactionHash.slice(-8)}</span></li>`;
+    }).join("");
+    return `<ul class="approval-evidence" id="${evidenceId}">${items}</ul>`;
   }
 
   document.querySelectorAll("[data-sort]").forEach(btn=>{
@@ -723,6 +779,17 @@
       uptimeSnapshot = null;
       uptimeError = error;
     }
+    try {
+      const approvalResponse = await fetch("../data/council-approvals.json", { cache: "no-store" });
+      if(!approvalResponse.ok) throw new Error(`Council approval snapshot request failed (${approvalResponse.status}).`);
+      approvalsSnapshot = await approvalResponse.json();
+      if(approvalsSnapshot.schemaVersion !== 1 || approvalsSnapshot.combinedPercentageAvailable !== false ||
+        approvalsSnapshot.participation?.length !== 21 || !Array.isArray(approvalsSnapshot.decisions)){
+        throw new Error("Council approval snapshot validation failed.");
+      }
+    } catch(error) {
+      approvalsSnapshot = null;
+    }
     let eligibilitySnapshot = null;
     try {
       const eligibilityResponse = await fetch("../data/council-history.json", { cache: "no-store" });
@@ -739,18 +806,24 @@
     }
     const eligibilityByKey = new Map((eligibilitySnapshot?.participation ?? []).map(record => [record.publicKey, record]));
     const consensusByKey = new Map((uptimeSnapshot?.validators ?? []).map(record => [record.publicKey, record]));
+    const approvalsByKey = new Map((approvalsSnapshot?.participation ?? []).map(record => [record.publicKey, record]));
     members = snapshot.participation.map(member => ({
       ...member,
       consensus: consensusByKey.get(member.publicKey) ?? null,
       eligibility: eligibilityByKey.get(member.publicKey) ?? null,
+      approvals: approvalsByKey.get(member.publicKey) ?? null,
     }));
     proposals = snapshot.proposals;
+    approvalDecisions = approvalsSnapshot?.decisions ?? [];
     document.getElementById("latest-votes").textContent = `${snapshot.latestProposal.voterCount} / 21`;
     document.getElementById("latest-label").innerHTML = `Council members recorded as voting on neo.community <a href="${snapshot.latestProposal.sourceUrl}" target="_blank" rel="noopener">Proposal #${snapshot.latestProposal.number}</a>`;
     document.getElementById("majority-record").textContent = `${snapshot.proposalsReachingMajority} / ${snapshot.proposalCount}`;
     document.getElementById("majority-threshold").textContent = snapshot.majorityThreshold;
     const fresh = new Date(snapshot.fetchedAt);
-    document.getElementById("data-status").innerHTML = `<span>✓</span><div><strong>VERIFIED SNAPSHOT.</strong> Governance records refreshed <time datetime="${snapshot.fetchedAt}">${fresh.toLocaleString(undefined, {dateStyle:"medium", timeStyle:"short", timeZone:"UTC"})} UTC</time>. Current Council roster observed ${new Date(snapshot.councilRoster.observedAt).toLocaleDateString(undefined, {dateStyle:"medium", timeZone:"UTC"})}.</div>`;
+    const approvalFreshness = approvalsSnapshot
+      ? ` Council approvals refreshed <time datetime="${approvalsSnapshot.fetchedAt}">${new Date(approvalsSnapshot.fetchedAt).toLocaleString(undefined, {dateStyle:"medium", timeStyle:"short", timeZone:"UTC"})} UTC</time>.`
+      : " Council approval evidence is temporarily unavailable.";
+    document.getElementById("data-status").innerHTML = `<span>✓</span><div><strong>VERIFIED SNAPSHOTS.</strong> Portal records refreshed <time datetime="${snapshot.fetchedAt}">${fresh.toLocaleString(undefined, {dateStyle:"medium", timeStyle:"short", timeZone:"UTC"})} UTC</time>.${approvalFreshness} Current Council roster observed ${new Date(snapshot.councilRoster.observedAt).toLocaleDateString(undefined, {dateStyle:"medium", timeZone:"UTC"})}.</div>`;
     if(uptimeError){
       document.getElementById("uptime-status").innerHTML = `<span>⚠️</span><div><strong>CONSENSUS OBSERVATION UNAVAILABLE.</strong> ${uptimeError.message}</div>`;
     } else if(uptimeSnapshot.status === "collecting"){

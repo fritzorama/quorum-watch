@@ -192,3 +192,13 @@ eligible-portal-proposal coverage. Future executed-witness evidence and addition
 evidence must remain separately labeled; they must not be blended into this percentage or treated as
 proof that a member with no visible signature failed to participate. See
 `docs/COUNCIL-VOTING-MECHANISMS-RESEARCH.md`.
+
+### 2026-09-08 — Governance participation is an umbrella, not a blended score
+
+The roll call uses `Governance participation` as a broad presentation category, while every
+underlying mechanism remains independently labeled. Eligible neo.community portal-vote coverage
+retains its own denominator and percentage. Reviewed Council transaction evidence separately states
+whether a signature was included in the executed witness, was an additional verified off-chain
+signature, was not found in the available evidence, or the member was not eligible. The compact row
+may summarize source counts, but no combined percentage is allowed until the mechanism catalogue is
+demonstrably complete and cross-source decisions can be reconciled without double counting.
