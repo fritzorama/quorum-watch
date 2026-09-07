@@ -237,6 +237,7 @@
   .ledger-head button:hover{ color: var(--ink); }
   .ledger-head button:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; border-radius:2px; }
   .col-num{ text-align:right; justify-content:flex-end; }
+  .col-vote{ text-align:center; justify-content:center; }
   .sort-arrow{ font-size:9px; opacity:.6; }
 
   .row{
@@ -268,10 +269,12 @@
   .who .name{ font-weight:600; font-size:14px; }
   .consensus-badge{
     display:inline-block; margin-left:7px; padding:1px 5px;
-    border:1px solid var(--line-strong); border-radius:2px;
-    color:var(--ink-muted); font-family:"IBM Plex Mono", monospace;
+    border:1px solid color-mix(in srgb, var(--good) 80%, var(--line)); border-radius:2px;
+    background:color-mix(in srgb, var(--good) 14%, transparent);
+    color:var(--good); font-family:"IBM Plex Mono", monospace;
     font-size:8.5px; font-weight:500; letter-spacing:.05em;
     text-transform:uppercase; vertical-align:2px;
+    box-shadow:0 0 7px color-mix(in srgb, var(--good) 45%, transparent);
   }
   .who .loc{ font-size:11.5px; color: var(--ink-faint); margin-top:1px; }
   .num{
@@ -536,9 +539,9 @@
             <div class="loc">${m.location}</div>
           </span>
           <span class="num col-vote">${m.recordedVotes}</span>
-          <span class="num col-uptime">Not tracked</span>
-          <span class="num col-discuss">Not tracked</span>
-          <span class="num col-score">Unavailable</span>
+          <span class="num col-uptime">N/A</span>
+          <span class="num col-discuss">N/A</span>
+          <span class="num col-score">N/A</span>
         </button>
         <div class="row-detail">
           <div class="row-detail-inner">
