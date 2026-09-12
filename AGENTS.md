@@ -57,6 +57,9 @@ history and mockup copy as context, not as authoritative project state. Keep
 - Extend the consensus-duty observation: run `npm run fetch:uptime`.
 - Refresh historical Council eligibility: run `npm run fetch:council-history`.
 - Refresh reviewed Council-approval evidence: run `npm run fetch:council-approvals`.
+- Refresh the local-review-only executed Council-decision catalogue: run
+  `npm run fetch:council-decisions`. The ndapp staging API is discovery-only; every candidate
+  transaction must be independently corroborated and cryptographically verified.
 
 The production site and later slice branches read verified neo.community portal vote records from the
 checked-in snapshot. Council transaction approvals use the separate checked-in
@@ -91,8 +94,8 @@ zero. Do not publish a percentage before the full seven-day window.
 - Production branch: `main`
 - Production domain: `https://neoquorumwatch.com`
 - Active development domain: `https://dev.neoquorumwatch.com`
-- Active development branch: none immediately after the Slice 3 release; create the next slice branch
-  from the latest `origin/main` before further implementation.
+- Active development branch: `slice-4-council-decision-history`, created from the latest
+  `origin/main`. Its current data-verification work is not connected to the frontend.
 - Cloudflare Pages fallback: `https://quorum-watch.pages.dev`
 - The development domain is a proxied CNAME to the active branch alias
   (Cloudflare may truncate

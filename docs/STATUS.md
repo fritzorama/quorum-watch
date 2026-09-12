@@ -1,6 +1,6 @@
 # Status
 
-Last updated: 2026-09-07 (neo.community vote scope clarified)
+Last updated: 2026-09-12 (executed Council-decision verification foundation)
 
 This file is the single source of truth for where the project actually is.
 Update it at the end of every slice — before committing.
@@ -81,19 +81,26 @@ Update it at the end of every slice — before committing.
 - Cloudflare's build now publishes every checked-in JSON snapshot under
   `/data/`, so the development page can load the uptime observation without
   changing how the approved production branch is selected.
+- On `slice-4-council-decision-history`, a dependency-free collector now treats the ndapp.org
+  staging tracker only as a discovery feed, then independently verifies every candidate through two
+  Neo N3 RPC providers. It scans all witnesses, derives the committee and threshold, and
+  cryptographically maps embedded signatures to public keys. The first full run verified 34
+  transactions containing 35 actions with zero quarantines. The snapshot is `local-review-only`,
+  exposes no percentage, and leaves 29 historical keys unresolved rather than adopting third-party
+  identity labels.
 
 ## NEXT (the slice we are currently building)
 
-**Slice 2 — Node health and Consensus performance.** Continue the prospective
-primary-duty observation through at least 2026-09-12 19:52:55 UTC, then refresh
-the snapshot and inspect all missed-duty evidence. Publish that narrow
-percentage only if the full window validates. Separately define a sourced,
-effective-dated registry of independently attributable Council endpoints before
-collecting or scoring node health; an unidentified endpoint remains `Not tracked`.
+**Slice 4 — Council decision history.** Await the tracker's maintainer response about source-code
+availability, method-catalogue completeness, and API permanence. Meanwhile review the independently
+verified 34-transaction snapshot and complete historical identity attribution before designing any
+frontend presentation. Executed-witness inclusion is not a participation percentage.
 
 ## LATER (recorded, not started)
 
 - Discussion engagement metric + the org→GitHub-handle mapping table
+- Resume Council node-health and Consensus primary-duty work after ecosystem attribution questions
+  are answered; preserve the existing observation and do not relabel it as general node uptime.
 - Broader Consensus participation (Prepare/Commit and view-change evidence),
   which may require a continuously running consensus-message listener
 - Scheduled/automated refresh (GitHub Actions cron + static redeploy is still

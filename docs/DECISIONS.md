@@ -202,3 +202,18 @@ whether a signature was included in the executed witness, was an additional veri
 signature, was not found in the available evidence, or the member was not eligible. The compact row
 may summarize source counts, but no combined percentage is allowed until the mechanism catalogue is
 demonstrably complete and cross-source decisions can be reconciled without double counting.
+
+### 2026-09-12 — Third-party Council tracker is discovery-only; executed witnesses are not participation rates
+
+The staging ndapp.org Council tracker is useful for discovering candidate transaction hashes, but
+its backend is private, its method catalogue is undocumented, and its API permanence is unknown.
+Quorum Watch therefore independently fetches each candidate from two RPC providers, checks the raw
+transaction and execution evidence, scans every witness, derives the committee address and threshold,
+and cryptographically matches embedded signatures to committee public keys. Any disagreement fails
+closed. Identity continues to come only from Quorum Watch's own stable-key records.
+
+An executed witness proves which signatures were included in the broadcast transaction. It does not
+prove who was asked, available, willing, omitted after quorum, or opposed. This evidence may later be
+shown as raw executed-approval facts, but it cannot produce a Council participation percentage by
+itself. Catalogue completeness and frontend use remain open pending maintainer answers and historical
+identity review.

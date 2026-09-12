@@ -110,3 +110,31 @@ interface and nested evidence controls were inspected locally and again through
 the Cloudflare branch preview.
 
 **Release state:** Approved by the user on 2026-09-08 for release to `main`.
+
+---
+
+## Slice 4 — Executed Council-decision verification foundation (data stage complete)
+
+**Problem:** Protocol-level Council actions are distributed across ordinary chain transactions. A
+staging ndapp.org tracker exposes 34 candidates, but an undocumented private service cannot be the
+project's source of truth.
+
+**What was implemented:** Two research records document the discovery problem and tracker. A new
+dependency-free collector uses the tracker only for candidate hashes, corroborates every raw
+transaction and its execution evidence across two RPC providers, scans all witnesses, derives the
+committee and threshold, cryptographically attributes embedded signatures, and maps identities only
+through Quorum Watch's own roster. It writes an atomic `local-review-only` snapshot.
+
+**Integrity result:** 34 unique executed transactions and 35 actions verified with zero quarantines:
+18 compliance actions, 11 fee actions, four role actions, and two protocol actions. Twenty-nine
+historical public keys remain unresolved. No participation percentage is produced.
+
+**Deliberately not included:** No frontend changes, third-party identity labels, completeness claim,
+or inference of non-participation from a signature missing from an executed witness.
+
+**How we knew it worked:** Sixty tests pass, including committee parsing, threshold and signature
+extraction, Neo sign-data construction, and cryptographic attribution of a real signature. The live
+collection also passed full cross-provider and source-agreement validation.
+
+**Release state:** Committed only to `slice-4-council-decision-history` for review. It is not connected
+to the website and is not approved for `main`.
